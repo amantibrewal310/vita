@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken', # For Custom Signup
     'api',
+    'api.user'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,9 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/ 'media'
+
+AUTH_USER_MODEL = 'user.CustomUser'
+
 
 CORS_ALLOW_ALL_ORIGINS = True
 
