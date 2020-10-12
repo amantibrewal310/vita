@@ -9,5 +9,6 @@ router.register(r'list', views.VideoViewSet)
 router.register(r'comment', views.CommentViewSet)
 
 urlpatterns = [
+    path('comment/<str:pk>/', views.comment),
     path('', include(router.urls)),
 ]
