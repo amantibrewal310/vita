@@ -1,6 +1,6 @@
 # TODO:
 
-
+```
 <!-- Building the Categories -->
 
 class Category(models.Model):
@@ -18,6 +18,15 @@ class Video(models.Model):
 
     category = models.ForeignKey(
         Category, on_delete= models.PROTECT, default=1)
+```
+* [x] Video Model
+* [x] Comment Model
+* [x] Custome User Model
+* [ ] Content Moderation Model 
+* [ ] Adding Category to Video model
+* [ ] Payment
+* [ ] Social Login
+* [ ] Basic Video Player
+* [ ] Advanced Video Player
+* [ ] Frontend
 
-    .....
-    ........

@@ -9,8 +9,8 @@ from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly
 
 
-# Not needed probably 
-
+ 
+# For Viewing comments of particular video
 @csrf_exempt
 def comment(request, pk):
     comments = Comment.objects.filter(video=pk)
