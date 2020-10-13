@@ -10,6 +10,6 @@ router.register(r'comment-list', views.CommentViewSet)
 
 urlpatterns = [
     # Not needed probably
-    # path('comment/<str:pk>/', views.comment),
+    path('<str:pk>/comments/', views.comment),
     path('', include(router.urls)),
 ]
