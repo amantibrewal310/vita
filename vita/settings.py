@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken', # For Custom Signup
     'api',
     'api.user',
-    'api.videos'
+    'api.videos',
 ]
 
 MIDDLEWARE = [
