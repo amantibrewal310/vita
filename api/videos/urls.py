@@ -5,10 +5,11 @@ from . import views
 
 
 router = routers.DefaultRouter()
-router.register(r'list', views.VideoViewSet)
-router.register(r'comment', views.CommentViewSet)
+router.register(r'video-list', views.VideoViewSet)
+router.register(r'comment-list', views.CommentViewSet)
 
 urlpatterns = [
-    path('comment/<str:pk>/', views.comment),
+    # Not needed probably
+    # path('comment/<str:pk>/', views.comment),
     path('', include(router.urls)),
 ]
