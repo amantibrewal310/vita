@@ -2,14 +2,24 @@ from rest_framework import serializers
 
 from .models import Video, Comment
 
+
 class VideoSerailizer(serializers.HyperlinkedModelSerializer):
-    thumbnail = serializers.ImageField(max_length=None, allow_empty_file=False, allow_null=True, required=False) # For Full URL of Image
+    # adds user to the comment
+    user = serializers.ReadOnlyField(source='user.id')
+
     class Meta:
         model = Video
-        fields = ('title', 'description', 'thumbnail', 'videoFile', 'user', 'likes', 'dislikes')
+        fields = ('id', 'title', 'description', 'thumbnail', 'videoFile', 'user', 'likes', 'dislikes')
+
+
 
 class CommentSerializer(serializers.ModelSerializer):
+    # adds user to the comment
+    user = serializers.ReadOnlyField(source='user.id')
+    
     class Meta:
         model = Comment
-        fields = ('text', 'user', 'likes', 'dislikes', 'video')
+        # serializing ids too
+        fields = ('id', 'text', 'user', 'likes', 'dislikes', 'video')
 
+    
