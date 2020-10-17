@@ -6,6 +6,10 @@ from rest_framework.views import APIView
 from .serializers import CustomUserSerializer
 from rest_framework.permissions import AllowAny
 from .models import NewUser
+from rest_framework.decorators import api_view
+
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,16 +26,12 @@ class UserViewSet(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes]
 
 
+@api_view(['GET'])
+def userDetail(request, email):
+    try:
+        loggedInUser = NewUser.objects.get(email=email)
+    except NewUser.DoesNotExist:
+        return JsonResponse({'detail' : 'user does not exist'})
 
-class CustomUserCreate(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request, format='json'):
-        serializer = CustomUserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    serializer = CustomUserSerializer(loggedInUser, many=False);
+    return Response(serializer.data, status=status.HTTP_200_OK)

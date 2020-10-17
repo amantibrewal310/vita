@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import '../components/css/header.css'
 import {Link, useHistory} from 'react-router-dom'
+import AuthControl from './auth/AuthControl';
 
 function Header() {
 
@@ -15,16 +16,18 @@ function Header() {
         })
     }
 
-    const handleSubmit = (e) => {
-        console.log(data);
-        history.push({
-            pathname: `/search/`,
-            search: `?search=${data.search}`
-        });
-        // reload is necessary to tell browser 
-        // we have arrived to this page 
-        window.location.reload();
-    }
+    // No serach functionality present
+
+    // const handleSubmit = (e) => {
+    //     console.log(data);
+    //     history.push({
+    //         pathname: `/search/`,
+    //         search: `?search=${data.search}`
+    //     });
+    //     // reload is necessary to tell browser 
+    //     // we have arrived to this page 
+    //     window.location.reload();
+    // }
 
     return (
         <div className="topnav">
@@ -35,23 +38,14 @@ function Header() {
             >
                 Home
             </Link>
-            <Link 
-                to="/register"
-            >
-                Register
-            </Link>
-            <Link 
-                to="/login"
-            >
-                Login
-            </Link>
-            <Link 
-                to="/logout"
-            >
-                Logout
-            </Link>
+            
+            {/* login, logout, register */}
+            <AuthControl />
 
-            <div id='search-container'>
+        
+            {/* No serach functionality present */}
+
+            {/* <div id='search-container'>
                 <input 
                     id='searchbox'
                     type='text' 
@@ -66,7 +60,7 @@ function Header() {
                 >
                     Serach
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 }
