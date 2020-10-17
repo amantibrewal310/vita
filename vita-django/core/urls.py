@@ -11,22 +11,15 @@ urlpatterns = [
    
     # admin
     path('admin/', admin.site.urls),
-   
-    # Project urls
 
-    # path('', include('blog.urls', namespace='blog')),
-    # User Management
-    # path('api/user/', include('users.urls', namespace='users')),
-    # Blog_API Application
-    # path('api/', include('blog_api.urls', namespace='blog_api')),
+    # API
+    path('api/', include('vita_api.urls'), name='vita_api'),
 
-    # API schema and Documentation
-    # path('project/docs/', include_docs_urls(title='BlogAPI')),
-    # path('project/schema', get_schema_view(
-    #     title="BlogAPI",
-    #     description="API for the BlogAPI",
-    #     version="1.0.0"
-    # ), name='openapi-schema'),
+    # User 
+    path('api/user/', include('users.urls'), name='users'),
+
+    # facility to directly login from DRF GUI
+    path('api-auth/', include('rest_framework.urls'), name='rest_framework'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

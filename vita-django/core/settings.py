@@ -146,11 +146,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        # oauth
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'drf_social_oauth2.authentication.SocialAuthentication',
-    ),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     # oauth
+    #     'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    #     'drf_social_oauth2.authentication.SocialAuthentication',
+    # ),
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -165,7 +165,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# Facebook configuration    
+# Facebook configuration 
+# Generated from developers.facebook <<<
 SOCIAL_AUTH_FACEBOOK_KEY = ('685643272334163')
 SOCIAL_AUTH_FACEBOOK_SECRET = ('eef5e5feede531e1816c6621b29cbc5d')
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:3000/'
