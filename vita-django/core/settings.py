@@ -1,6 +1,7 @@
 
 from pathlib import Path
 from datetime import timedelta
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,10 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e@#thm5h&qjsn#o1g=%55n@a87t1!mz5!6^q%k8mw1t(#ivl=8'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -167,8 +168,8 @@ AUTHENTICATION_BACKENDS = (
 
 # Facebook configuration 
 # Generated from developers.facebook <<<
-SOCIAL_AUTH_FACEBOOK_KEY = ('685643272334163')
-SOCIAL_AUTH_FACEBOOK_SECRET = ('eef5e5feede531e1816c6621b29cbc5d')
+SOCIAL_AUTH_FACEBOOK_KEY = config('FB_SOCIAL_AUTH_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('FB_SOCIAL_SECRET')
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:3000/'
 
 # Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.

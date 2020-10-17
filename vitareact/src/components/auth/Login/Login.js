@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import FbLogin from 'react-facebook-login';
 import FacebookLogin from './FacebookLogin';
 import '../../css/register.css';
+import { FB_CLIENT_ID, FB_CLIENT_SECRET, FB_APP_ID} from '../../../Backend';
 
 
 
@@ -33,8 +34,8 @@ function Login() {
 				grant_type: 'password',
 				username: formData.email,
 				password: formData.password,
-				client_id: 'a1fQR0KV0WANB7FvhiO3btsgJYkrjJtpalTdeFzT',
-			    client_secret: 'ujgrMGxkt7fgqEpoxFpDInFjzfmgRKYScshcBaEawCu0l8wAm85XpG7DFdX9kFLD6PLsPRet0aNnEBmLnvOXyyW5WRy0ZsJtsY5ESk5sEkMgpybW6PKgUmmYtznlK7dL',
+				client_id: FB_CLIENT_ID,
+			    client_secret: FB_CLIENT_SECRET,
 		    })
 			.then((res) => {
 				localStorage.setItem('access_token', res.data.access_token);
@@ -81,7 +82,7 @@ function Login() {
             </form>
         
             <FbLogin
-				appId="685643272334163"
+				appId={FB_APP_ID}
 				fields="name,email,picture"
 				callback={responseFacebook}
 			/>
