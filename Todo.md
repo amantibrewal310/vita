@@ -30,3 +30,6 @@ class Video(models.Model):
 * [ ] Advanced Video Player
 * [ ] Frontend
 
+# BUGS:
+	- FB login Bug - Doesn't properly store token in localstorage
+
