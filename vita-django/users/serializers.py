@@ -3,13 +3,10 @@ from users.models import NewUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    # email = serializers.EmailField(required=True)
-    # username = serializers.CharField(required=True)
-    # password = serializers.CharField(min_length=8, write_only=True)
-
     class Meta:
         model = NewUser
-        fields = ('id', 'email', 'username', 'password')
+        # changing fields so that all data is available for profile page
+        fields = ('id', 'email', 'username', 'password', 'about', 'first_name')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

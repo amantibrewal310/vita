@@ -7,6 +7,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './components/auth/Login/Login';
 import Logout from './components/auth/Logout';
+import UserProfile from './components/UserProfile';
+import Register from './components/auth/Register';
 
 const routing = (
   <Router>
@@ -18,6 +20,8 @@ const routing = (
         <Route exact path="/" component={App} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
+        <Route exact path="/profile" component={UserProfile} />
+        <Route exact path="/register" component={Register} />
       </Switch>
       
       <Footer />

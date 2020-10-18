@@ -1,18 +1,31 @@
 import React, { useEffect } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
+import checkLoggedIn from './checkLoggedIn';
 
-export default function SignUp() {
+function Logout() {
 	const history = useHistory();
 
-	useEffect(() => {
-		const response = axiosInstance.post('user/logout/blacklist/', {
-			refresh_token: localStorage.getItem('refresh_token'),
-		});
-		localStorage.removeItem('access_token');
-		localStorage.removeItem('refresh_token');
-		axiosInstance.defaults.headers['Authorization'] = null;
-		history.push('/login');
+	// if user is not logged in and tries to logout rect
+	if(!checkLoggedIn()) {
+		history.goBack();	
+		return <div></div>;
+	}
+
+	const response = axiosInstance.post('user/logout/blacklist/', {
+		refresh_token: localStorage.getItem('refresh_token'),
 	});
-	return <div>Logout</div>;
+
+	localStorage.removeItem('access_token');
+	localStorage.removeItem('refresh_token');
+	localStorage.removeItem('expiry_time');
+	localStorage.removeItem('email');
+	axiosInstance.defaults.headers['Authorization'] = null;
+	
+	history.push('/login');
+	window.location.reload();
+
+	return <div></div>;
 }
+
+export default Logout

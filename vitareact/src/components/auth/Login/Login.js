@@ -7,7 +7,6 @@ import '../../css/register.css';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, FB_APP_ID} from '../../../Backend';
 
 
-
 function Login() {
 
     const history = useHistory();
@@ -17,6 +16,8 @@ function Login() {
 	});
 
 	const [formData, updateFormData] = useState(initialFormData);
+    const [error, setError] = useState('');
+    var expiry_time;
 
 	const handleChange = (e) => {
 		updateFormData({
@@ -27,7 +28,9 @@ function Login() {
     
     const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
+        
+        // validate form 
+        vaidateDetails();
 
 		AxiosLoginInstance
 			.post(`auth/token/`, {
@@ -37,23 +40,45 @@ function Login() {
 				client_id: FB_CLIENT_ID,
 			    client_secret: FB_CLIENT_SECRET,
 		    })
-			.then((res) => {
+			.then(res => {
+                // set the expiry of the token 
+                expiry_time = new Date().getTime() + res.data.expires_in * 1000;
+                localStorage.setItem('email', formData.email);
+                localStorage.setItem('expiry_time', expiry_time);
 				localStorage.setItem('access_token', res.data.access_token);
 				localStorage.setItem('refresh_token', res.data.refresh_token);
-				history.push('/');
+                // home page on succefull login 
+                history.push('/');
 				window.location.reload();
-			});
+            })
+            .catch(err => {
+                console.log(err);
+                setError('Wrong Credentials');
+            });
     };
     
     const responseFacebook = async (response) => {
-        console.log('facebook login initiated');
-		FacebookLogin(response.accessToken);
+        // setting email here, tokens are set in FacebookLogin file
+        localStorage.setItem('email', response.email);
+        FacebookLogin(response.accessToken);
+        // home page on succefull login 
+        history.push('/');
+		window.location.reload();
     };
     
-    
+    // form validation 
+    const vaidateDetails = () => {
+        if(formData.email === "" || formData.password === "") {
+            setError('Form is incomplete')
+        } else {
+            setError('');
+        }
+    }
+
     return (
         <div className='form-container'>
             <h2>Login Here</h2>
+            <div>{error}</div>
             <form>
                 <div>
                     <label>Email </label>
