@@ -3,20 +3,26 @@ import AxiosLoginInstance from './AxiosLogin';
 import { useHistory } from 'react-router-dom';
 import FbLogin from 'react-facebook-login';
 import FacebookLogin from './FacebookLogin';
+import checkLoggedIn from '../checkLoggedIn';
 import '../../css/register.css';
 
 
 function Login() {
 
-    const history = useHistory();
 	const initialFormData = Object.freeze({
 		email: '',
     	password: '',
-	});
+    });
+    const intialErrors = {
+        credentialsError: null,
+        emptyFormError: null,
+    }
+    var expiry_time;
+    const history = useHistory();
 
 	const [formData, updateFormData] = useState(initialFormData);
-    const [error, setError] = useState('');
-    var expiry_time;
+    const [error, setError] = useState(intialErrors);
+    
 
 	const handleChange = (e) => {
 		updateFormData({
@@ -29,8 +35,12 @@ function Login() {
 		e.preventDefault();
         
         // validate form 
-        vaidateDetails();
-
+        if(!vaidateDetails()) {
+            return;
+        }
+        // TODO:
+        // first check if the user exist 
+        // then process the response
 		AxiosLoginInstance
 			.post(`auth/token/`, {
 				grant_type: 'password',
@@ -51,33 +61,56 @@ function Login() {
 				window.location.reload();
             })
             .catch(err => {
-                console.log(err);
-                setError('Wrong Credentials');
+                // wrong credentials 
+                setError({
+                    emptyFormError: null,
+                    credentialsError: err.data.error_description
+                });
             });
     };
+
+    // TODO: 
+    // handle fb login error 
     
     const responseFacebook = async (response) => {
         // setting email here, tokens are set in FacebookLogin file
         localStorage.setItem('email', response.email);
-        FacebookLogin(response.accessToken);
-        // home page on succefull login 
+        FacebookLogin(response.accessToken)
         history.push('/');
 		window.location.reload();
     };
     
+    // TODO: 
+    // add more validations 
     // form validation 
     const vaidateDetails = () => {
         if(formData.email === "" || formData.password === "") {
-            setError('Form is incomplete')
+            // form is incomplete
+            setError({
+                credentialsError:null,
+                emptyFormError: 'All field must be filled!'
+            });
+            return false;
         } else {
-            setError('');
+            // form is filled 
+            setError({
+                ...error,
+                emptyFormError: null
+            });
+            return true;
         }
+    }
+
+    if(checkLoggedIn()) {
+        history.goBack();
+        return <div></div>
     }
 
     return (
         <div className='form-container'>
             <h2>Login Here</h2>
-            <div>{error}</div>
+            <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
+            <div>{error.credentialsError ? error.credentialsError: ''}</div>
             <form>
                 <div>
                     <label>Email </label>
