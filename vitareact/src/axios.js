@@ -19,15 +19,7 @@ axiosInstance.interceptors.response.use(
 		return response;
 	},
 	async function (error) {
-
-        console.log("error.............")
-        console.log(error);
-        console.log(error.config)
-        console.log(error.response)
-        console.log("error.............")
-        
-        const originalRequest = error.config;
-
+		
 		if (typeof error.response === 'undefined') {
 			alert(
 				'A server/network error occurred. ' +
@@ -37,74 +29,7 @@ axiosInstance.interceptors.response.use(
 			return Promise.reject(error);
         }
         
-        console.log("original reg.............")
-        console.log(originalRequest.url)
-        console.log("original reg.............")
-
-		if (
-			error.response.status === 401 &&
-			originalRequest.url === baseURL + 'refresh/'
-		) {
-			window.location.href = '/login/';
-			return Promise.reject(error);
-		}
-
-        // access taken expired 
-		if (
-			error.response.data.code === 'token_not_valid' &&
-			error.response.status === 401 &&
-			error.response.statusText === 'Unauthorized'
-		) {
-			const refreshToken = localStorage.getItem('refresh_token');
-
-			if (refreshToken) {
-
-                console.log('Response token....')
-                console.log(refreshToken);
-                console.log('Response token....')
-
-				const tokenParts = JSON.parse(atob(refreshToken.split('.')[1]));
-
-				// exp date in token is expressed in seconds, while now() returns milliseconds:
-				const now = Math.ceil(Date.now() / 1000);
-				console.log(tokenParts.exp);
-
-				if (tokenParts.exp > now) {
-                    // change from /token/refresh/  => refresh/
-					return axiosInstance
-						.post('token/refresh/', { refresh: refreshToken })
-						.then((response) => {
-
-                            console.log("insider post request");
-                            console.log(response);
-                            console.log(response.data.access);
-                            console.log("insider post request");
-
-							localStorage.setItem('access_token', response.data.access);
-							// localStorage.setItem('refresh_token', response.data.refresh);
-
-							axiosInstance.defaults.headers['Authorization'] =
-								'JWT ' + response.data.access;
-							originalRequest.headers['Authorization'] =
-								'JWT ' + response.data.access;
-
-							return axiosInstance(originalRequest);
-						})
-						.catch((err) => {
-							console.log(err);
-						});
-				} else {
-					console.log('Refresh token is expired', tokenParts.exp, now);
-					window.location.href = '/login/';
-				}
-			} else {
-				console.log('Refresh token not available.');
-				window.location.href = '/login/';
-			}
-		}
-
-		// specific error handling done elsewhere
-		return Promise.reject(error);
+		return Promise.reject(error.response);
 	}
 );
 
