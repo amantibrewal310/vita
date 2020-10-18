@@ -1,21 +1,19 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics, permissions, status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from .serializers import VideoSerailizer, CommentSerializer
 from .models import Video, Comment
-from django.views.decorators.csrf import csrf_exempt  # as csrf will denied
-
-# permissions 
-from rest_framework import permissions
 from .permissions import IsOwnerOrReadOnly
 
 
  
 # For Viewing comments of particular video
-@csrf_exempt
+@api_view(['GET'])
 def comment(request, pk):
     comments = Comment.objects.filter(video=pk)
     serializer = CommentSerializer(comments, many=True)
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class VideoViewSet(viewsets.ModelViewSet):
@@ -27,7 +25,7 @@ class VideoViewSet(viewsets.ModelViewSet):
     serializer_class = VideoSerailizer
     
     # only authenticated users can create, update, delete
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     # The user is attached to video as he creates it
     # user is not manually picked from list options 
@@ -44,7 +42,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     
     # only authenticated users can create, update, delete
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
      # The user is attached to comment as he creates it
     def perform_create(self, serializer):
