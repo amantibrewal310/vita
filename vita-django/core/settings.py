@@ -147,11 +147,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     # oauth
-    #     'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    #     'drf_social_oauth2.authentication.SocialAuthentication',
-    # ),
+    
+    # NOTE: when DEFAULT_AUTHENTICATION_CLASSES is uncommented 
+    # 1. Django REST framework GUI does not allow login, since tokens are required
+    # 2. Postman does not allow auth with username(email) and password
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # oauth
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'drf_social_oauth2.authentication.SocialAuthentication',
+    ),
 }
 
 AUTHENTICATION_BACKENDS = (

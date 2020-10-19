@@ -25,7 +25,7 @@ class Video(models.Model):
 * [ ] Content Moderation Model 
 * [ ] Adding Category to Video model
 * [ ] Payment
-* [ ] Social Login
+* [x] Social Login
 * [ ] Basic Video Player
 * [ ] Advanced Video Player
 * [ ] Frontend
@@ -33,3 +33,10 @@ class Video(models.Model):
 # BUGS:
 	- FB login Bug - Doesn't properly store token in localstorage
 
+
+# React
+    - try getting video list while user is authenticated
+    - redirect to login page if user tries to play video
+
+# Admin Dashboard
+    - for description of upload video add makdown editor 
