@@ -6,32 +6,22 @@
     /* --video-player-width: 800px; */
     --easing: 0.25s;
 }
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap");
-/* html {
-    height: 100%;
-}
-body {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-*/
+
 .videoPlayer {
-    font-family: "Roboto Mono", monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-bottom: 0;
     margin: 10px;
     position: relative;
     display: inline-flex;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.835);
     overflow: hidden;
 }
 .videoPlayer video {
     max-width: var(--video-player-width);
     margin: auto;
     /* 
-        TODO: 
-        add media queries to video 
+    TODO: 
+    add media queries to video 
     */
     min-width: 800px;
     min-height: 500px;
@@ -99,14 +89,19 @@ body {
     justify-content: center;
     align-items: center;
     border: none;
-    background-color: transparent;
+    background: transparent;
     color: var(--text-color);
     outline: 0;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+.control-btn:hover {
+    color: #eb2b9b;
 }
 .time-control {
     display: flex;
     color: var(--text-color);
-    font-size: 12px;
+    font-size: 14px;
 }
 .time {
     color: var(--text-color);
@@ -115,6 +110,21 @@ body {
     display: flex;
     align-items: center;
 }
+
+.start-time, .end-time {
+    transition: 0.1s ease;
+}
+
+.start-time:hover, .end-time:hover {
+    color: #eb2b9b;
+    font-size: 15px;
+}
+.time-slash {
+    color: #eb2b9b;
+    margin: 0 5px;
+    font-size: 25px;
+}
+
 .volume-controls {
     color: var(--text-color);
     display: flex;
