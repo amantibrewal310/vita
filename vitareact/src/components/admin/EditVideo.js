@@ -93,7 +93,7 @@ function EditVideo({id}) {
             .put(`video/video-list/${id}/`, formData)
             .then(res => {
                 history.push({
-                    pathname: `/play/${res.data.id}`,
+                    pathname: `/admin/video-list/${res.data.id}`,
                 });
                 window.location.reload();
             })

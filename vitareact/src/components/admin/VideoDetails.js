@@ -1,7 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom'
 import GetVideo from '../GetVideo';
-import DeleteVideo from './DeleteVideo';
+import DeleteVidCom from './DeleteVidCom';
 import EditVideo from './EditVideo';
 
 // Video [id]
@@ -19,7 +19,7 @@ function VideoDetails() {
         <div>
             <h1><u>Video Details Page for Admin</u></h1>
             <GetVideo />
-            <DeleteVideo id={id} />
+            <DeleteVidCom type="Video" urlSuffix="video/video-list/" id={id} />
             <EditVideo id={id} />
             {/* TODO: 5. */}
         </div>
