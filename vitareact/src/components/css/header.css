@@ -25,21 +25,3 @@
     background-color: #c873dd;
     color: white;
 }
-
-#search-container {
-    display: flex;
-    justify-content: flex-end;
-    float:right;
-    margin: 5px 10px 0 0;
-    width: 40%;
-}
-
-#searchbox, #search-container button{
-    font-size: 18px;
-    padding: 8px 12px;
-    border-radius: 3px;
-    outline: none;
-    border: none;
-    margin: 0 5px;
-    background-color: white;
-}

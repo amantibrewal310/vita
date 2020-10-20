@@ -26,13 +26,15 @@ class Video(models.Model):
 * [ ] Adding Category to Video model
 * [ ] Payment
 * [x] Social Login
-* [ ] Basic Video Player
+* [x] Basic Video Player
 * [ ] Advanced Video Player
 * [ ] Frontend
 
 # BUGS:
 	- FB login Bug - Doesn't properly store token in localstorage
 
+# Django
+    - add field - [views] in Video Model
 
 # React
     - try getting video list while user is authenticated
@@ -40,3 +42,18 @@ class Video(models.Model):
 
 # Admin Dashboard
     - for description of upload video add makdown editor 
+    - upload progress bar 
+
+# Error pages 
+    - 404, 500, etc
+
+# Features 
+    - search (for user and admin)
+    - filters (for admin - for content moderation)
+    - success pop up boxes after form fill
+    - replay feature in comments
+    - pin feature in comments 
+    - wacth list for user
+
+# Ideas 
+    - category page [Hotstar genre page], may be detail page too

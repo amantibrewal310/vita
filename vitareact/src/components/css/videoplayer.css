@@ -73,6 +73,10 @@
     transition: all ease var(--easing);
 }
 
+.video-info .progress-bar:hover, .video-info .progress-bar .progress:hover {
+    height: 5px;
+}
+
 .video-controls {
     display: flex;
     justify-content: space-between;
@@ -146,6 +150,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 2px;
 }
 .volume-progressbar .volume-progress {
     position: absolute;
@@ -155,10 +160,14 @@
     margin: auto;
     height: 100%;
     width: 50%;
+    border-radius: 2px;
     background: linear-gradient(to right, #fa761d, #ff1e74);
     transition: all ease var(--easing);
 }
 
+.volume-progressbar:hover, .volume-progressbar .volume-progress:hover {
+    height: 5px;
+}
 
 /*************************/
 .withlove{

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import ContentLoading from './ContentLoading'
+import ContentLoading from './ContentLoading';
 import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
+import AddComments from './AddComment';
 
 // Get video data for a particular video 
 // Get all comments on the video
@@ -51,6 +52,17 @@ function GetVideo() {
             });
     }, [])
 
+
+    // method to add new comment to the comments array 
+    // this is passed as prop to the Addcomment component
+    const addCommentToList = (newComment) => {
+        setCommentsData({
+            comments: [newComment, ...commentsData.comments],
+            loading: false
+        });
+    } 
+
+
     // TODO:
     // display a sidebar with video-list like youtube
     return (
@@ -66,10 +78,17 @@ function GetVideo() {
                 - Admin 
                     - hide report button 
             */}
+            {/* TODO:
+                hide Add comments component when logged int user is admin 
+            */}
+            <h3>Comments</h3>
+            <AddComments videoId={id} addCommentToList={addCommentToList} />
+            <hr />
             {/* Returns comment list for this video */}
             <CommentsLoading 
                 isLoading={commentsData.loading}
                 comments={commentsData.comments}
+                videoId={id}
             />
             {/* TODO:
                 - User should be able to 

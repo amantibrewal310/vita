@@ -6,17 +6,14 @@ import {Link} from 'react-router-dom';
 // Returns a list of comments 
 // props -> array of comments 
 
-function CommentList(props) {
-    const comments = props.comments;
+function CommentList({comments}) {
 
-    if(comments.length == 0) {
-        return (
-            <div>
-                <h3>Comments</h3>
-                <p>No comments</p>
-            </div>
-        )
-    }
+    const commentList = (comments.length == 0)
+    ? (<p>No comments</p>)
+    : (comments.map(comment => (
+            <SingleComment key={comment.id} comment={comment} />
+        ))
+    )
 
     // if(logged in user is superuser) {
         // return (
@@ -35,12 +32,7 @@ function CommentList(props) {
 
     return (
         <div>
-        <h3>Comments</h3>
-        {
-            comments.map(comment => (
-                <SingleComment key={comment.id} comment={comment} />
-            ))
-        }
+            {commentList}
         </div>
     )
 }

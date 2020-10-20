@@ -30,6 +30,9 @@ function App() {
     return (
         <div>
             <h1>Latest Vidoes</h1>
+            {/* TODO: 
+                search box
+            */}
             <VideoListLoading 
                 isLoading={appState.loading} 
                 videoList={appState.videoList} 

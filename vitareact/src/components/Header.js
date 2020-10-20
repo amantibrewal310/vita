@@ -42,25 +42,6 @@ function Header() {
             {/* login, logout, register */}
             <AuthControl />
 
-        
-            {/* No serach functionality present */}
-
-            {/* <div id='search-container'>
-                <input 
-                    id='searchbox'
-                    type='text' 
-                    name='searchbox' 
-                    onChange={handleChange}
-                    placeholder='Search Posts'
-                />
-                <button 
-                    id='submit'
-                    type='submit'
-                    onClick={handleSubmit}
-                >
-                    Serach
-                </button>
-            </div> */}
         </div>
     );
 }

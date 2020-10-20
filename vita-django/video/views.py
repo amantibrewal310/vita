@@ -11,7 +11,7 @@ from .permissions import IsOwnerOrReadOnly
 # For Viewing comments of particular video
 @api_view(['GET'])
 def comment(request, pk):
-    comments = Comment.objects.filter(video=pk)
+    comments = Comment.objects.filter(video=pk).order_by('-created_at')
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -21,7 +21,7 @@ class VideoViewSet(viewsets.ModelViewSet):
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     '''
-    queryset = Video.objects.all().order_by('id')
+    queryset = Video.objects.all().order_by('-uploaded_at')
     serializer_class = VideoSerailizer
     
     # only authenticated users can create, update, delete
@@ -43,7 +43,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     This viewset automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     '''
-    queryset = Comment.objects.all().order_by('id')
+    queryset = Comment.objects.all().order_by('-created_at')
     serializer_class = CommentSerializer
     
     # NOTE: If this error Occurs 

@@ -9,10 +9,21 @@ function SingleComment({comment}) {
     // to display name of user that made comment 
     return (
         <div>
+            {/* display user avatar and name like yt */}
+            <span>By {comment.user}</span>
             <p>{comment.text}</p>
-            <span>likes: {comment.likes}</span>
-            <span>dislikes: {comment.dislikes}</span>
-            <p>By {comment.user}</p>
+            <span>
+                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                {comment.likes}
+            </span>
+            <span>
+                <i className="fa fa-thumbs-o-down" aria-hidden="true"></i> 
+                {comment.dislikes}
+            </span>
+            <span> 
+                <i className="fa fa-clock-o" aria-hidden="true"></i>
+                {comment.created_at}
+            </span>
             <hr />
         </div>
     )
