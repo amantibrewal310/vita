@@ -27,7 +27,7 @@ function SignUp() {
     const handleChange = (e) => {
         updateFormData({
             ...formData, 
-            [e.target.name]: e.target.value.trim(),
+            [e.target.name]: e.target.value,
         });
     }
 
@@ -40,8 +40,8 @@ function SignUp() {
 
         axiosInstance
             .post(`user/`, {
-                email: formData.email,
-                username: formData.username,
+                email: formData.email.trim(),
+                username: formData.username.trim(),
                 password: formData.password,
             })
             .then(response => {

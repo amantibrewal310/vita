@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentLoading from './ContentLoading'
-import ShowComments from './ShowComments';
+import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
 
 // Get video data for a particular video 
@@ -12,7 +12,7 @@ function GetVideo() {
     // video Id
     const {id} = useParams();
     const VideoLoading = ContentLoading(VideoPlayer);
-    const CommentsLoading = ContentLoading(ShowComments);
+    const CommentsLoading = ContentLoading(CommentList);
 
     const [videoData, setVideoData] = useState({
         loading: true,
@@ -36,7 +36,7 @@ function GetVideo() {
             });
 
         
-    }, [setVideoData]);
+    }, [])  ;
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/api/video/${id}/comments/`)
@@ -49,20 +49,35 @@ function GetVideo() {
             .catch(err => {
                 console.log('error in comment data: ' + err);
             });
-    }, [setCommentsData])
+    }, [])
 
     // TODO:
     // display a sidebar with video-list like youtube
     return (
         <div className=''>
+            {/* Returns a component with video players and video details */}
             <VideoLoading 
                 isLoading={videoData.loading} 
                 video={videoData.video} 
             />
+            {/* TODO
+                - User able to 
+                    - Report video
+                - Admin 
+                    - hide report button 
+            */}
+            {/* Returns comment list for this video */}
             <CommentsLoading 
                 isLoading={commentsData.loading}
                 comments={commentsData.comments}
             />
+            {/* TODO:
+                - User should be able to 
+                    - add comment, additional(/edit/delete)
+                    - Report comment 
+                - Admin 
+                    - hide add commet, report, add link to /admin/comment-detail/:id
+            */}
         </div>
     )
 }

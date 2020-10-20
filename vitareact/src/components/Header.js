@@ -5,18 +5,18 @@ import AuthControl from './auth/AuthControl';
 
 function Header() {
 
-    let history = useHistory();
-    const [data, setData] = useState({search: ''});
-
-    const handleChange = (e) => {
-        // update state from value of input 
-        setData({
-            ...data,
-            search: e.target.value
-        })
-    }
-
     // No serach functionality present
+
+    // let history = useHistory();
+    // const [data, setData] = useState({search: ''});
+
+    // const handleChange = (e) => {
+    //     // update state from value of input 
+    //     setData({
+    //         ...data,
+    //         search: e.target.value
+    //     })
+    // }
 
     // const handleSubmit = (e) => {
     //     console.log(data);

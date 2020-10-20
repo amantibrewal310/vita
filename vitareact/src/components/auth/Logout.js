@@ -8,8 +8,9 @@ function Logout() {
 
 	// if user is not logged in and tries to logout rect
 	if(!checkLoggedIn()) {
-		history.goBack();	
-		return <div></div>;
+		history.goBack();
+		window.reload();	
+		return <></>;
 	}
 
 	const response = axiosInstance.post('user/logout/blacklist/', {

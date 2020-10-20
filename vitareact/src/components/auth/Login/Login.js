@@ -28,7 +28,7 @@ function Login() {
 	const handleChange = (e) => {
 		updateFormData({
 			...formData,
-			[e.target.name]: e.target.value.trim(),
+			[e.target.name]: e.target.value,
 		});
     };
     
@@ -45,8 +45,8 @@ function Login() {
 		AxiosLoginInstance
 			.post(`auth/token/`, {
 				grant_type: 'password',
-				username: formData.email,
-				password: formData.password,
+				username: formData.email.trim(),
+				password: formData.password.trim(),
 				client_id: FB_CLIENT_ID,
 			    client_secret: FB_CLIENT_SECRET,
 		    })
@@ -58,6 +58,13 @@ function Login() {
 				localStorage.setItem('access_token', res.data.access_token);
 				localStorage.setItem('refresh_token', res.data.refresh_token);
                 // home page on succefull login 
+
+                // TODO:
+                // Check if the user is admin 
+                // add isSupeUser in localstorage
+                // make a seprate component to make a get request using this [email]
+                // and set the retuned result in localstorage  
+
                 history.push('/');
 				window.location.reload();
             })
@@ -77,6 +84,8 @@ function Login() {
         // setting email here, tokens are set in FacebookLogin file
         localStorage.setItem('email', response.email);
         FacebookLogin(response.accessToken)
+        // TODO:
+        // check admin login
         history.push('/');
 		window.location.reload();
     };
@@ -104,7 +113,8 @@ function Login() {
 
     if(checkLoggedIn()) {
         history.goBack();
-        return <div></div>
+        window.reload();
+        return <></>
     }
 
     return (

@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import './css/videoplayer.css'
 
 // exports video player 
+// TODO: 
+// 1. skip 5 sec 
+// 1. Title hover top over video player and disppear on mouse leave, appear on mouse enter 
+// 2. Full Screen
+// 3. play rate (1.5X, 2X ...) 
+// 5. Picture in picture
 
 class VideoPlayer extends Component {
     constructor(props) {
@@ -23,6 +29,7 @@ class VideoPlayer extends Component {
       progressPercentage: 0,
       isVolumeOn: true,
       volumeValue: 0.5,
+      volumePercentage: 50,
       isShowingControls: true
     };
    
@@ -124,7 +131,7 @@ class VideoPlayer extends Component {
      
     updateVolume = () => {
       this.setState({
-        volumeValue: this.videoRef.current.volume
+        volumePercentage: this.videoRef.current.volume * 100
       });
     };
    
@@ -138,6 +145,10 @@ class VideoPlayer extends Component {
       });
       // set volume on video 
       this.videoRef.current.volume = tempVolumeValue;
+      this.setState({
+        volumeValue: tempVolumeValue,
+        isVolumeOn: true
+      });
     };
    
     updateShowControls = () => {
@@ -155,12 +166,12 @@ class VideoPlayer extends Component {
 
    render() {
 
-       let progressStyle = {
-         width: this.state.progressPercentage + "%"
-       };
-       let volumeProgressStyle = {
-         width: this.state.volumeValue * 100 + "%"
-       };
+      let progressStyle = {
+        width: this.state.progressPercentage + "%"
+      };
+      let volumeProgressStyle = {
+        width: this.state.volumePercentage + "%"
+      };
 
        let video = this.props.video;
 

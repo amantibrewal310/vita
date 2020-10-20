@@ -27,6 +27,11 @@ class VideoViewSet(viewsets.ModelViewSet):
     # only authenticated users can create, update, delete
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+    # NOTE: If this error Occurs 
+    # Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x7f02d4056940>": "Video.user" must be a "NewUser" instance.
+    # Reason is user cannot be attached with video 
+    # Use postman with bearer token and json in body 
+
     # The user is attached to video as he creates it
     # user is not manually picked from list options 
     def perform_create(self, serializer):
@@ -41,6 +46,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all().order_by('id')
     serializer_class = CommentSerializer
     
+    # NOTE: If this error Occurs 
+    # Cannot assign "<django.contrib.auth.models.AnonymousUser object at 0x7f7d0a605cd0>": "Comment.user" must be a "NewUser" instance.
+    # do what we do in user case
+
     # only authenticated users can create, update, delete
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 

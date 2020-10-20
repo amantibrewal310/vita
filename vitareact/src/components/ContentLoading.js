@@ -7,7 +7,11 @@ function ContentLoading(WrappedComponent) {
             return <WrappedComponent {...props} />
         }
         // TODO:
-        // display a nice loader
+        // display a nice loader, write css for 
+        //  a smaller and a bigger version
+        // >> <Loader type="big/small" />
+        // write css of both in PreLoader.js file 
+        // apply css with respect to props[big/small] 
         return ( 
             <div>
                 Waiting for the data......
