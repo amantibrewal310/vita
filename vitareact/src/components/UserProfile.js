@@ -51,7 +51,8 @@ function UserProfile() {
     }
 
     history.goBack();
-    return <div></div>
+    window.reload();
+    return <></>
 }
 
 export default UserProfile

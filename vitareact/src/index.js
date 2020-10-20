@@ -10,6 +10,10 @@ import Logout from './components/auth/Logout';
 import UserProfile from './components/UserProfile';
 import Register from './components/auth/Register';
 import GetVideo from './components/GetVideo';
+import Admin from './components/admin/Admin';
+import CreateVideo from './components/admin/CreateVideo';
+import VideoDetails from './components/admin/VideoDetails';
+import CommentDetails from './components/admin/CommentDetails';
 
 const routing = (
   <Router>
@@ -24,6 +28,10 @@ const routing = (
         <Route exact path="/profile" component={UserProfile} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/play/:id" component={GetVideo} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/create" component={CreateVideo}/>
+        <Route exact path="/admin/video-details/:id" component={VideoDetails}/>
+        <Route exact path="/admin/comment-details/:id" component={CommentDetails}/>
       </Switch>
   
       <Footer />

@@ -69,8 +69,12 @@
     left: 0;
     width: 0;
     margin: auto;
-    background-color: var(--progress-color);
+    background: linear-gradient(to right, #fa761d, #ff1e74);
     transition: all ease var(--easing);
+}
+
+.video-info .progress-bar:hover, .video-info .progress-bar .progress:hover {
+    height: 5px;
 }
 
 .video-controls {
@@ -96,7 +100,7 @@
     cursor: pointer;
 }
 .control-btn:hover {
-    color: #eb2b9b;
+    color: #ff1e74;
 }
 .time-control {
     display: flex;
@@ -115,12 +119,19 @@
     transition: 0.1s ease;
 }
 
-.start-time:hover, .end-time:hover {
-    color: #eb2b9b;
-    font-size: 15px;
+.start-time {
+    color: #fa751dc2;
+}
+.start-time:hover {
+    color: #fa761d;
+}
+.end-time {
+    color: #ff1e74cb;
+}
+.end-time:hover {
+    color: #ff1e74;
 }
 .time-slash {
-    color: #eb2b9b;
     margin: 0 5px;
     font-size: 25px;
 }
@@ -139,6 +150,7 @@
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    border-radius: 2px;
 }
 .volume-progressbar .volume-progress {
     position: absolute;
@@ -148,10 +160,14 @@
     margin: auto;
     height: 100%;
     width: 50%;
-    background-color: var(--progress-color);
+    border-radius: 2px;
+    background: linear-gradient(to right, #fa761d, #ff1e74);
     transition: all ease var(--easing);
 }
 
+.volume-progressbar:hover, .volume-progressbar .volume-progress:hover {
+    height: 5px;
+}
 
 /*************************/
 .withlove{

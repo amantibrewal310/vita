@@ -8,6 +8,10 @@ function VideoList(props) {
         return <div>No videos available</div>
     }
 
+    /* 
+        set [to] in Link based on user logged in status, 
+        if not logged int set [to] => same page 
+    */
     return (
         <div>
         {
