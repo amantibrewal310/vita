@@ -117,16 +117,10 @@
 
 .start-time, .end-time {
     transition: 0.1s ease;
-}
-
-.start-time {
-    color: #fa751dc2;
+    color: var(--text-color);
 }
 .start-time:hover {
     color: #fa761d;
-}
-.end-time {
-    color: #ff1e74cb;
 }
 .end-time:hover {
     color: #ff1e74;
@@ -135,11 +129,37 @@
     margin: 0 5px;
     font-size: 25px;
 }
-
+.left-side-controls, .playback-rate {
+    display: flex;
+    flex-direction: row;
+    width: 35%;
+    align-content: center;
+    justify-content: space-between;
+}
+.playback-rate {
+    width: 50%;
+}
 .volume-controls {
     color: var(--text-color);
     display: flex;
     align-items: center;
+}
+.playchange, .playback-value{
+    padding: 10px 5px;
+    font-size: 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+.playchange:hover {
+    color: #ff1e74;
+}
+.playback-meter {
+    width: 40px;
+    height: 40px;
+    background-image: url('../../images/play50.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .volume-progressbar {
@@ -169,14 +189,62 @@
     height: 5px;
 }
 
-/*************************/
-.withlove{
-    position:absolute;
-    bottom: 10px;
-    font-weight:600;
-    font-size:18px;
-    left: 0;
-    right: 0;
-    margin:auto;
-    text-align:center;
+.center-controls {
+    display: flex;
+    width: 20%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
 }
+
+.skip-btn, .fullscreen-btn {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all ease var(--easing);
+    background-size: contain;
+}
+.skip-btn {
+    margin-top: 5px;
+}
+#backward-skip {
+    background-image: url('../../images/backN.png');
+}
+#forward-skip {
+    background-image: url('../../images/forwN.png');
+}
+#backward-skip:hover {
+    background-image: url('../../images/back.png');
+}
+#forward-skip:hover {
+    background-image: url('../../images/forw.png');
+}
+.fullscreen-btn {
+    background-image: url('../../images/fullscrN.png');
+}
+.fullscreen-btn:hover {
+    background-image: url('../../images/fullscr.png');
+}
+
+.options-btn:hover {
+    background-image: url('../../images/options.png');
+}
+.skip-btn>img{
+    padding-top: 5px;
+    width: 100%;
+}
+
+.right-side-controls {
+    display: flex;
+    width: 23%;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+}
+
+
+/* hiding the standard video controls in fullscreen*/
+/* uncomment to fullscreen */
+/* ::-webkit-media-controls {
+    display:none !important;
+} */

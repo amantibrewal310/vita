@@ -23,7 +23,9 @@ function AddComment({videoId, addCommentToList}) {
         axiosInstance
             .post(`/video/comment-list/`, {
                 text: commentData.text,
-                video: videoId
+                video: videoId,
+                created_at: "2020-01-01 00:00:00"
+                // passing a sample datetime, django takes care of correct datetime
             })
             .then(res => {
                 console.log(res);
