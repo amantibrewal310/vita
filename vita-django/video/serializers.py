@@ -9,16 +9,16 @@ class VideoSerailizer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'title', 'description', 'thumbnail', 'videoFile', 'user', 'likes', 'dislikes')
-
+        fields = ('id', 'title', 'description', 'thumbnail',
+                  'videoFile', 'user', 'likes', 'dislikes')
 
 
 class CommentSerializer(serializers.ModelSerializer):
     # adds user to the comment
     user = serializers.ReadOnlyField(source='user.id')
-    
+    created_at = serializers.DateTimeField(format="%d-%b-%Y %H:%M")
+
     class Meta:
         model = Comment
-        fields = ('id', 'text', 'user', 'likes', 'dislikes', 'video', 'created_at')
-
-    
+        fields = ('id', 'text', 'user', 'likes',
+                  'dislikes', 'video', 'created_at')
