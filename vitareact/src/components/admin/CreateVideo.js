@@ -1,24 +1,30 @@
 import React, {useState} from 'react';
 import axiosInstance from '../../axios';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import '../css/register.css';
 
 function CreateVideo() {
 
-    const history = useHistory();
-    const initTextData = Object.freeze({
-        title: '',
-        description: ''
-    });
     // TODO:
     // 1.
     // add form validation for file types 
     // both in react and django, add error types for files 
     // 2.
     // check for only admin upload
+    const history = useHistory();
+
+    const initTextData = Object.freeze({
+        title: '',
+        description: ''
+    });
     const initErrors = {
         emptyFormError: null,
         authError: null
+    }
+    const initUploadState = {
+        uploadProgress: 0,
+        source:null
     }
 
     // states 
@@ -26,6 +32,7 @@ function CreateVideo() {
     const [thumbnail, setThumbnail] = useState(null);
     const [videoFile, setVideoFile] = useState(null);
     const [error, setError] = useState(initErrors);
+    const [uploadState, setUploadState] = useState(initUploadState);
 
     // listener
     const handleChange = (e) => {
@@ -63,11 +70,31 @@ function CreateVideo() {
         formData.append('videoFile', videoFile.videoFile[0]);
         console.log(formData);
 
+        // upload progress
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
+        setUploadState({
+            ...uploadState,
+            source: source
+        });
+
+        let config = {
+            onUploadProgress: function(progressEvent) {
+                let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
+                setUploadState({
+                    ...uploadState,
+                    uploadProgress: percentCompleted
+                });
+            },
+            cancelToken: source.token
+        };
+
         axiosInstance
-            .post(`video/video-list/`, formData)
+            .post(`video/video-list/`, formData, config)
             .then(res => {
+                console.log(res);
                 history.push({
-                    pathname: `/play/${res.data.id}`,
+                    pathname: `/admin/video-details/${res.data.id}`,
                 });
                 window.location.reload();
             })
@@ -80,6 +107,16 @@ function CreateVideo() {
                     });
                 }
             });
+    }
+
+    // cancel handler 
+    const handleCancelUpload = () => {
+        console.log(uploadState.source);
+        uploadState.source.cancel();
+        setUploadState({
+            source: null,
+            uploadProgress: 0
+        });
     }
 
     // form validators 
@@ -155,6 +192,22 @@ function CreateVideo() {
                 >
                     Create    
                 </button>
+                {
+                    (uploadState.uploadProgress > 0) 
+                    ? (
+                        <>
+                            <div>Upload: {uploadState.uploadProgress}%</div>
+                            <button 
+                                type="submit"
+                                onClick={handleCancelUpload}
+                            >
+                                Cancel    
+                            </button>
+                        </>
+                    ) : (
+                        <></>
+                    )
+                }
             </form>
         </div>
     )

@@ -6,11 +6,6 @@ import axiosInstance from '../../axios';
 // props - type, id, urlSuffix
 
 function DeleteVidCom({type, id, urlSuffix}) {
-    console.log(type);
-    console.log(id);
-    console.log(urlSuffix);
-    console.log(`${urlSuffix}${id}/`);
-
     const history = useHistory();
     
     const handleDelete = () => {
@@ -23,9 +18,7 @@ function DeleteVidCom({type, id, urlSuffix}) {
                 if(res.status == 204) {
                     // TODO:
                     // show success message ${type} deleted
-                    history.push({
-                        pathname: '/admin/',
-                    });
+                    history.push('/admin');
                     window.location.reload();
                 } else {
                     console.log(`${type} not deleted`);

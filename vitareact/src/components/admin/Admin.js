@@ -65,14 +65,14 @@ function Admin() {
                 <button>Most Reported</button>
             </div>
 
-            <div class="row">
-                <div class="col">
+            <div className="row">
+                <div className="col">
                     {/* heading changes based on serach/filter applied */}
-                    <h2>{initHeading.videoHeading}</h2>
+                    <h2>{boxHeading.videoHeading}</h2>
                 </div>
-                <div class="col">
+                <div className="col">
                     {/* heading changes based on serach/filter applied */}
-                    <h2>{initHeading.commentHeading}</h2>
+                    <h2>{boxHeading.commentHeading}</h2>
                 </div>
             </div>
         </div>

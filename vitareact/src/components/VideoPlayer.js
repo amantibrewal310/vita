@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './css/videoplayer.css'
+import forwardTen from '../images/forw.png';
+import backwardTen from '../images/back.png';
+import fullScreen from '../images/fullscr.png'
+import options from '../images/options.png'
 
 // exports video player 
 // TODO: 
-// 1. skip 5 sec 
 // 1. Title hover top over video player and disppear on mouse leave, appear on mouse enter 
-// 2. Full Screen
-// 3. play rate (1.5X, 2X ...) 
+// 2. Custom control disapper on Full Screen
+// 4. Theater mode
 // 5. Picture in picture
 
 class VideoPlayer extends Component {
@@ -30,7 +33,8 @@ class VideoPlayer extends Component {
       isVolumeOn: true,
       volumeValue: 0.5,
       volumePercentage: 50,
-      isShowingControls: true
+      isShowingControls: true,
+      playbackRate: 1.0
     };
    
     /*
@@ -112,13 +116,70 @@ class VideoPlayer extends Component {
       this.setState({
         progressPercentage: tempProgressPercentage
       });
-      // set the time using ref 
-      // TODO: 
-      // Not working 
       this.videoRef.current.currentTime = Math.round((this.state.completeDurationInSeconds * tempProgressPercentage) / 100);
-      console.log(this.videoRef.current.currentTime);
     };
     
+    /*
+      Skip forward 
+    */
+    skipForward = () => {
+      let currTime = this.videoRef.current.currentTime;
+      let timeAfterSkip = Math.min(currTime + 10, this.state.completeDurationInSeconds);
+      // console.log(timeAfterSkip);
+      let tempProgressPercentage = getPercentage(timeAfterSkip, this.state.completeDurationInSeconds);
+      this.setState({
+        progressPercentage: tempProgressPercentage
+      });
+      this.videoRef.current.currentTime = timeAfterSkip;
+    }
+    /*
+      Skip backward
+    */
+    skipBackward = () => {
+      let currTime = this.videoRef.current.currentTime;
+      let timeAfterSkip = Math.max(currTime - 10, 0);
+      let tempProgressPercentage = getPercentage(timeAfterSkip, this.state.completeDurationInSeconds);
+      this.setState({
+        progressPercentage: tempProgressPercentage
+      });
+      this.videoRef.current.currentTime = timeAfterSkip;
+    }
+    /*
+      full screen 
+    */
+    goFullScreen = (e) => {
+      e.target.requestFullscreen();
+      // console.log(e.target);
+    }
+    goFullScreenOnClick = () => {
+      if(this.videoRef && this.videoRef.current) {
+        this.videoRef.current.requestFullscreen();
+      }
+    }
+    /* 
+      playback rate
+    */
+    increasePlayRate = () => {
+      if(this.state.playbackRate == 2.0) {
+        return;
+      }
+      this.setState({
+        playbackRate: this.state.playbackRate + 0.25
+      })
+      this.videoRef.current.playbackRate += 0.25;
+      console.log(this.videoRef.current.playbackRate);
+    }
+    decreasePlayRate = () => {
+      if(this.state.playbackRate == 0.25) {
+        return;
+      }
+      this.setState({
+        playbackRate: this.state.playbackRate - 0.25
+      })
+      this.videoRef.current.playbackRate -= 0.25;
+      console.log(this.videoRef.current.playbackRate);
+    }
+
     /* 
       mute/unmute 
     */
@@ -195,6 +256,7 @@ class VideoPlayer extends Component {
              onMouseLeave={this.updateHideControls}
            >
              <video
+               id='main-video-player'
                src={video.videoFile}
                poster={video.thumbnail}
                ref={this.videoRef}
@@ -204,6 +266,8 @@ class VideoPlayer extends Component {
                onLoadedData={this.updateCompleteDuration}
                onEnded={this.updateEnded}
                onVolumeChange={this.updateVolume}
+               onDoubleClick={e => this.goFullScreen(e)}
+               allowFullScreen
              />
              
              <div className="video-info">
@@ -224,58 +288,92 @@ class VideoPlayer extends Component {
                
                <div className="video-controls">
                  
-                 {/* volume controls */}
-                 <div className="volume-controls">
-                   <button className="control-btn" onClick={this.toggleVolume}>
-                     {this.state.isVolumeOn ? (
-                       <i className="fa fa-volume-up" aria-hidden="true"></i>
-                     ) : (
-                       <i className="fas fa-volume-mute" aria-hidden="true"></i>
-                     )}
-                   </button>
-                   <div
-                     className="volume-progressbar"
-                     ref={this.volumeProgress}
-                     onClick={e => this.setVolume(e)}
-                   >
-                     <span
-                       className="volume-progress"
-                       style={volumeProgressStyle}
-                     />
-                   </div>
+                 <div className='left-side-controls'>
+                    {/* volume controls */}
+                    <div className="volume-controls">
+                      <button className="control-btn" onClick={this.toggleVolume}>
+                        {this.state.isVolumeOn ? (
+                          <i className="fa fa-volume-up" aria-hidden="true" title='mute'></i>
+                        ) : (
+                          <i className="fas fa-volume-mute" aria-hidden="true" title='unmute'></i>
+                        )}
+                      </button>
+                      <div
+                        className="volume-progressbar"
+                        ref={this.volumeProgress}
+                        onClick={e => this.setVolume(e)}
+                      >
+                        <span
+                          className="volume-progress"
+                          style={volumeProgressStyle}
+                        />
+                      </div>
+                    </div>
+                    {/* volume controls */}
+                    
+                    {/* playbackrate */}
+                    <div className='playback-rate'>
+                      <div onClick={this.decreasePlayRate}>
+                        <i className="fa fa-chevron-circle-down playchange" aria-hidden="true"></i>
+                      </div>
+                      <div className='playback-meter'></div>
+                      <div className='playback-value'>{this.state.playbackRate}x</div>
+                      <div onClick={this.increasePlayRate}>
+                        <i className="fa fa-chevron-circle-up playchange" aria-hidden="true"></i>
+                      </div>
+                    </div>
                  </div>
-                 {/* volume controls */}
+                 
+
+                  {/* skip backward button */}
+                  <div className='center-controls'>
+                    <div id="backward-skip" className='skip-btn' onClick={this.skipBackward} title='skip -10s'>
+                    </div>  
                       
-                  {/* play pause buttons */}
-                 <div className="controls">
-                   {this.state.isPlaying ? (
-                     <button className="control-btn" onClick={this.handlePause}>
-                       <i className="fa fa-pause" aria-hidden="true"></i>
-                     </button>
-                   ) : (
-                     <button className="control-btn" onClick={this.handlePlay}>
-                       <i className="fas fa-play" aria-hidden="true"></i>
-                     </button>
-                   )}
-                 </div>
-                 {/* play pause buttons */}
+                     {/* play pause buttons */}
+                    <div className="controls">
+                      {this.state.isPlaying ? (
+                        <button className="control-btn" onClick={this.handlePause}>
+                          <i className="fa fa-pause" aria-hidden="true" title='pause'></i>
+                        </button>
+                      ) : (
+                        <button className="control-btn" onClick={this.handlePlay}>
+                          <i className="fas fa-play" aria-hidden="true" title='play'></i>
+                        </button>
+                      )}
+                    </div>
+                    {/* play pause buttons */}
+                      
+                    {/* skip forward button */}
+                    <div id="forward-skip" className='skip-btn' onClick={this.skipForward} title='skip 10s'>
+                    </div> 
+                  </div> 
 
-                 {/* time controls */}
-                 <div className="time-control">
-                   <div className="start-time time">
-                     {this.state.currentDuration.hours}:
-                     {this.state.currentDuration.minutes}:
-                     {this.state.currentDuration.seconds}
-                   </div>
-                   <div className="time-slash"> / </div>
-                   <div className="end-time time">
-                     {this.state.completeDuration.hours}:
-                     {this.state.completeDuration.minutes}:
-                     {this.state.completeDuration.seconds}
-                   </div>
-                 </div>
-                 {/* time controls */} 
+                  <div className="right-side-controls">
+                    {/* time controls */}
+                    <div className="time-control">
+                      <div className="start-time time">
+                        {this.state.currentDuration.hours}:
+                        {this.state.currentDuration.minutes}:
+                        {this.state.currentDuration.seconds}
+                      </div>
+                      <div className="time-slash"> / </div>
+                      <div className="end-time time">
+                        {this.state.completeDuration.hours}:
+                        {this.state.completeDuration.minutes}:
+                        {this.state.completeDuration.seconds}
+                      </div>
+                    </div>
+                    {/* time controls */} 
 
+                    {/* options button */}
+                    {/* <div className='options-btn' title='options'>
+                    </div>   */}
+
+                    {/* full screen button */}
+                    <div className='fullscreen-btn' onClick={this.goFullScreenOnClick} title='fullscreen'>
+                    </div>  
+                  </div>
                </div>
              </div>
            </div>
