@@ -3,9 +3,10 @@ import '../components/css/footer.css'
 
 function Footer() {
     return (
-        <div className="footer">
-            <p>Footer</p>
-        </div>
+        // <div className="footer">
+        //     <p>Footer</p>
+        // </div>
+        <></>
     )
 }
 

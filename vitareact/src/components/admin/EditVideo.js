@@ -1,11 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import axiosInstance from '../../axios';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import '../css/register.css';
 
 // Returns the edit video form
 
 function EditVideo({id}) {
+    
+    // TODO:
+    // 1.
+    // add form validation for file types 
+    // both in react and django, add error types for files 
+    // 2.
+    // check for only admin upload
     const history = useHistory();
     // video id send as parameter [edit/:id]
     // const {id} = useParams();
@@ -14,15 +22,13 @@ function EditVideo({id}) {
         title: '',
         description: ''
     });
-    // TODO:
-    // 1.
-    // add form validation for file types 
-    // both in react and django, add error types for files 
-    // 2.
-    // check for only admin upload
     const initErrors = {
         emptyFormError: null,
         authError: null
+    }
+    const initUploadState = {
+        uploadProgress: 0,
+        source:null
     }
 
     // states 
@@ -30,6 +36,7 @@ function EditVideo({id}) {
     const [thumbnail, setThumbnail] = useState(null);
     const [videoFile, setVideoFile] = useState(null);
     const [error, setError] = useState(initErrors);
+    const [uploadState, setUploadState] = useState(initUploadState);
 
     // fill the edit form with current values 
     useEffect(() => {
@@ -85,16 +92,39 @@ function EditVideo({id}) {
 
         formData.append('title', textData.title.trim());
         formData.append('description', textData.description.trim());
-        formData.append('thumbnail',thumbnail.thumbnail[0]);
-        formData.append('videoFile', videoFile.videoFile[0]);
+        
+        if(thumbnail) {
+            formData.append('thumbnail',thumbnail.thumbnail[0]);
+        }
+        if(videoFile) {
+            formData.append('videoFile', videoFile.videoFile[0]);
+        }
         console.log(formData);
 
-        axiosInstance
-            .put(`video/video-list/${id}/`, formData)
-            .then(res => {
-                history.push({
-                    pathname: `/admin/video-list/${res.data.id}`,
+        // upload progress
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
+        setUploadState({
+            ...uploadState,
+            source: source
+        });
+
+        let config = {
+            onUploadProgress: function(progressEvent) {
+                let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
+                setUploadState({
+                    ...uploadState,
+                    uploadProgress: percentCompleted
                 });
+            },
+            cancelToken: source.token
+        };
+
+        // changed to path request, admin may change whatever he wishes
+        axiosInstance
+            .patch(`video/video-list/${id}/`, formData, config)
+            .then(res => {
+                console.log(res);
                 window.location.reload();
             })
             .catch(err => {
@@ -108,17 +138,27 @@ function EditVideo({id}) {
             });
     }
 
+    // cancel handler 
+    const handleCancelUpload = () => {
+        console.log(uploadState.source);
+        uploadState.source.cancel();
+        setUploadState({
+            source: null,
+            uploadProgress: 0
+        });
+    }
+
     // form validators 
     const vaidateDetails = () => {
-        if(textData.title === "" || textData.description === "" || thumbnail === null || videoFile === null) {
+        if(textData.title === "" || textData.description === "") {
             // update the errors in form
             setError({
                 authError: null,
-                emptyFormError: 'Fill all fileds, upload all files'
+                emptyFormError: 'Fields cannot be empty'
             });
             return false;
         } else {
-            // form is completely filled
+            // form is for path request
             setError({
                 authError:null,
                 emptyFormError: null
@@ -183,6 +223,22 @@ function EditVideo({id}) {
                 >
                     Edit    
                 </button>
+                {
+                    (uploadState.uploadProgress > 0) 
+                    ? (
+                        <>
+                            <div>Upload: {uploadState.uploadProgress}%</div>
+                            <button 
+                                type="submit"
+                                onClick={handleCancelUpload}
+                            >
+                                Cancel    
+                            </button>
+                        </>
+                    ) : (
+                        <></>
+                    )
+                }
             </form>
         </div>
     )
