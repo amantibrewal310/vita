@@ -1,6 +1,13 @@
 from django.db import models
+from django.db.models.fields.related import ForeignKey
 from users.models import NewUser
 # Create your models here.
+
+
+class VideoCategory(models.Model):
+    category = models.CharField(max_length=20);
+    def __str__(self):
+        return self.category
 
 
 class Video(models.Model):
@@ -31,8 +38,11 @@ class Video(models.Model):
     objects = models.Manager()  # default manager
     videoobjects = VideoObjects()  # custom manager
 
+    category = models.ForeignKey(VideoCategory, on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return self.title
+
 
 
 class Comment(models.Model):
@@ -67,4 +77,62 @@ class Comment(models.Model):
     commentobjects = CommentObjects()  # custom manager
 
     def __str__(self):
-        return self.video.title
+        return  self.user.username + ' | ' + self.video.title 
+
+
+# Votes
+
+class VideoVote(models.Model): 
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+
+    voteOptions = (
+        ('none', 'none'),
+        ('like', 'like'),
+        ('dislike', 'dislike')
+    )
+    voteValue = models.CharField(max_length=10, choices=voteOptions, default='none')
+
+    def __str__(self):
+        return  self.user.username + ' | ' + self.voteValue 
+
+
+
+class CommentVote(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    
+    voteOptions = (
+        ('none', 'none'),
+        ('like', 'like'),
+        ('dislike', 'dislike')
+    )
+    voteValue = models.CharField(max_length=10, choices=voteOptions, default='none')
+
+    def __str__(self):
+        return  self.user.username + ' | ' + self.voteValue 
+
+
+# Reports
+
+class ReportReason(models.Model):
+    reason = models.CharField(max_length=100)
+    def __str__(self):
+        return self.reason
+
+class VideoReport(models.Model):
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    reason = models.ForeignKey(ReportReason, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.user.username + ' | ' + self.reason.reason
+
+class CommentReport(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    # video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    reason = models.ForeignKey(ReportReason, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.user.username + ' | ' + self.reason.reason + ' | ' + self.video.title

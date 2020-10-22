@@ -3,6 +3,9 @@ import axiosInstance from '../axios';
 
 // exports a comment fomr 
 // adds comment to comment list
+
+// TODO: 
+// while adding comment send post request to commentLike model
 function AddComment({videoId, addCommentToList}) {
     
     const inputBoxRef = useRef(null);

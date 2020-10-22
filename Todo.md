@@ -39,6 +39,7 @@ class Video(models.Model):
 # React
     - try getting video list while user is authenticated
     - redirect to login page if user tries to play video
+    - in add comment - while adding comment send post request to commentLike model
 
 # Admin Dashboard
     - for description of upload video add makdown editor 

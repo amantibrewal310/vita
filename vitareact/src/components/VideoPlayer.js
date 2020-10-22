@@ -237,17 +237,13 @@ class VideoPlayer extends Component {
        let video = this.props.video;
 
        return (
-           <div>
-           {/* Other video info */}
-
+          <div>
+            {/* Title */}
             <h1>{video.title}</h1>
-            {/* <p>Description: {video.description}</p>
-            <span>Video Likes: {video.likes} </span>
-            <span> Video Disikes: {video.dislikes}</span> */}
            
-           {/* Video player */}
-           
-           <div
+            {/* Video player */}
+
+            <div
              className={`videoPlayer ${
                this.state.isShowingControls ? "show-controls" : "hide-controls"
              }`}
@@ -313,13 +309,11 @@ class VideoPlayer extends Component {
                     
                     {/* playbackrate */}
                     <div className='playback-rate'>
-                      <div onClick={this.decreasePlayRate}>
-                        <i className="fa fa-chevron-circle-down playchange" aria-hidden="true"></i>
-                      </div>
                       <div className='playback-meter'></div>
-                      <div className='playback-value'>{this.state.playbackRate}x</div>
-                      <div onClick={this.increasePlayRate}>
-                        <i className="fa fa-chevron-circle-up playchange" aria-hidden="true"></i>
+                      <div className='playback-value'>{this.state.playbackRate}X</div>
+                      <div className='playback-btn'>
+                        <i className="fa fa-chevron-circle-up" aria-hidden="true" onClick={this.increasePlayRate}></i>
+                        <i className="fa fa-chevron-circle-down" aria-hidden="true" onClick={this.decreasePlayRate}></i>
                       </div>
                     </div>
                  </div>
@@ -377,7 +371,20 @@ class VideoPlayer extends Component {
                </div>
              </div>
            </div>
-         </div>
+                    
+            {/* Other video details */}
+            <div>
+               <span>Description: {video.description}</span>
+               <span>
+                 <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                 {video.likes} 
+               </span> 
+               <span> 
+                 <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                 {video.dislikes}
+               </span>
+            </div>
+          </div>
        )
    }
 }

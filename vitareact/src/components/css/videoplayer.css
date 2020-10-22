@@ -132,26 +132,31 @@
 .left-side-controls, .playback-rate {
     display: flex;
     flex-direction: row;
-    width: 35%;
+    width: 30%;
     align-content: center;
     justify-content: space-between;
 }
 .playback-rate {
-    width: 50%;
+    width: 42%;
 }
 .volume-controls {
     color: var(--text-color);
     display: flex;
     align-items: center;
 }
-.playchange, .playback-value{
-    padding: 10px 5px;
-    font-size: 20px;
+.playback-btn i {
+    padding: 3px;
+    font-size: 14px;
     color: var(--text-color);
     cursor: pointer;
     transition: all ease 0.2s;
 }
-.playchange:hover {
+.playback-value {
+    padding: 10px 0;
+    font-size: 16px;
+    color: #ff1e74;
+}
+.playback-btn i:hover {
     color: #ff1e74;
 }
 .playback-meter {
@@ -160,6 +165,10 @@
     background-image: url('../../images/play50.png');
     background-size: contain;
     background-repeat: no-repeat;
+}
+.playback-btn {
+    display: flex;
+    flex-direction: column;
 }
 
 .volume-progressbar {
