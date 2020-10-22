@@ -2,11 +2,11 @@ from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
 
-from .models import (Video, Comment, VideoCategory, ReportReason, 
-                    VideoVote, CommentVote, VideoReport, CommentReport)
+from .models import (Video, Comment, VideoCategory, ReportReason,
+                     VideoVote, CommentVote, VideoReport, CommentReport)
 
 
-class VideoSerailizer(serializers.HyperlinkedModelSerializer):
+class VideoSerializer(serializers.HyperlinkedModelSerializer):
     # adds user to the comment
     user = serializers.ReadOnlyField(source='user.id')
 
@@ -46,4 +46,3 @@ class VideoVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoVote
         fields = '__all__'
-

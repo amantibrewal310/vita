@@ -12,11 +12,14 @@ router.register(r'categories', views.VideoCategoryViewSet)
 router.register(r'report-reason', views.ReportReasonViewSet)
 
 urlpatterns = [
-    path('<str:pk>/comments/', views.comment), # For Viewing comments of particular video
+    # For Viewing comments of particular video
+    path('<str:pk>/comments/', views.comment),
     path('', include(router.urls)),
 
     # check, delete user vote on the video
-    path('video-vote/check/<int:video_id>/', views.checkVideoVote, name='getvideovote'),
+    path('video-vote/check/<int:video_id>/',
+         views.checkVideoVote, name='getvideovote'),
     # get list of votes, make a vote
     path('video-vote/', views.videoVoteList, name='votevideolist'),
+
 ]
