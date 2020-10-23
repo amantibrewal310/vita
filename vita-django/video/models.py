@@ -145,5 +145,6 @@ class CommentReport(models.Model):
     reason = models.ForeignKey(
         ReportReason, on_delete=models.SET_NULL, null=True)
 
-    def __str__(self):
-        return self.user.username + ' | ' + self.reason.reason + ' | ' + self.video.title
+    # def __str__(self):
+    #     return self.comment
+    #     # return self.user.username + ' | ' + self.reason.reason + ' | ' + self.video.title

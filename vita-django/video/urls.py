@@ -15,13 +15,23 @@ urlpatterns = [
     # For Viewing comments of particular video
     path('<str:pk>/comments/', views.comment),
     path('', include(router.urls)),
-    path('video-vote/', views.videoVote, name='voteVideo'),
-    path('comment-vote/', views.commentVote, name='voteComment'),
+    path('video-vote/', views.videoVote, name='vote-video'),
+    path('comment-vote/', views.commentVote, name='vote-comment'),
+    path('report-video/', views.ReportVideo, name='report-video'),
+    path('report-comment/', views.ReportComment, name='report-comment'),
+    path('reported-video-list/', views.ReportedVideoList,
+         name="reported-video-list"),
+    path('reported-video/<int:pk>/', views.ReportedVideoDetail,
+         name="reported-video-detail"),
+    path('reported-comment-list/', views.ReportedCommentList,
+         name="reported-comment-list"),
+    path('reported-comment/<int:pk>/', views.ReportedCommentDetail,
+         name="reported-comment-detail"),
 
-    # check, delete user vote on the video
-    # path('video-vote/check/<int:video_id>/',
-    #      views.checkVideoVote, name='getvideovote'),
-    # get list of votes, make a vote
+    path('reported-video/final/', views.UpdateVideoStatus,
+         name="updateVideoStatus"),
+    path('reported-comment/final/', views.UpdateCommentStatus,
+         name="updateCommentStatus")
 
 
 ]
