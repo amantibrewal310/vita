@@ -235,19 +235,92 @@ class VideoPlayer extends Component {
         this.setState({ isShowingControls: false });
       }
     };
-    
+
+    // ....................like/dislike handlers ....................
+    /* 
+      check status of vote 
+    */
+    getVoteStatus = () => {
+      axiosInstance
+        .post(`video/video-vote/`, {
+          video: this.props.video.id,
+          action: 'checkStatus'
+        })
+        .then(res => {
+          this.setVoteStatus(res.data.status);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    /* 
+      set status for buttons to glow
+    */
+    setVoteStatus = (status) => {
+      if(status == 'like') {
+        this.setState({
+          like: true,
+          dislike: false
+        });
+      } else if(status == 'dislike') {
+        this.setState({
+          like: false,
+          dislike: true
+        });
+      } else {
+        this.setState({
+          like: false,
+          dislike: false
+        });
+      }
+    }
+    /* 
+      get final likes/dislikes
+    */
+    getVoteCount = () => {
+      axiosInstance
+        .get(`video/video-list/${this.props.video.id}`)
+        .then(res => {
+          this.setState({
+            videoLikes: res.data.likes,
+            videoDislikes: res.data.dislikes
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    /*
+      like/dislike pressed 
+    */
+    handleVote = (action) => {
+      const body = {
+        video: this.props.video.id,
+        action: action
+      };
+      axiosInstance
+        .post(`video/video-vote/`, body)
+        .then(res => {
+          this.setVoteStatus(res.data.status);
+          this.getVoteCount();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
     /*
       like pressed 
     */
     handleLike = () => {
-      
+      this.handleVote('like');
     }
     /*
       dislike pressed 
     */
     handleDislike = () => {
-      
+      this.handleVote('dislike');
     }
+
 
    render() {
 
@@ -401,12 +474,14 @@ class VideoPlayer extends Component {
                <span>Description: {video.description}</span>
                <span className='vote-btn' onClick={this.handleLike}>
                  <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 
-                    aria-hidden="true"></i>
+                    aria-hidden="true">
+                  </i>
                  {this.state.videoLikes} 
                </span> 
                <span className='vote-btn' onClick={this.handleDislike}> 
                  <i className={"fa fa-thumbs-o-down" + (this.state.dislike ? " dislike" : "")}
-                    aria-hidden="true"></i>
+                    aria-hidden="true">
+                  </i>
                  {this.state.videoDislikes}
                </span>
             </div>

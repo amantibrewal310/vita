@@ -97,14 +97,14 @@ def updateVideoVoteStatus(video_id, action, value):
 
 
 # vote video
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def videoVote(request):
     videoID = request.data['video']
+    action = request.data['action']
 
-    if request.method == "GET":
+    if action == 'checkStatus':
         try:
             result = VideoVote.objects.filter(video=videoID, user=request.user)
-
             if len(result) == 0:
                 return Response(data={
                     "success": True,
@@ -121,9 +121,8 @@ def videoVote(request):
                 "error": True,
                 "msg": "Please send request with valid parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == "POST":
-        action = request.data['action']
+    
+    else:
         try:
             result = VideoVote.objects.filter(video=videoID, user=request.user)
             if len(result) == 0:
@@ -164,7 +163,6 @@ def videoVote(request):
                             "success": True,
                             "status": action
                         }, status=status.HTTP_200_OK)
-
         except:
             return Response(data={
                 "success": False,
@@ -194,11 +192,12 @@ def updateCommentVoteStatus(commentID, action, value):
         print(serializer.errors)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def commentVote(request):
-    commentID = request.data['comment']
+    commentID = request.data['comment']    
+    action = request.data['action']
 
-    if request.method == "GET":
+    if action == 'checkStatus':
         try:
             result = CommentVote.objects.filter(
                 comment=commentID, user=request.user)
@@ -220,9 +219,7 @@ def commentVote(request):
                 "msg": "Please send request with valid parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.method == "POST":
-        action = request.data['action']
-
+    else:
         try:
             result = CommentVote.objects.filter(
                 comment=commentID, user=request.user)
@@ -271,3 +268,29 @@ def commentVote(request):
                 "error": True,
                 "msg": "Please pass with proper parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+# video search, for both admin and user
+# end point - /api/video/video-search/?search=[query string]
+class VideoSearchView(generics.ListAPIView):
+    serializer_class = VideoSerializer
+    queryset = Video.objects.all()
+    search_fields = ['title', 'description']
+    filter_backends = (filters.SearchFilter,)
+
+
+# order/sorted results for admin
+class VideoOrderView(generics.ListAPIView):
+    serializer_class = VideoSerializer
+
+    def get_queryset(self):
+        queryset = Video.objects.all()
+        dict = self.request.query_params
+        print(dict)
+
+        # likes, dislikes, views, reported
+        orderby = dict.get('orderby', None)
+        if orderby is not None: 
+            queryset = queryset.order_by('-' + orderby)
+
+        return queryset

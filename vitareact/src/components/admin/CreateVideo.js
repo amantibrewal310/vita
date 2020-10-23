@@ -78,6 +78,9 @@ function CreateVideo() {
             source: source
         });
 
+        // TODO: 
+        // progress not in sync with upload 
+        // try putting a loader in place of progress bar 
         let config = {
             onUploadProgress: function(progressEvent) {
                 let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
@@ -92,7 +95,6 @@ function CreateVideo() {
         axiosInstance
             .post(`video/video-list/`, formData, config)
             .then(res => {
-                console.log(res);
                 history.push({
                     pathname: `/admin/video-details/${res.data.id}`,
                 });
