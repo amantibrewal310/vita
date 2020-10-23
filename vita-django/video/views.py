@@ -6,9 +6,13 @@ from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from .serializers import (VideoSerializer, CommentSerializer,
                           VideoCategorySerializer, ReportReasonSerializer,
-                          VideoVoteSerializer, CommentVoteSerializer)
+                          VideoVoteSerializer, CommentVoteSerializer,
+                          VideoReportSerializer,
+                          CommentReportSerializer)
+
+
 from .models import (ReportReason, Video, Comment,
-                     VideoCategory, VideoVote, CommentVote)
+                     VideoCategory, VideoVote, CommentVote, VideoReport, CommentReport)
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -269,7 +273,7 @@ def commentVote(request):
                 "msg": "Please pass with proper parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-
+          
 # video search, for both admin and user
 # end point - /api/video/video-search/?search=[query string]
 class VideoSearchView(generics.ListAPIView):
@@ -293,4 +297,201 @@ class VideoOrderView(generics.ListAPIView):
         if orderby is not None: 
             queryset = queryset.order_by('-' + orderby)
 
-        return queryset
+        return quer
+def updateVideoReportStatus(videoID):
+
+    result = Video.objects.get(id=videoID)
+    reported = result.reported + 1
+    serializer = VideoSerializer(result, data={
+        "reported": reported
+    }, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        print(serializer.errors)
+
+
+@api_view(['POST'])
+def ReportVideo(request):
+
+    serializer = VideoReportSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        updateVideoReportStatus(request.data['video'])
+        return Response(data={
+            "success": True,
+            "msg": "Your report has been submitted"
+        }, status=status.HTTP_201_CREATED)
+    else:
+        print(serializer.errors)
+    return Response(data={
+        "success": False,
+        "error": True,
+        "msg": "Please request with proper parameter"
+    }, status=status.HTTP_400_BAD_REQUEST)
+
+
+def updateCommentReportStatus(commentID):
+
+    result = Comment.objects.get(id=commentID)
+    reported = result.reported + 1
+    print(reported)
+    serializer = CommentSerializer(result, data={
+        "reported": reported
+    }, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        print(serializer.errors)
+
+
+@api_view(['POST'])
+def ReportComment(request):
+
+    serializer = CommentReportSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save(user=request.user)
+        updateCommentReportStatus(request.data['comment'])
+        return Response(data={
+            "success": True,
+            "msg": "Your report has been submitted"
+        }, status=status.HTTP_201_CREATED)
+    else:
+        print(serializer.errors)
+    return Response(data={
+        "success": False,
+        "error": True,
+        "msg": "Please request with proper parameter"
+    }, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def ReportedVideoList(request):
+    result = Video.objects.exclude(reported=0).exclude(status="reported")
+
+    serializer = VideoSerializer(result, many=True)
+
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def ReportedCommentList(request):
+    result = Comment.objects.exclude(reported=0).exclude(status="reported")
+
+    serializer = CommentSerializer(result, many=True)
+
+    return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def ReportedVideoDetail(request, pk):
+    try:
+        result = VideoReport.objects.filter(video=pk)
+        serializer = VideoReportSerializer(result, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response(data={
+            "success": False,
+            "msg": "Server Error"
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def ReportedCommentDetail(request, pk):
+    try:
+        result = CommentReport.objects.filter(comment=pk)
+        serializer = CommentReportSerializer(result, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response(data={
+            "success": False,
+            "msg": "Server Error"
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+def UpdateVideoStatus(request):
+    videoID = request.data['video_id']
+    action = request.data['action']
+
+    if action == "approve":
+        video = Video.objects.get(id=videoID)
+
+        serializer = VideoSerializer(video, data={
+            "status": "reported",
+        }, partial=True)
+
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(data={
+                "success": True,
+                "msg": "Video has been reported. No longer will be available"
+            }, status=status.HTTP_200_OK)
+    elif action == "decline":
+        result = VideoReport.objects.filter(video=videoID)
+        result.delete()
+        video = Video.objects.get(id=videoID)
+
+        serializer = VideoSerializer(video, data={
+            "status": "published",
+            "reported": 0
+        }, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(data={
+                "success": True,
+                "msg": "Request of reporter is denied"
+            }, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+        return Response(data={
+            "success": False,
+            "msg": "Something went Wrong!"
+        })
+
+
+@api_view(['POST'])
+def UpdateCommentStatus(request):
+    commentID = request.data['comment_id']
+    action = request.data['action']
+
+    if action == "approve":
+        comment = Comment.objects.get(id=commentID)
+
+        serializer = CommentSerializer(comment, data={
+            "status": "reported",
+        }, partial=True)
+
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(data={
+                "success": True,
+                "msg": "Comment has been reported. No longer will be available"
+            }, status=status.HTTP_200_OK)
+    elif action == "decline":
+        result = CommentReport.objects.filter(comment=commentID)
+        result.delete()
+        comment = Comment.objects.get(id=commentID)
+
+        serializer = CommentSerializer(comment, data={
+            "status": "published",
+            "reported": 0
+        }, partial=True)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(data={
+                "success": True,
+                "msg": "Request of reporter is denied"
+            }, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+        return Response(data={
+            "success": False,
+            "msg": "Something went Wrong!"
+        })

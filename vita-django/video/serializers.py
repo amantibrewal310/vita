@@ -17,7 +17,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Video
         fields = ('id', 'title', 'description', 'thumbnail',
-                  'videoFile', 'user', 'likes', 'dislikes', 'views')
+                  'videoFile', 'user', 'likes', 'dislikes', 'views', 'reported', 'status')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -28,7 +28,7 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'text', 'user', 'likes',
-                  'dislikes', 'video', 'created_at')
+                  'dislikes', 'video', 'created_at', "reported", "status")
 
 
 class VideoCategorySerializer(serializers.ModelSerializer):
@@ -58,3 +58,19 @@ class CommentVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentVote
         fields = ('comment', 'voteValue', 'user')
+
+
+class VideoReportSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.id')
+
+    class Meta:
+        model = VideoReport
+        fields = ('video', 'reason', 'user')
+
+
+class CommentReportSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source="user.id")
+
+    class Meta:
+        model = CommentReport
+        fields = ('comment', 'reason', 'user')
