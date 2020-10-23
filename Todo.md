@@ -24,8 +24,7 @@
 
 
 # Features 
-    - search (for user and admin)
-    - filters (for admin - for content moderation)
+    - admin action on report on video-detail, comment-detail page
     - success pop up boxes after form fill
     - reply feature in comments
     - pin feature in comments 

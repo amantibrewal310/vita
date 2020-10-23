@@ -33,5 +33,8 @@ urlpatterns = [
     path('reported-comment/final/', views.UpdateCommentStatus,
          name="updateCommentStatus")
 
-
+    # search
+    path('video-search/', views.VideoSearchView.as_view(), name='videosearch'),
+    # filters
+    path('video-order/', views.VideoOrderView.as_view(), name='videoorder')
 ]

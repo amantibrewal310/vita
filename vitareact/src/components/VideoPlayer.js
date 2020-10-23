@@ -236,81 +236,73 @@ class VideoPlayer extends Component {
       }
     };
 
-    /*
-      checks the like and dislike by user 
+    // ....................like/dislike handlers ....................
+    /* 
+      check status of vote 
     */
     getVoteStatus = () => {
-      axiosInstance 
-        .get(`video/video-vote/check/${this.props.video.id}/`)
-        .then(res => {
-          if(res.data.length == 1) {
-            // users vote found
-            const voteValue = res.data[0].voteValue;
-
-            if(voteValue == "like") {
-              this.setState({
-                like: true
-              })
-            } else if(voteValue == "dislike") {
-              this.setState({
-                dislike: true
-              })
-            }
-          
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-    /*
-      create users vote
-    */
-    createVote = (voteType) => {
       axiosInstance
         .post(`video/video-vote/`, {
-            video: this.props.video.id,
-            voteValue: voteType
+          video: this.props.video.id,
+          action: 'checkStatus'
         })
         .then(res => {
-          this.getVoteStatus();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-    /*
-      delete vote 
-    */
-    deleteVote = () => {
-      axiosInstance 
-        .delete(`video/video-vote/check/${this.props.video.id}/`)
-        .then(res => {
-          this.getVoteStatus();
+          this.setVoteStatus(res.data.status);
         })
         .catch(err => {
           console.log(err);
         });
     }
     /* 
-      change count of votes on video 
+      set status for buttons to glow
     */
-    changeVotes = (voteType, change) => {
-      const data = {};
-      
-      if(voteType == 'likes') {
-        data.likes = this.state.videoLikes + change;
+    setVoteStatus = (status) => {
+      if(status == 'like') {
+        this.setState({
+          like: true,
+          dislike: false
+        });
+      } else if(status == 'dislike') {
+        this.setState({
+          like: false,
+          dislike: true
+        });
       } else {
-        data.dislikes = this.state.videoDislikes + change;
+        this.setState({
+          like: false,
+          dislike: false
+        });
       }
-
+    }
+    /* 
+      get final likes/dislikes
+    */
+    getVoteCount = () => {
       axiosInstance
-        .patch(`video/video-list/${this.props.video.id}/`, data)
+        .get(`video/video-list/${this.props.video.id}`)
         .then(res => {
           this.setState({
             videoLikes: res.data.likes,
             videoDislikes: res.data.dislikes
-          });
+          })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    /*
+      like/dislike pressed 
+    */
+    handleVote = (action) => {
+      const body = {
+        video: this.props.video.id,
+        action: action
+      };
+      axiosInstance
+        .post(`video/video-vote/`, body)
+        .then(res => {
+          this.setVoteStatus(res.data.status);
+          this.getVoteCount();
         })
         .catch(err => {
           console.log(err);
@@ -320,46 +312,15 @@ class VideoPlayer extends Component {
       like pressed 
     */
     handleLike = () => {
-      if(this.state.like) {
-        return;
-      } else if(this.state.dislike) {
-        // status none and decrese dislikes count
-        this.deleteVote();
-        this.changeVotes('dislikes', -1);
-        this.setState({
-          dislike: false
-        });
-      } else {
-        // status like and inc likes count
-        this.createVote('like');
-        this.changeVotes('likes', 1);
-        this.setState({
-          like: true
-        });
-      }
+      this.handleVote('like');
     }
     /*
       dislike pressed 
     */
     handleDislike = () => {
-      if(this.state.dislike) {
-        return;
-      } else if(this.state.like) {
-        // status none and decrese likes count
-        this.deleteVote();
-        this.changeVotes('likes', -1);
-        this.setState({
-          like: false
-        })
-      } else {
-        // status dislike and inc dislikes count
-        this.createVote('dislike');
-        this.changeVotes('dislikes', 1);
-        this.setState({
-          dislike: true
-        })
-      }
+      this.handleVote('dislike');
     }
+
 
    render() {
 
@@ -513,12 +474,14 @@ class VideoPlayer extends Component {
                <span>Description: {video.description}</span>
                <span className='vote-btn' onClick={this.handleLike}>
                  <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 
-                    aria-hidden="true"></i>
+                    aria-hidden="true">
+                  </i>
                  {this.state.videoLikes} 
                </span> 
                <span className='vote-btn' onClick={this.handleDislike}> 
                  <i className={"fa fa-thumbs-o-down" + (this.state.dislike ? " dislike" : "")}
-                    aria-hidden="true"></i>
+                    aria-hidden="true">
+                  </i>
                  {this.state.videoDislikes}
                </span>
             </div>
