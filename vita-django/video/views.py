@@ -1,5 +1,5 @@
 from django.db.models import query
-from rest_framework import viewsets, generics, permissions, status
+from rest_framework import viewsets, generics, permissions, status, filters
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
@@ -113,4 +113,31 @@ def checkVideoVote(request, video_id):
     elif request.method == 'DELETE':
         vote[0].delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# video search, for both admin and user
+# end point - /api/video/video-search/?search=[query string]
+class VideoSearchView(generics.ListAPIView):
+    serializer_class = VideoSerailizer
+    queryset = Video.objects.all()
+    search_fields = ['title', 'description']
+    filter_backends = (filters.SearchFilter,)
+
+
+# filter for admin
+class VideoOrderView(generics.ListAPIView):
+    serializer_class = VideoSerailizer
+
+    def get_queryset(self):
+        queryset = Video.objects.all()
+        dict = self.request.query_params
+        print(dict)
+        
+        # likes, dislikes, views, reported
+        orderby = dict.get('orderby', None)
+        if orderby is not None: 
+            queryset = queryset.order_by('-' + orderby)
+
+        return queryset
+
 
