@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, API, CLIENT } from '../../../Backend';
+import setAdminStatus from '../setAdminStatus';
 // import { useHistory } from 'react-router-dom';
 
-const FacebookLogin = (accesstoken) => {
+const FacebookLogin = (accesstoken, email) => {
 	var expiry_time;
 	axios
 		.post(`${API}auth/convert-token`, {
@@ -15,9 +16,11 @@ const FacebookLogin = (accesstoken) => {
 		.then((res) => {
 			// set the expiry of the token 
 			expiry_time = new Date().getTime() + res.data.expires_in * 1000;
-            localStorage.setItem('expiry_time', expiry_time);
+			localStorage.setItem('email', email);
+			localStorage.setItem('expiry_time', expiry_time);
 			localStorage.setItem('access_token', res.data.access_token);
 			localStorage.setItem('refresh_token', res.data.refresh_token);
+			setAdminStatus(email);
 		})
 		.catch(err => {
 			console.log('Error in facebook auth');

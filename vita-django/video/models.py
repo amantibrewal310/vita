@@ -30,6 +30,7 @@ class Video(models.Model):
     videoFile = models.FileField(upload_to='videos/')
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
     reported = models.IntegerField(default=0)
     status = models.CharField(
         max_length=10, choices=options, default="published")

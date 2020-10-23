@@ -5,8 +5,8 @@ from users.models import NewUser
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewUser
-        # changing fields so that all data is available for profile page
-        fields = ('id', 'email', 'username', 'password', 'about', 'first_name')
+        # adding is_staff for admin verification
+        fields = ('id', 'email', 'username', 'password', 'about', 'first_name', 'is_staff')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

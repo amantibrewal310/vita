@@ -10,6 +10,8 @@ import axiosInstance from '../axios'
 // 5. Picture in picture
 
 class VideoPlayer extends Component {
+    _isMounted = false;
+
     constructor(props) {
       super(props);
       // creating refs to the elements we need to control, or get data 
@@ -41,9 +43,14 @@ class VideoPlayer extends Component {
 
     componentDidMount() {
       // find the like dislike status, set state to show users previous actions
+      this._isMounted = true;
       this.getVoteStatus();
     }
    
+    componentWillUnmount() {
+      this._isMounted = false;
+    }
+
     /*
      onLoadedData:
      we need to update the completeDurationInSeconds and completeDuration
