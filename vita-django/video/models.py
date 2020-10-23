@@ -113,6 +113,8 @@ class CommentVote(models.Model):
     voteValue = models.CharField(
         max_length=10, choices=voteOptions, default='none')
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.user.username + ' | ' + self.voteValue
 

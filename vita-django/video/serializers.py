@@ -53,6 +53,8 @@ class VideoVoteSerializer(serializers.ModelSerializer):
 
 
 class CommentVoteSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.id')
+
     class Meta:
         model = CommentVote
-        fields = '__all__'
+        fields = ('comment', 'voteValue', 'user')
