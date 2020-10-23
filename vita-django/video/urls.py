@@ -15,11 +15,12 @@ urlpatterns = [
     # For Viewing comments of particular video
     path('<str:pk>/comments/', views.comment),
     path('', include(router.urls)),
+    path('video-vote/', views.videoVote, name='votevideo'),
 
     # check, delete user vote on the video
-    path('video-vote/check/<int:video_id>/',
-         views.checkVideoVote, name='getvideovote'),
+    # path('video-vote/check/<int:video_id>/',
+    #      views.checkVideoVote, name='getvideovote'),
     # get list of votes, make a vote
-    path('video-vote/', views.videoVoteList, name='votevideolist'),
+
 
 ]

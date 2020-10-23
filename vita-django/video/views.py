@@ -6,8 +6,9 @@ from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
 from .serializers import (VideoSerializer, CommentSerializer,
                           VideoCategorySerializer, ReportReasonSerializer,
-                          VideoVoteSerializer)
-from .models import (ReportReason, Video, Comment, VideoCategory, VideoVote)
+                          VideoVoteSerializer, CommentVoteSerializer)
+from .models import (ReportReason, Video, Comment,
+                     VideoCategory, VideoVote, CommentVote)
 from .permissions import IsOwnerOrReadOnly
 
 
@@ -75,39 +76,93 @@ class ReportReasonViewSet(viewsets.ModelViewSet):
 
 # video vote views
 
-# video vote views (create, update, delete)
-@api_view(['GET', 'POST'])
-def videoVoteList(request):
+# # video vote views (create, update, delete)
+# @api_view(['GET', 'POST'])
+# def videoVoteList(request):
 
-    # listing all the votes on video
-    if request.method == 'GET':
-        votes = VideoVote.objects.all()
-        serializer = VideoVoteSerializer(votes, many=True)
-        return Response(serializer.data)
+#     # listing all the votes on video
+#     if request.method == 'GET':
+#         votes = VideoVote.objects.all()
+#         serializer = VideoVoteSerializer(votes, many=True)
+#         return Response(serializer.data)
 
-    # making a vote
-    elif request.method == 'POST':
-        serializer = VideoVoteSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status.HTTP_201_CREATED)
+#     # making a vote
+#     elif request.method == 'POST':
+#         serializer = VideoVoteSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(user=request.user)
+#             return Response(serializer.data, status.HTTP_201_CREATED)
 
-        return Response(serializer.errors)
+#         return Response(serializer.errors)
 
 
-# if logged in user has voted on this video before
-# filter will return array with 1 vote detail
-# else empty array is returned
-@api_view(['GET', 'DELETE'])
-def checkVideoVote(request, video_id):
+# # if logged in user has voted on this video before
+# # filter will return array with 1 vote detail
+# # else empty array is returned
+# @api_view(['GET', 'DELETE'])
+# def checkVideoVote(request, video_id):
 
-    vote = VideoVote.objects.filter(video=video_id, user=request.user)
+#     vote = VideoVote.objects.filter(video=video_id, user=request.user)
 
-    if request.method == 'GET':
-        serializer = VideoVoteSerializer(vote, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#     if request.method == 'GET':
+#         serializer = VideoVoteSerializer(vote, many=True)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # delete is called when user has already made vote on video_id
-    elif request.method == 'DELETE':
-        vote[0].delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     # delete is called when user has already made vote on video_id
+#     elif request.method == 'DELETE':
+#         vote[0].delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+def updateVideoVoteStatus(video_id, action, value):
+    video = Video.objects.get(id=video_id)
+    likes = video.likes
+    dislikes = video.dislikes
+
+    fields = ('title', 'description', 'thumbnail',
+              'videoFile', 'user', 'likes', 'dislikes')
+
+    data = dict((x, y) for x, y in video.__dict__.items() if x in fields)
+    print(data)
+
+    if action == "like":
+        likes += value
+    elif action == "dislike":
+        dislikes += value
+
+    data['likes'] = likes
+    data['dislikes'] = dislikes
+    data.pop('thumbnail')
+    data.pop('videoFile')
+    # data['user'] = result.__dict__['user_id']
+    print("hello")
+
+    serializer = VideoSerializer(video, data=data, partial=True)
+    print(serializer)
+
+    if serializer.is_valid():
+        print("valid")
+        serializer.save(user=video.user)
+    else:
+        print("invalid")
+        print(serializer.errors)
+
+
+@api_view(['GET'])
+def videoVote(request):
+    videoID = request.data['video']
+    action = request.data['action']
+
+    try:
+        result = VideoVote.objects.filter(video=videoID, user=request.user)
+        if len(result) == 0:
+            serializer = VideoVoteSerializer(data={
+                "video": videoID,
+                "voteValue": action
+            })
+            if serializer.is_valid():
+                updateVideoVoteStatus(videoID, action, 1)
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except:
+        pass
+    return JsonResponse({"user": "videoID"})

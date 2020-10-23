@@ -9,6 +9,10 @@ from .models import (Video, Comment, VideoCategory, ReportReason,
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
     # adds user to the comment
     user = serializers.ReadOnlyField(source='user.id')
+    thumbnail = serializers.ImageField(
+        max_length=None, allow_empty_file=False, allow_null=True, required=False)
+    videoFile = serializers.FileField(
+        allow_empty_file=False, allow_null=True, required=False)
 
     class Meta:
         model = Video
@@ -45,4 +49,10 @@ class VideoVoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VideoVote
+        fields = '__all__'
+
+
+class CommentVoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentVote
         fields = '__all__'
