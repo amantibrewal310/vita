@@ -49,7 +49,7 @@ class VideoVoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VideoVote
-        fields = '__all__'
+        fields = ('video', 'voteValue', 'user')
 
 
 class CommentVoteSerializer(serializers.ModelSerializer):

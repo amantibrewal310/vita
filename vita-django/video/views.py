@@ -118,36 +118,23 @@ def updateVideoVoteStatus(video_id, action, value):
     likes = video.likes
     dislikes = video.dislikes
 
-    fields = ('title', 'description', 'thumbnail',
-              'videoFile', 'user', 'likes', 'dislikes')
-
-    data = dict((x, y) for x, y in video.__dict__.items() if x in fields)
-    print(data)
-
     if action == "like":
         likes += value
     elif action == "dislike":
         dislikes += value
 
-    data['likes'] = likes
-    data['dislikes'] = dislikes
-    data.pop('thumbnail')
-    data.pop('videoFile')
-    # data['user'] = result.__dict__['user_id']
-    print("hello")
-
-    serializer = VideoSerializer(video, data=data, partial=True)
-    print(serializer)
+    serializer = VideoSerializer(video, data={
+        "likes": likes,
+        "dislikes": dislikes
+    }, partial=True)
 
     if serializer.is_valid():
-        print("valid")
         serializer.save(user=video.user)
     else:
-        print("invalid")
         print(serializer.errors)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def videoVote(request):
     videoID = request.data['video']
     action = request.data['action']
@@ -162,7 +149,37 @@ def videoVote(request):
             if serializer.is_valid():
                 updateVideoVoteStatus(videoID, action, 1)
                 serializer.save(user=request.user)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response({
+                    "success": True,
+                    "status": action
+                }, status=status.HTTP_201_CREATED)
+        else:
+            serializer = VideoVoteSerializer(result, many=True)
+            data = serializer.data[0]
+            if data['voteValue'] == action:
+                result.delete()
+                updateVideoVoteStatus(videoID, action, -1)
+                return Response({
+                    "success": True,
+                    "status": "None"
+                }, status=status.HTTP_202_ACCEPTED)
+            else:
+                serializer = VideoVoteSerializer(data={
+                    "video": videoID,
+                    "voteValue": action
+                })
+                if serializer.is_valid():
+                    result.delete()
+                    updateVideoVoteStatus(videoID, action, 1)
+                    action = 'like' if action == 'dislike' else 'dislike'
+                    updateVideoVoteStatus(videoID, action, -1)
+                    action = 'like' if action == 'dislike' else 'dislike'
+                    serializer.save(user=request.user)
+                    return Response({
+                        "success": True,
+                        "status": action
+                    }, status=status.HTTP_200_OK)
+
     except:
         pass
     return JsonResponse({"user": "videoID"})
