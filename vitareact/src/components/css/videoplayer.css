@@ -251,6 +251,15 @@
     position: relative;
 }
 
+.vote-btn {
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.like, .dislike {
+    color: rgb(60, 112, 255);
+}
 
 /* hiding the standard video controls in fullscreen*/
 /* uncomment to fullscreen */

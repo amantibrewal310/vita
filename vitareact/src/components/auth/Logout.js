@@ -21,6 +21,7 @@ function Logout() {
 	localStorage.removeItem('refresh_token');
 	localStorage.removeItem('expiry_time');
 	localStorage.removeItem('email');
+	localStorage.removeItem('admin');
 	axiosInstance.defaults.headers['Authorization'] = null;
 	
 	history.push('/login');
