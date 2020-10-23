@@ -15,7 +15,8 @@ urlpatterns = [
     # For Viewing comments of particular video
     path('<str:pk>/comments/', views.comment),
     path('', include(router.urls)),
-    path('video-vote/', views.videoVote, name='votevideo'),
+    path('video-vote/', views.videoVote, name='voteVideo'),
+    path('comment-vote/', views.commentVote, name='voteComment'),
 
     # check, delete user vote on the video
     # path('video-vote/check/<int:video_id>/',

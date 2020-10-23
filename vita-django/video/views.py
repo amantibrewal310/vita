@@ -75,44 +75,6 @@ class ReportReasonViewSet(viewsets.ModelViewSet):
 
 
 # video vote views
-
-# # video vote views (create, update, delete)
-# @api_view(['GET', 'POST'])
-# def videoVoteList(request):
-
-#     # listing all the votes on video
-#     if request.method == 'GET':
-#         votes = VideoVote.objects.all()
-#         serializer = VideoVoteSerializer(votes, many=True)
-#         return Response(serializer.data)
-
-#     # making a vote
-#     elif request.method == 'POST':
-#         serializer = VideoVoteSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(user=request.user)
-#             return Response(serializer.data, status.HTTP_201_CREATED)
-
-#         return Response(serializer.errors)
-
-
-# # if logged in user has voted on this video before
-# # filter will return array with 1 vote detail
-# # else empty array is returned
-# @api_view(['GET', 'DELETE'])
-# def checkVideoVote(request, video_id):
-
-#     vote = VideoVote.objects.filter(video=video_id, user=request.user)
-
-#     if request.method == 'GET':
-#         serializer = VideoVoteSerializer(vote, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-
-#     # delete is called when user has already made vote on video_id
-#     elif request.method == 'DELETE':
-#         vote[0].delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
 def updateVideoVoteStatus(video_id, action, value):
     video = Video.objects.get(id=video_id)
     likes = video.likes
@@ -137,49 +99,174 @@ def updateVideoVoteStatus(video_id, action, value):
 @api_view(['GET', 'POST'])
 def videoVote(request):
     videoID = request.data['video']
-    action = request.data['action']
 
-    try:
-        result = VideoVote.objects.filter(video=videoID, user=request.user)
-        if len(result) == 0:
-            serializer = VideoVoteSerializer(data={
-                "video": videoID,
-                "voteValue": action
-            })
-            if serializer.is_valid():
-                updateVideoVoteStatus(videoID, action, 1)
-                serializer.save(user=request.user)
-                return Response({
+    if request.method == "GET":
+        try:
+            result = VideoVote.objects.filter(video=videoID, user=request.user)
+
+            if len(result) == 0:
+                return Response(data={
                     "success": True,
-                    "status": action
-                }, status=status.HTTP_201_CREATED)
-        else:
-            serializer = VideoVoteSerializer(result, many=True)
-            data = serializer.data[0]
-            if data['voteValue'] == action:
-                result.delete()
-                updateVideoVoteStatus(videoID, action, -1)
-                return Response({
-                    "success": True,
-                    "status": "None"
-                }, status=status.HTTP_202_ACCEPTED)
+                    "status": None,
+                }, status=status.HTTP_200_OK)
             else:
+                return Response(data={
+                    "success": True,
+                    "status": result.first().voteValue
+                }, status=status.HTTP_200_OK)
+        except:
+            return Response(data={
+                "success": False,
+                "error": True,
+                "msg": "Please send request with valid parameter"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == "POST":
+        action = request.data['action']
+        try:
+            result = VideoVote.objects.filter(video=videoID, user=request.user)
+            if len(result) == 0:
                 serializer = VideoVoteSerializer(data={
                     "video": videoID,
                     "voteValue": action
                 })
                 if serializer.is_valid():
-                    result.delete()
                     updateVideoVoteStatus(videoID, action, 1)
-                    action = 'like' if action == 'dislike' else 'dislike'
-                    updateVideoVoteStatus(videoID, action, -1)
-                    action = 'like' if action == 'dislike' else 'dislike'
                     serializer.save(user=request.user)
                     return Response({
                         "success": True,
                         "status": action
-                    }, status=status.HTTP_200_OK)
+                    }, status=status.HTTP_201_CREATED)
+            else:
+                serializer = VideoVoteSerializer(result, many=True)
+                data = serializer.data[0]
+                if data['voteValue'] == action:
+                    result.delete()
+                    updateVideoVoteStatus(videoID, action, -1)
+                    return Response({
+                        "success": True,
+                        "status": "None"
+                    }, status=status.HTTP_202_ACCEPTED)
+                else:
+                    serializer = VideoVoteSerializer(data={
+                        "video": videoID,
+                        "voteValue": action
+                    })
+                    if serializer.is_valid():
+                        result.delete()
+                        updateVideoVoteStatus(videoID, action, 1)
+                        action = 'like' if action == 'dislike' else 'dislike'
+                        updateVideoVoteStatus(videoID, action, -1)
+                        action = 'like' if action == 'dislike' else 'dislike'
+                        serializer.save(user=request.user)
+                        return Response({
+                            "success": True,
+                            "status": action
+                        }, status=status.HTTP_200_OK)
 
-    except:
-        pass
-    return JsonResponse({"user": "videoID"})
+        except:
+            return Response(data={
+                "success": False,
+                "error": True,
+                "msg": "Please pass with proper parameter"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+def updateCommentVoteStatus(commentID, action, value):
+    comment = Comment.objects.get(id=commentID)
+    likes = comment.likes
+    dislikes = comment.dislikes
+
+    if action == "like":
+        likes += value
+    elif action == "dislike":
+        dislikes += value
+
+    serializer = CommentSerializer(comment, data={
+        "likes": likes,
+        "dislikes": dislikes
+    }, partial=True)
+
+    if serializer.is_valid():
+        serializer.save(user=comment.user)
+    else:
+        print(serializer.errors)
+
+
+@api_view(['GET', 'POST'])
+def commentVote(request):
+    commentID = request.data['comment']
+
+    if request.method == "GET":
+        try:
+            result = CommentVote.objects.filter(
+                comment=commentID, user=request.user)
+
+            if len(result) == 0:
+                return Response(data={
+                    "success": True,
+                    "status": None,
+                }, status=status.HTTP_200_OK)
+            else:
+                return Response(data={
+                    "success": True,
+                    "status": result.first().voteValue
+                }, status=status.HTTP_200_OK)
+        except:
+            return Response(data={
+                "success": False,
+                "error": True,
+                "msg": "Please send request with valid parameter"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == "POST":
+        action = request.data['action']
+
+        try:
+            result = CommentVote.objects.filter(
+                comment=commentID, user=request.user)
+            if len(result) == 0:
+                serializer = CommentVoteSerializer(data={
+                    "comment": commentID,
+                    "voteValue": action
+                })
+                if serializer.is_valid():
+                    updateCommentVoteStatus(commentID, action, 1)
+                    serializer.save(user=request.user)
+                    return Response({
+                        "success": True,
+                        "status": action
+                    }, status=status.HTTP_201_CREATED)
+            else:
+                serializer = CommentVoteSerializer(result, many=True)
+                data = serializer.data[0]
+                if data['voteValue'] == action:
+                    result.delete()
+                    updateCommentVoteStatus(commentID, action, -1)
+                    return Response({
+                        "success": True,
+                        "status": "None"
+                    }, status=status.HTTP_202_ACCEPTED)
+                else:
+                    serializer = CommentVoteSerializer(data={
+                        "comment": commentID,
+                        "voteValue": action
+                    })
+                    if serializer.is_valid():
+                        result.delete()
+                        updateCommentVoteStatus(commentID, action, 1)
+                        action = 'like' if action == 'dislike' else 'dislike'
+                        updateCommentVoteStatus(commentID, action, -1)
+                        action = 'like' if action == 'dislike' else 'dislike'
+                        serializer.save(user=request.user)
+                        return Response({
+                            "success": True,
+                            "status": action
+                        }, status=status.HTTP_200_OK)
+
+        except:
+            return Response(data={
+                "success": False,
+                "error": True,
+                "msg": "Please pass with proper parameter"
+            }, status=status.HTTP_400_BAD_REQUEST)
