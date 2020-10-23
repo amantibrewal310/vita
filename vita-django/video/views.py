@@ -113,21 +113,11 @@ class ReportReasonViewSet(viewsets.ModelViewSet):
 #         vote[0].delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def updateVideoVoteStatus(video_id, action, value):
-    video = Video.objects.get(id=video_id)
-    likes = video.likes
-    dislikes = video.dislikes
-
-    if action == "like":
-        likes += value
-    elif action == "dislike":
-        dislikes += value
-
 
 # video search, for both admin and user
 # end point - /api/video/video-search/?search=[query string]
 class VideoSearchView(generics.ListAPIView):
-    serializer_class = VideoSerailizer
+    serializer_class = VideoSerializer
     queryset = Video.objects.all()
     search_fields = ['title', 'description']
     filter_backends = (filters.SearchFilter,)
@@ -135,7 +125,7 @@ class VideoSearchView(generics.ListAPIView):
 
 # filter for admin
 class VideoOrderView(generics.ListAPIView):
-    serializer_class = VideoSerailizer
+    serializer_class = VideoSerializer
 
     def get_queryset(self):
         queryset = Video.objects.all()
@@ -150,7 +140,29 @@ class VideoOrderView(generics.ListAPIView):
         return queryset
 
 
-# video vote 
+# update vote count in voted video 
+def updateVideoVoteStatus(video_id, action, value):
+    video = Video.objects.get(id=video_id)
+    likes = video.likes
+    dislikes = video.dislikes
+
+    if action == "like":
+        likes += value
+    elif action == "dislike":
+        dislikes += value
+
+    serializer = VideoSerializer(video, data={
+        "likes": likes,
+        "dislikes": dislikes
+    }, partial=True)
+
+    if serializer.is_valid():
+        serializer.save(user=video.user)
+    else:
+        print(serializer.errors)
+
+
+# vote video
 @api_view(['GET', 'POST'])
 def videoVote(request):
     videoID = request.data['video']

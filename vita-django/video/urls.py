@@ -21,12 +21,9 @@ urlpatterns = [
     # path('video-vote/check/<int:video_id>/',
     #      views.checkVideoVote, name='getvideovote'),
     # get list of votes, make a vote
-    path('video-vote/', views.videoVoteList, name='votevideolist'),
 
     # search
     path('video-search/', views.VideoSearchView.as_view(), name='videosearch'),
     # filters
     path('video-order/', views.VideoOrderView.as_view(), name='videoorder')
-
-
 ]
