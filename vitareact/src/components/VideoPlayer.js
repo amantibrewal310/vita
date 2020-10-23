@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './css/videoplayer.css'
 import axiosInstance from '../axios'
+import screenfull from 'screenfull'
+import ReportVideo from './ReportVidCom'
 
 // exports video player 
 // TODO: 
@@ -38,7 +40,9 @@ class VideoPlayer extends Component {
       like: false,
       dislike: false,
       videoLikes: this.props.video.likes,
-      videoDislikes: this.props.video.dislikes
+      videoDislikes: this.props.video.dislikes,
+      // report
+      report: true
     };
 
     componentDidMount() {
@@ -158,18 +162,6 @@ class VideoPlayer extends Component {
       });
       this.videoRef.current.currentTime = timeAfterSkip;
     }
-    /*
-      full screen 
-    */
-    goFullScreen = (e) => {
-      e.target.requestFullscreen();
-      // console.log(e.target);
-    }
-    goFullScreenOnClick = () => {
-      if(this.videoRef && this.videoRef.current) {
-        this.videoRef.current.requestFullscreen();
-      }
-    }
     /* 
       playback rate
     */
@@ -235,6 +227,10 @@ class VideoPlayer extends Component {
         this.setState({ isShowingControls: false });
       }
     };
+
+    onToggleFullScreen = () => {
+      screenfull.toggle(this.videoPlayer.current);
+    }
 
     // ....................like/dislike handlers ....................
     /* 
@@ -320,6 +316,14 @@ class VideoPlayer extends Component {
     handleDislike = () => {
       this.handleVote('dislike');
     }
+    /*
+      report
+    */
+    toggleReportBtn = () => {
+      this.setState({
+        report: !this.state.report
+      });
+    }
 
 
    render() {
@@ -347,6 +351,7 @@ class VideoPlayer extends Component {
              ref={this.videoPlayer}
              onMouseEnter={this.updateShowControls}
              onMouseLeave={this.updateHideControls}
+             onDoubleClick={this.onToggleFullScreen}
            >
              <video
                id='main-video-player'
@@ -359,7 +364,6 @@ class VideoPlayer extends Component {
                onLoadedData={this.updateCompleteDuration}
                onEnded={this.updateEnded}
                onVolumeChange={this.updateVolume}
-               onDoubleClick={e => this.goFullScreen(e)}
                allowFullScreen
              />
              
@@ -462,7 +466,7 @@ class VideoPlayer extends Component {
                     </div>   */}
 
                     {/* full screen button */}
-                    <div className='fullscreen-btn' onClick={this.goFullScreenOnClick} title='fullscreen'>
+                    <div className='fullscreen-btn' onClick={this.onToggleFullScreen} title='fullscreen'>
                     </div>  
                   </div>
                </div>
@@ -484,6 +488,20 @@ class VideoPlayer extends Component {
                   </i>
                  {this.state.videoDislikes}
                </span>
+
+               {/* report */}
+
+               { this.state.report ? (
+                   <span className='report-btn' onClick={this.toggleReportBtn}>
+                    <i className="fa fa-flag-o" 
+                      aria-hidden="true">
+                    </i>
+                   </span>
+                  ):(
+                   <ReportVideo type="video" id={this.props.video.id} toggleReportBtn={this.toggleReportBtn} />
+                  )
+               }
+               
             </div>
           </div>
        )

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axiosInstance from '../axios';
+import ReportComment from './ReportVidCom';
 
 // Returns a single comment
 // props -> single comment object
@@ -22,6 +23,7 @@ function SingleComment({comment}) {
     // combined state is causing errors in updates 
     const [likeState, setLikeState] = useState(initLikeState);
     const [countState, setCountState] = useState(initCountState);
+    const [report, setReport] = useState(true);
 
     useEffect(() => {
         getVoteStatus();
@@ -100,6 +102,12 @@ function SingleComment({comment}) {
                 console.log(err);
             });
     }
+    /*
+        report
+    */
+    const toggleReportBtn = () => {
+        setReport(!report);
+    }
 
     return (
         <div>
@@ -122,6 +130,18 @@ function SingleComment({comment}) {
                 <i className="fa fa-clock-o" aria-hidden="true"></i>
                 {comment.created_at}
             </span>
+            {/* report */}
+
+            { report ? (
+                    <span className='report-btn' onClick={toggleReportBtn}>
+                        <i  className="fa fa-flag-o" 
+                            aria-hidden="true">
+                        </i>
+                    </span>
+                ):(
+                    <ReportComment type="comment" id={comment.id} toggleReportBtn={toggleReportBtn} />
+                )
+            }
             <hr />
         </div>
     )

@@ -1,6 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import '../css/adminHome.css'
+import '../css/adminHome.css';
+import axiosInstance from '../../axios';
+import VideoResults from './VideoResults';
+import commentResults from './CommentResults';
+import ContentLoading from '../ContentLoading';
+import CommentResults from './CommentResults';
 
 // Admin Options Avalailable 
 
@@ -22,22 +27,66 @@ import '../css/adminHome.css'
 
 function Admin() {
 
+    const VideoResultsLoading = ContentLoading(VideoResults);
+    const CommentResultsLoading = ContentLoading(CommentResults);
+
     const initHeading = {
         videoHeading: 'Recent Video Reports',
         commentHeading: 'Recent Comment Reports'
     }
-    const [boxHeading, setBoxHeading] = useState(initHeading)
 
+    const [boxHeading, setBoxHeading] = useState(initHeading);
+    const [videoResults, setVideoResults] = useState([]);
+    const [commentResults, setCommentResults] = useState([]);
+    const [videoResLoading, setVideoResLoadingLoading] = useState(false);
+    const [commentResLoading, setCommentResLoading] = useState(false);
+
+    useEffect(() => {
+        // recent reported videos 
+        axiosInstance
+            .get(`video/reported-video-list/`)
+            .then(res => {
+                setVideoResults(res.data);
+                // console.log(res.data)
+                setVideoResLoadingLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
+
+    useEffect(() => {
+        axiosInstance
+            .get(`video/reported-comment-list/`)
+            .then(res => {
+                setCommentResults(res.data);
+                // console.log(res.data)
+                setCommentResLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
+
+    // search handlers
     const handleSearchChange = () => {
     }
+    // search submit handler
     const handleSearchSubmit = () => {
     }
 
     return (
+        
         <div>
             <h1><u>Admin Home</u></h1>
             
-            <Link to={`/admin/create`}><button id="create-new-btn">Create New</button></Link>
+            <Link 
+                to={`/admin/create`}>
+                <button 
+                    id="create-new-btn">
+                    Create New Video
+                </button>
+            </Link>
             
             <div id='search-container'>
                 <input 
@@ -57,11 +106,9 @@ function Admin() {
             </div>
 
             <div>  
-                <h2>Options</h2>
-                <h3>Sort</h3>
+                <h3>Options</h3>
                 <button>Most views</button>
                 <button>Most Likes</button>
-                <h3>Filters</h3>
                 <button>Most Reported</button>
             </div>
 
@@ -69,10 +116,20 @@ function Admin() {
                 <div className="col">
                     {/* heading changes based on serach/filter applied */}
                     <h2>{boxHeading.videoHeading}</h2>
+                    {/* video results */}
+                    <VideoResultsLoading 
+                        isLoading={videoResLoading}
+                        allVideos={videoResults}
+                    />
                 </div>
                 <div className="col">
                     {/* heading changes based on serach/filter applied */}
                     <h2>{boxHeading.commentHeading}</h2>
+                    {/* comments results */}
+                    <CommentResultsLoading 
+                        isLoading={commentResLoading}
+                        allComments={commentResults}
+                    />
                 </div>
             </div>
         </div>

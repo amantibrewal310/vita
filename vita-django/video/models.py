@@ -147,4 +147,4 @@ class CommentReport(models.Model):
 
     # def __str__(self):
     #     return self.comment
-    #     # return self.user.username + ' | ' + self.reason.reason + ' | ' + self.video.title
+    #     # return self.user.username + ' | ' + self.reason.reason + ' | ' + self.comment.text
