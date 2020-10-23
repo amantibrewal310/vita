@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Route, BrowserRouter as Router, Switch} from 'react-router-dom';
+import PrivateRoute from './Routes/PrivateRoute';
+import AdminRoute from './Routes/AdminRoute';
 import './index.css';
 import App from './App';
 import Header from './components/Header';
@@ -14,6 +16,7 @@ import Admin from './components/admin/Admin';
 import CreateVideo from './components/admin/CreateVideo';
 import VideoDetails from './components/admin/VideoDetails';
 import CommentDetails from './components/admin/CommentDetails';
+import NotFound from './components/NotFound';
 
 const routing = (
   <Router>
@@ -24,14 +27,18 @@ const routing = (
       <Switch>
         <Route exact path="/" component={App} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/logout" component={Logout} />
-        <Route exact path="/profile" component={UserProfile} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/play/:id" component={GetVideo} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/admin/create" component={CreateVideo}/>
-        <Route exact path="/admin/video-details/:id" component={VideoDetails}/>
-        <Route exact path="/admin/comment-details/:id" component={CommentDetails}/>
+        
+        <PrivateRoute exact path="/profile" component={UserProfile} />
+        <PrivateRoute exact path="/play/:id" component={GetVideo} />
+        <PrivateRoute exact path="/logout" component={Logout} />
+        
+        <AdminRoute exact path="/admin" component={Admin} />
+        <AdminRoute exact path="/admin/create" component={CreateVideo}/>
+        <AdminRoute exact path="/admin/video-details/:id" component={VideoDetails}/>
+        <AdminRoute exact path="/admin/comment-details/:id" component={CommentDetails}/>
+        
+        <Route path="*" component={NotFound} />
       </Switch>
   
       <Footer />

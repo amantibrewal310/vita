@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import FbLogin from 'react-facebook-login';
 import FacebookLogin from './FacebookLogin';
 import checkLoggedIn from '../checkLoggedIn';
+import setAdminStatus from '../setAdminStatus';
 import '../../css/register.css';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, FB_APP_ID} from '../../../Backend';
 
@@ -56,17 +57,9 @@ function Login() {
                 localStorage.setItem('email', formData.email);
                 localStorage.setItem('expiry_time', expiry_time);
 				localStorage.setItem('access_token', res.data.access_token);
-				localStorage.setItem('refresh_token', res.data.refresh_token);
+                localStorage.setItem('refresh_token', res.data.refresh_token);
+                setAdminStatus(formData.email);
                 // home page on succefull login 
-
-                // TODO:
-                // Check if the user is admin 
-                // add isSupeUser in localstorage
-                // make a seprate component to make a get request using this [email]
-                // and set the retuned result in localstorage  
-
-                history.push('/');
-				window.location.reload();
             })
             .catch(err => {
                 // wrong credentials 
@@ -81,9 +74,7 @@ function Login() {
     // handle fb login error 
     
     const responseFacebook = async (response) => {
-        // setting email here, tokens are set in FacebookLogin file
-        localStorage.setItem('email', response.email);
-        FacebookLogin(response.accessToken)
+        FacebookLogin(response.accessToken, response.email)
         // TODO:
         // check admin login
         history.push('/');

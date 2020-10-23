@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import './css/videoplayer.css'
-import forwardTen from '../images/forw.png';
-import backwardTen from '../images/back.png';
-import fullScreen from '../images/fullscr.png'
-import options from '../images/options.png'
+import axiosInstance from '../axios'
 
 // exports video player 
 // TODO: 
@@ -13,6 +10,8 @@ import options from '../images/options.png'
 // 5. Picture in picture
 
 class VideoPlayer extends Component {
+    _isMounted = false;
+
     constructor(props) {
       super(props);
       // creating refs to the elements we need to control, or get data 
@@ -34,9 +33,24 @@ class VideoPlayer extends Component {
       volumeValue: 0.5,
       volumePercentage: 50,
       isShowingControls: true,
-      playbackRate: 1.0
+      playbackRate: 1.0,
+      // video data states
+      like: false,
+      dislike: false,
+      videoLikes: this.props.video.likes,
+      videoDislikes: this.props.video.dislikes
     };
+
+    componentDidMount() {
+      // find the like dislike status, set state to show users previous actions
+      this._isMounted = true;
+      this.getVoteStatus();
+    }
    
+    componentWillUnmount() {
+      this._isMounted = false;
+    }
+
     /*
      onLoadedData:
      we need to update the completeDurationInSeconds and completeDuration
@@ -167,7 +181,6 @@ class VideoPlayer extends Component {
         playbackRate: this.state.playbackRate + 0.25
       })
       this.videoRef.current.playbackRate += 0.25;
-      console.log(this.videoRef.current.playbackRate);
     }
     decreasePlayRate = () => {
       if(this.state.playbackRate == 0.25) {
@@ -177,7 +190,6 @@ class VideoPlayer extends Component {
         playbackRate: this.state.playbackRate - 0.25
       })
       this.videoRef.current.playbackRate -= 0.25;
-      console.log(this.videoRef.current.playbackRate);
     }
 
     /* 
@@ -224,6 +236,130 @@ class VideoPlayer extends Component {
       }
     };
 
+    /*
+      checks the like and dislike by user 
+    */
+    getVoteStatus = () => {
+      axiosInstance 
+        .get(`video/video-vote/check/${this.props.video.id}/`)
+        .then(res => {
+          if(res.data.length == 1) {
+            // users vote found
+            const voteValue = res.data[0].voteValue;
+
+            if(voteValue == "like") {
+              this.setState({
+                like: true
+              })
+            } else if(voteValue == "dislike") {
+              this.setState({
+                dislike: true
+              })
+            }
+          
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    /*
+      create users vote
+    */
+    createVote = (voteType) => {
+      axiosInstance
+        .post(`video/video-vote/`, {
+            video: this.props.video.id,
+            voteValue: voteType
+        })
+        .then(res => {
+          this.getVoteStatus();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    /*
+      delete vote 
+    */
+    deleteVote = () => {
+      axiosInstance 
+        .delete(`video/video-vote/check/${this.props.video.id}/`)
+        .then(res => {
+          this.getVoteStatus();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    /* 
+      change count of votes on video 
+    */
+    changeVotes = (voteType, change) => {
+      const data = {};
+      
+      if(voteType == 'likes') {
+        data.likes = this.state.videoLikes + change;
+      } else {
+        data.dislikes = this.state.videoDislikes + change;
+      }
+
+      axiosInstance
+        .patch(`video/video-list/${this.props.video.id}/`, data)
+        .then(res => {
+          this.setState({
+            videoLikes: res.data.likes,
+            videoDislikes: res.data.dislikes
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    /*
+      like pressed 
+    */
+    handleLike = () => {
+      if(this.state.like) {
+        return;
+      } else if(this.state.dislike) {
+        // status none and decrese dislikes count
+        this.deleteVote();
+        this.changeVotes('dislikes', -1);
+        this.setState({
+          dislike: false
+        });
+      } else {
+        // status like and inc likes count
+        this.createVote('like');
+        this.changeVotes('likes', 1);
+        this.setState({
+          like: true
+        });
+      }
+    }
+    /*
+      dislike pressed 
+    */
+    handleDislike = () => {
+      if(this.state.dislike) {
+        return;
+      } else if(this.state.like) {
+        // status none and decrese likes count
+        this.deleteVote();
+        this.changeVotes('likes', -1);
+        this.setState({
+          like: false
+        })
+      } else {
+        // status dislike and inc dislikes count
+        this.createVote('dislike');
+        this.changeVotes('dislikes', 1);
+        this.setState({
+          dislike: true
+        })
+      }
+    }
 
    render() {
 
@@ -375,13 +511,15 @@ class VideoPlayer extends Component {
             {/* Other video details */}
             <div>
                <span>Description: {video.description}</span>
-               <span>
-                 <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                 {video.likes} 
+               <span className='vote-btn' onClick={this.handleLike}>
+                 <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 
+                    aria-hidden="true"></i>
+                 {this.state.videoLikes} 
                </span> 
-               <span> 
-                 <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                 {video.dislikes}
+               <span className='vote-btn' onClick={this.handleDislike}> 
+                 <i className={"fa fa-thumbs-o-down" + (this.state.dislike ? " dislike" : "")}
+                    aria-hidden="true"></i>
+                 {this.state.videoDislikes}
                </span>
             </div>
           </div>
