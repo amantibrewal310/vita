@@ -2,8 +2,8 @@
 * [x] Video Model
 * [x] Comment Model
 * [x] Custome User Model
-* [ ] Content Moderation Model 
-* [ ] Adding Category to Video model
+* [x] Content Moderation Model 
+* [x] Adding Category to Video model
 * [ ] Payment
 * [x] Social Login
 * [x] Basic Video Player
@@ -14,13 +14,14 @@
 	- FB login Bug - Doesn't properly store token in localstorage
 
 # Django
+    - user can report only once
 
 # React
     - increase video views on play
 
 # Admin Dashboard
     - for description of upload video add makdown editor 
-    - upload progress bar 
+    - upload progress bar (or a preloader)
 
 
 # Features 

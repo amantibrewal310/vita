@@ -251,7 +251,7 @@
     position: relative;
 }
 
-.vote-btn {
+.vote-btn, .report-btn, .btn {
     font-size: 16px;
     margin: 5px;
     cursor: pointer;

@@ -290,14 +290,15 @@ class VideoOrderView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Video.objects.all()
         dict = self.request.query_params
-        print(dict)
 
         # likes, dislikes, views, reported
         orderby = dict.get('orderby', None)
         if orderby is not None: 
             queryset = queryset.order_by('-' + orderby)
 
-        return quer
+        return queryset
+        
+
 def updateVideoReportStatus(videoID):
 
     result = Video.objects.get(id=videoID)
