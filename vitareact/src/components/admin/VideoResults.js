@@ -10,37 +10,43 @@ function VideoResults({allVideos}) {
     return (
         <>
             {
-                allVideos.map(video => (
-                    <Link
-                        to = {`/admin/video-details/${video.id}`}
-                        key = {video.id}
-                    >
-                        <div>
+                (allVideos.length == 0) 
+                ? (
+                    <p>No Results found</p>
+                )
+                : (
+                    allVideos.map(video => (
+                        <Link
+                            to = {`/admin/video-report-action/${video.id}`}
+                            key = {video.id}
+                        >
                             <div>
-                                <img src={video.thumbnail} alt="thumbnail" width="100px"/>
-                                <span> {video.title} </span>
+                                <div>
+                                    <img src={video.thumbnail} alt="thumbnail" width="100px"/>
+                                    <span> {video.title} </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        <i className="fa fa-eye btn" aria-hidden="true"></i>
+                                        {video.views}
+                                    </span>
+                                    <span>
+                                        <i className="fa fa-thumbs-o-up btn" aria-hidden="true"></i>
+                                        {video.likes}
+                                    </span>
+                                    <span>
+                                        <i className="fa fa-thumbs-o-down btn" aria-hidden="true"></i>
+                                        {video.dislikes}
+                                    </span>
+                                    <span>
+                                        <i className="fa fa-flag-o btn" aria-hidden="true"></i>
+                                        {video.reported}
+                                    </span>
+                                </div>
                             </div>
-                            <div>
-                                <span>
-                                    <i className="fa fa-eye btn" aria-hidden="true"></i>
-                                    {video.views}
-                                </span>
-                                <span>
-                                    <i className="fa fa-thumbs-o-up btn" aria-hidden="true"></i>
-                                    {video.likes}
-                                </span>
-                                <span>
-                                    <i className="fa fa-thumbs-o-down btn" aria-hidden="true"></i>
-                                    {video.dislikes}
-                                </span>
-                                <span>
-                                    <i className="fa fa-flag-o btn" aria-hidden="true"></i>
-                                    {video.reported}
-                                </span>
-                            </div>
-                        </div>
-                    </Link>
-                ))
+                        </Link>
+                    ))
+                )
             }
         </>
     )

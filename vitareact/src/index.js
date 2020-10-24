@@ -17,6 +17,8 @@ import CreateVideo from "./components/admin/CreateVideo";
 import VideoDetails from "./components/admin/VideoDetails";
 import CommentDetails from "./components/admin/CommentDetails";
 import NotFound from "./components/NotFound";
+import VideoReportAction from './components/admin/VideoReportAction';
+import CommentReportAction from "./components/admin/CommentReportAction";
 
 const routing = (
     <Router>
@@ -38,15 +40,27 @@ const routing = (
                     path="/admin/create"
                     component={CreateVideo}
                 />
+                {/* for editing/deleting video*/}
                 <AdminRoute
                     exact
                     path="/admin/video-details/:id"
                     component={VideoDetails}
                 />
+                {/* for deleting comment */}
                 <AdminRoute
                     exact
                     path="/admin/comment-details/:id"
                     component={CommentDetails}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/video-report-action/:id"
+                    component={VideoReportAction}
+                />
+                <AdminRoute
+                    exact
+                    path="/admin/comment-report-action/:id"
+                    component={CommentReportAction}
                 />
 
                 <Route path="*" component={NotFound} />

@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import '../css/adminHome.css';
 import axiosInstance from '../../axios';
 import VideoResults from './VideoResults';
-import commentResults from './CommentResults';
 import ContentLoading from '../ContentLoading';
 import CommentResults from './CommentResults';
 

@@ -1,13 +1,11 @@
 import React from 'react';
 import {useParams} from 'react-router-dom';
 import GetSingleComment from '../GetSingleComment';
-import DeleteVidCom from './DeleteVidCom';
+import DeleteComment from './DeleteVidCom';
+import ReportList from './ReportListVidCom'; 
 
-// Comment [id]
-    // 1. comment detail 
-    // 2. Report List [recent reports on that comment] 
-    // 3. Delete/Remove comment [confirmation by alert box]
-
+// TODO: 
+// display the video details too on which this comment was made 
 function CommentDetail() {
     // get it from params
     const {id} = useParams();
@@ -15,8 +13,8 @@ function CommentDetail() {
         <div>
             <h1><u>Comment Details page for Admin</u></h1>
             <GetSingleComment id={id} />
-            <DeleteVidCom type="Comment" urlSuffix="video/comment-list/" id={id} />
-            {/* TODO: 2. */}
+            <DeleteComment type="Comment" urlSuffix="video/comment-list/" id={id} />
+            <ReportList type="comment" id={id}/>
         </div>
     )
 }

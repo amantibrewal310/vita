@@ -7,7 +7,7 @@ function CommentResults({allComments}) {
             {
                 allComments.map(comment => (
                     <Link
-                        to = {`/admin/comment-details/${comment.id}`}
+                        to = {`/admin/comment-report-action/${comment.id}`}
                         key = {comment.id}
                     >
                         <div>
