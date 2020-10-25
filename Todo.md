@@ -25,11 +25,9 @@
 
 
 # Features 
-    - admin action on report on video-detail, comment-detail page
     - success pop up boxes after form fill
     - reply feature in comments
     - pin feature in comments 
     - wacth list for user   
 
 # Ideas 
-    - category page [Hotstar genre page], may be detail page too
