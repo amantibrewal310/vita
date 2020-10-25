@@ -31,7 +31,7 @@ urlpatterns = [
     path('reported-video/final/', views.UpdateVideoStatus,
          name="updateVideoStatus"),
     path('reported-comment/final/', views.UpdateCommentStatus,
-         name="updateCommentStatus")
+         name="updateCommentStatus"),
 
     # search
     path('video-search/', views.VideoSearchView.as_view(), name='videosearch'),

@@ -297,7 +297,7 @@ class VideoOrderView(generics.ListAPIView):
         if orderby is not None: 
             queryset = queryset.order_by('-' + orderby)
 
-        return quer
+        return queryset
 def updateVideoReportStatus(videoID):
 
     result = Video.objects.get(id=videoID)
