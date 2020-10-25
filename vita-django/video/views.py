@@ -19,7 +19,7 @@ from .permissions import IsOwnerOrReadOnly
 # For Viewing comments of particular video
 @api_view(['GET'])
 def comment(request, pk):
-    comments = Comment.objects.filter(video=pk).order_by('-created_at')
+    comments = Comment.commentobjects.filter(video=pk).order_by('-created_at')
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
