@@ -1,7 +1,8 @@
 
 import React, {useState} from 'react';
-import axiosInstance from '../../axios';
+import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import Popup from '../utils/Popup';
 import '../css/register.css';
 
 function SignUp() {
@@ -22,6 +23,7 @@ function SignUp() {
     // states
     const [formData, updateFormData] = useState(initialFormData);
     const [error, setError] = useState(intialErrors);
+    const [showPopup, setShowPopup] = useState(false);
 
     // listeners
     const handleChange = (e) => {
@@ -38,16 +40,16 @@ function SignUp() {
             return;
         }
 
-        axiosInstance
-            .post(`user/`, {
+        axios.post(`http://127.0.0.1:8000/api/user/`, {
                 email: formData.email.trim(),
                 username: formData.username.trim(),
                 password: formData.password,
             })
             .then(response => {
-                history.push('/login');
-                console.log(response);
-                console.log(response.data);
+                setShowPopup(true);
+                setTimeout(() => {
+                    history.push('/login');
+                }, 2000);
             })
             .catch(err => {
                 // some credential errors
@@ -93,6 +95,8 @@ function SignUp() {
     }
 
     return (
+        <>
+        <Popup show={showPopup} message="Sigup Successfull, Redirecting to Login..." type="success"/>
         <div className='form-container'>
             <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
             <div>{error.emailError ? error.emailError: ''}</div>
@@ -135,6 +139,7 @@ function SignUp() {
                 </button>
             </form>
         </div>
+        </>
     )
 }
 

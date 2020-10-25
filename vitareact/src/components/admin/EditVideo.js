@@ -54,8 +54,7 @@ function EditVideo({id}) {
                     // Display error message, the video was not found 
                     // return
                     alert('The video was not found');
-                    history.goBack();
-                    window.reload();
+                    history.push('/');
                 }
             });
     }, []);
