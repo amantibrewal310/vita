@@ -14,8 +14,10 @@
 
 .col {
     width: 45%;
-    height: 50vh;
+    height: 70vh;
     border: 1px solid black;
+    overflow-y: scroll;
+    padding-left: 40px;
 }
 
 #search-container {

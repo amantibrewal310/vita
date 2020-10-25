@@ -103,8 +103,7 @@ function Login() {
     }
 
     if(checkLoggedIn()) {
-        history.goBack();
-        window.reload();
+        history.push('/');
         return <></>
     }
 

@@ -125,7 +125,7 @@ def videoVote(request):
                 "error": True,
                 "msg": "Please send request with valid parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
-    
+
     else:
         try:
             result = VideoVote.objects.filter(video=videoID, user=request.user)
@@ -198,7 +198,7 @@ def updateCommentVoteStatus(commentID, action, value):
 
 @api_view(['POST'])
 def commentVote(request):
-    commentID = request.data['comment']    
+    commentID = request.data['comment']
     action = request.data['action']
 
     if action == 'checkStatus':
@@ -273,7 +273,7 @@ def commentVote(request):
                 "msg": "Please pass with proper parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-          
+
 # video search, for both admin and user
 # end point - /api/video/video-search/?search=[query string]
 class VideoSearchView(generics.ListAPIView):
@@ -290,14 +290,15 @@ class VideoOrderView(generics.ListAPIView):
     def get_queryset(self):
         queryset = Video.objects.all()
         dict = self.request.query_params
-        print(dict)
 
         # likes, dislikes, views, reported
         orderby = dict.get('orderby', None)
-        if orderby is not None: 
+        if orderby is not None:
             queryset = queryset.order_by('-' + orderby)
 
         return queryset
+
+
 def updateVideoReportStatus(videoID):
 
     result = Video.objects.get(id=videoID)

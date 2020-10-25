@@ -190,19 +190,46 @@ SOCIAL_AUTH_USER_FIELDS = ['email', 'username', 'first_name', 'password']
 
 #S3 BUCKETS CONFIG
 
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME = 'ap-south-1'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# # look for files first in aws 
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# # 500MB
+# FILE_UPLOAD_MAX_MEMORY_SIZE = 1048576000
+
+
+
+
+# CONFIG FOR STACK OVERFLOW ANS
+
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'core.storage_backends.MediaStorage'
+
+# MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+
+BASE_URL = 'http://example.com'
+FILE_UPLOAD_PERMISSIONS = 0o640
+DATA_UPLOAD_MAX_MEMORY_SIZE = 500024288000
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = 'ap-south-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# look for files first in aws 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
-# 500MB
-FILE_UPLOAD_MAX_MEMORY_SIZE = 1048576000

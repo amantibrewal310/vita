@@ -50,8 +50,7 @@ function UserProfile() {
         )
     }
 
-    history.goBack();
-    window.reload();
+    history.push('/');
     return <></>
 }
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ContentLoading from './ContentLoading';
 import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
 import AddComments from './AddComment';
+import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 
 // Get video data for a particular video 
 // Get all comments on the video
