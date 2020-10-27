@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, API, CLIENT } from '../../../Backend';
-import setAdminStatus from '../setAdminStatus';
 // import { useHistory } from 'react-router-dom';
 
 const FacebookLogin = (accesstoken, email) => {
@@ -27,5 +26,11 @@ const FacebookLogin = (accesstoken, email) => {
 			console.log(err);
 		})
 };
+
+const setAdminStatus = async (email) => {
+	const res = await axios.get(`http://127.0.0.1:8000/api/user/byemail/${email}/`);
+	const admin = (res.data.is_staff ? '1' : '0');
+	localStorage.setItem('admin', admin);
+} 
 
 export default FacebookLogin;

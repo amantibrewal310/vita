@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/category.css';
+import style from './css/category.module.css';
 import {Link} from 'react-router-dom'
 import comedy from '../images/category/comedy.jpeg'
 import action from '../images/category/action.jpeg'
@@ -25,126 +25,126 @@ import drama from '../images/category/drama.jpeg'
 function Category() {
 
     return (
-        <div className="category-container">
-            <h3>Categories</h3>
-            <div className="category-row">
-                <div className="category-column">
+        <div className={style.categoryContainer}>
+            <h3 className={style.categoryContainerHeading}>Categories</h3>
+            <div className={style.categoryRow}>
+                <div className={style.categoryColumn}>
                     <Link to="/category/results/1">
-                        <div className='category'>
-                            <img src={comedy} alt="cat-img" />
-                            <div className='category-name'>Comedy</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={comedy} alt="cat-img" />
+                            <div className={style.categoryName}>Comedy</div>
                         </div> 
                     </Link>
-                    <Link to="/category/results/2">
-                        <div className='category'>
-                            <img src={romance} alt="cat-img" />
-                            <div className='category-name'>Romance</div>
+                    <Link to="/category/results/4">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={romance} alt="cat-img" />
+                            <div className={style.categoryName}>Romance</div>
                         </div> 
                     </Link>
                     <Link to="/category/results/3">
-                        <div className='category'>
-                            <img src={music} alt="cat-img" />
-                            <div className='category-name'>Music</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={music} alt="cat-img" />
+                            <div className={style.categoryName}>Music</div>
                         </div> 
                     </Link>
                 </div>
-                <div className="category-column">
-                    <Link to="/category/results/4">
-                        <div className='category'>
-                            <img src={action} alt="cat-img" />
-                            <div className='category-name'>Family</div>
+                <div className={style.categoryColumn}>
+                    <Link to="/category/results/2">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={action} alt="cat-img" />
+                            <div className={style.categoryName}>Family</div>
                         </div> 
                     </Link>
                     <Link to="/category/results/5">
-                        <div className='category'>
-                            <img src={family} alt="cat-img" />
-                            <div className='category-name'>Family</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/6">
-                        <div className='category'>
-                            <img src={war} alt="cat-img" />
-                            <div className='category-name'>War</div>
-                        </div> 
-                    </Link> 
-                </div>
-                <div className="category-column">
-                    <Link to="/category/results/7">
-                        <div className='category'>
-                            <img src={biopic} alt="cat-img" />
-                            <div className='category-name'>Biopic</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/8">
-                        <div className='category'>
-                            <img src={adventure} alt="cat-img" />
-                            <div className='category-name'>Adventure</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/9">
-                        <div className='category'>
-                            <img src={crime} alt="cat-img" />
-                            <div className='category-name'>Crime</div>
-                        </div> 
-                    </Link> 
-                </div>
-                <div className="category-column">
-                    <Link to="/category/results/10">
-                        <div className='category'>
-                            <img src={scifi} alt="cat-img" />
-                            <div className='category-name'>Sci-Fi</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/11">
-                        <div className='category'>
-                            <img src={horror} alt="cat-img" />
-                            <div className='category-name'>Horror</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/12">
-                        <div className='category'>
-                            <img src={history} alt="cat-img" />
-                            <div className='category-name'>History</div>
-                        </div> 
-                    </Link> 
-                </div>
-                <div className="category-column">
-                    <Link to="/category/results/13">
-                        <div className='category'>
-                            <img src={documentry} alt="cat-img" />
-                            <div className='category-name'>Documentry</div>
-                        </div> 
-                    </Link>
-                    <Link to="/category/results/14">
-                        <div className='category'>
-                            <img src={thriller} alt="cat-img" />
-                            <div className='category-name'>Thriller</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={family} alt="cat-img" />
+                            <div className={style.categoryName}>Family</div>
                         </div> 
                     </Link>
                     <Link to="/category/results/15">
-                        <div className='category'>
-                            <img src={animation} alt="cat-img" />
-                            <div className='category-name'>Animation</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={war} alt="cat-img" />
+                            <div className={style.categoryName}>War</div>
                         </div> 
                     </Link> 
                 </div>
-                <div className="category-column">
-                    <Link to="/category/results/16">
-                        <div className='category'>
-                            <img src={fantasy} alt="cat-img" />
-                            <div className='category-name'>Fantasy</div>
+                <div className={style.categoryColumn}>
+                    <Link to="/category/results/7">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={biopic} alt="cat-img" />
+                            <div className={style.categoryName}>Biopic</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/8">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={adventure} alt="cat-img" />
+                            <div className={style.categoryName}>Adventure</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/6">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={crime} alt="cat-img" />
+                            <div className={style.categoryName}>Crime</div>
+                        </div> 
+                    </Link> 
+                </div>
+                <div className={style.categoryColumn}>
+                    <Link to="/category/results/9">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={scifi} alt="cat-img" />
+                            <div className={style.categoryName}>Sci-Fi</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/11">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={horror} alt="cat-img" />
+                            <div className={style.categoryName}>Horror</div>
                         </div> 
                     </Link>
                     <Link to="/category/results/17">
-                        <div className='category'>
-                            <img src={drama} alt="cat-img" />
-                            <div className='category-name'>Drama</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={history} alt="cat-img" />
+                            <div className={style.categoryName}>History</div>
+                        </div> 
+                    </Link> 
+                </div>
+                <div className={style.categoryColumn}>
+                    <Link to="/category/results/10">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={documentry} alt="cat-img" />
+                            <div className={style.categoryName}>Documentry</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/12">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={thriller} alt="cat-img" />
+                            <div className={style.categoryName}>Thriller</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/14">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={animation} alt="cat-img" />
+                            <div className={style.categoryName}>Animation</div>
+                        </div> 
+                    </Link> 
+                </div>
+                <div className={style.categoryColumn}>
+                    <Link to="/category/results/13">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={fantasy} alt="cat-img" />
+                            <div className={style.categoryName}>Fantasy</div>
                         </div> 
                     </Link>
                     <Link to="/category/results/18">
-                        <div className='category'>
-                            <img src={mystery} alt="cat-img" />
-                            <div className='category-name'>Mystery</div>
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={drama} alt="cat-img" />
+                            <div className={style.categoryName}>Drama</div>
+                        </div> 
+                    </Link>
+                    <Link to="/category/results/16">
+                        <div className={style.category}>
+                            <img className={style.categoryImage} src={mystery} alt="cat-img" />
+                            <div className={style.categoryName}>Mystery</div>
                         </div> 
                     </Link> 
                 </div>

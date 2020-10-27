@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './css/videoplayer.css'
 import axiosInstance from '../axios'
-import screenfull from 'screenfull'
+// import screenfull from 'screenfull'
 import ReportVideo from './ReportVidCom'
+import './sample.vtt'
 
 // exports video player 
 // TODO: 
@@ -228,9 +229,42 @@ class VideoPlayer extends Component {
       }
     };
 
-    onToggleFullScreen = () => {
-      screenfull.toggle(this.videoPlayer.current);
+    // onToggleFullScreen = () => {
+    //   screenfull.toggle(this.videoPlayer.current);
+    // }
+    goFullScreen = (e) => {
+      e.target.requestFullscreen();
+      console.log(e.target);
     }
+    goFullScreenOnClick = () => {
+      if(this.videoRef && this.videoRef.current) {
+        this.videoRef.current.requestFullscreen();
+      }
+    }
+
+    /*
+      Picture in Picture
+    */
+    togglePicInPic = () => {
+      if (document.pictureInPictureElement) {
+        document
+          .exitPictureInPicture()
+          .catch(error => {
+            console.log('cannot cancel pip');
+        })
+      } else if(this.videoRef && this.videoRef.current) {
+        this.videoRef.current.requestPictureInPicture();
+      }
+
+      // TODO: 
+      // play subtitles
+
+      // const currVideo = 
+      // const track = this.videoRef.current.textTracks[0];
+      // track.mode = 'showing';
+      // console.log(track);
+    }
+      
 
     // ....................like/dislike handlers ....................
     /* 
@@ -339,9 +373,6 @@ class VideoPlayer extends Component {
 
        return (
           <div>
-            {/* Title */}
-            <h1>{video.title}</h1>
-           
             {/* Video player */}
 
             <div
@@ -351,7 +382,9 @@ class VideoPlayer extends Component {
              ref={this.videoPlayer}
              onMouseEnter={this.updateShowControls}
              onMouseLeave={this.updateHideControls}
-             onDoubleClick={this.onToggleFullScreen}
+            //  onDoubleClick={this.onToggleFullScreen}
+              onDoubleClick={e => this.goFullScreen(e)}
+              allowFullScreen
            >
              <video
                id='main-video-player'
@@ -365,7 +398,9 @@ class VideoPlayer extends Component {
                onEnded={this.updateEnded}
                onVolumeChange={this.updateVolume}
                allowFullScreen
-             />
+             >
+               <track label="English" kind="subtitles" srcLang="es" src="sample.vtt" metadatatype="xml/scte35schemadef"></track>
+             </video>
              
              <div className="video-info">
                
@@ -388,13 +423,13 @@ class VideoPlayer extends Component {
                  <div className='left-side-controls'>
                     {/* volume controls */}
                     <div className="volume-controls">
-                      <button className="control-btn" onClick={this.toggleVolume}>
+                      <div className="control-btn" onClick={this.toggleVolume}>
                         {this.state.isVolumeOn ? (
                           <i className="fa fa-volume-up" aria-hidden="true" title='mute'></i>
                         ) : (
                           <i className="fas fa-volume-mute" aria-hidden="true" title='unmute'></i>
                         )}
-                      </button>
+                      </div>
                       <div
                         className="volume-progressbar"
                         ref={this.volumeProgress}
@@ -428,13 +463,13 @@ class VideoPlayer extends Component {
                      {/* play pause buttons */}
                     <div className="controls">
                       {this.state.isPlaying ? (
-                        <button className="control-btn" onClick={this.handlePause}>
+                        <div className="control-btn" onClick={this.handlePause}>
                           <i className="fa fa-pause" aria-hidden="true" title='pause'></i>
-                        </button>
+                        </div>
                       ) : (
-                        <button className="control-btn" onClick={this.handlePlay}>
+                        <div className="control-btn" onClick={this.handlePlay}>
                           <i className="fas fa-play" aria-hidden="true" title='play'></i>
-                        </button>
+                        </div>
                       )}
                     </div>
                     {/* play pause buttons */}
@@ -465,8 +500,11 @@ class VideoPlayer extends Component {
                     {/* <div className='options-btn' title='options'>
                     </div>   */}
 
+                    <div className='pip-btn' onClick={this.togglePicInPic} title='picture in picture'></div>
+
                     {/* full screen button */}
-                    <div className='fullscreen-btn' onClick={this.onToggleFullScreen} title='fullscreen'>
+                    {/* <div className='fullscreen-btn' onClick={this.onToggleFullScreen} title='fullscreen'> */}
+                    <div className='fullscreen-btn' onClick={this.goFullScreenOnClick} title='fullscreen'>
                     </div>  
                   </div>
                </div>
@@ -474,7 +512,8 @@ class VideoPlayer extends Component {
            </div>
                     
             {/* Other video details */}
-            <div>
+            <div className='player-video-info'>
+               <h1>{video.title}</h1>
                <span>Description: {video.description}</span>
                <span className='vote-btn' onClick={this.handleLike}>
                  <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 

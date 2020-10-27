@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import PrivateRoute from "./Routes/PrivateRoute";
 import AdminRoute from "./Routes/AdminRoute";
-// import "./index.css";
+import "./components/css/main.css";
 import App from "./App";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -21,6 +21,8 @@ import VideoReportAction from './components/admin/VideoReportAction';
 import CommentReportAction from "./components/admin/CommentReportAction";
 import Category from "./components/Category";
 import CategoryResults from "./components/CategoryResults";
+import VideoPreplay from './components/VideoPreplay';
+
 
 const routing = (
     <Router>
@@ -33,6 +35,7 @@ const routing = (
                 <Route exact path="/register" component={Register} />
 
                 <PrivateRoute exact path="/profile" component={UserProfile} />
+                <PrivateRoute exact path="/preplay/:id" component={VideoPreplay} />
                 <PrivateRoute exact path="/play/:id" component={GetVideo} />
                 <PrivateRoute exact path="/logout" component={Logout} />
 
@@ -67,7 +70,7 @@ const routing = (
 
                 <Route 
                     exact
-                    path="/category"
+                    path="/categories"
                     component={Category}
                 />
                 <Route 

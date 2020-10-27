@@ -1,0 +1,33 @@
+.modalContainer {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    display: block;
+    position: fixed;
+    display: flex;
+    justify-content: center;  
+}
+
+.modal {
+    position: fixed;  
+    z-index: 1;    
+    left: 40;
+    top: 8%;
+    width: 400px;
+    height: 100px;
+    background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink));
+    color: white;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 18px;
+    flex-direction: row;
+    margin-bottom: 0;
+    box-shadow: 0 8px 6px -6px black
+}
+
+.modalText {
+    width: 60%;
+    text-align: center;
+}

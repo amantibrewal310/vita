@@ -16,7 +16,7 @@ function VideoList(props) {
         <div>
         {
             videoList.map(video => (
-                <Link key={video.id} to={`play/${video.id}`} >
+                <Link key={video.id} to={`preplay/${video.id}`} >
                     <div>
                         <img src={video.thumbnail} width="200px" alt="thumbnail"/>
                         <h3>{video.title}</h3>
