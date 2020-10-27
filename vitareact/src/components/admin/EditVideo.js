@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import axiosInstance from '../../axios';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
-import '../css/register.css';
 
 // Returns the edit video form
 

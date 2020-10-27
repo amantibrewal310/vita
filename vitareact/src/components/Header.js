@@ -1,48 +1,152 @@
-import React, {useState} from 'react'
-import '../components/css/header.css'
-import {Link, useHistory} from 'react-router-dom'
-import AuthControl from './auth/AuthControl';
+import React, {useState, useRef} from 'react';
+import style from './css/header.module.css';
+import {Link, useHistory} from 'react-router-dom';
+import checkLoggedIn from '../components/auth/checkLoggedIn';
+import checkAdminLoggedIn from '../components/auth/checkAdminLoggedIn';
 
 function Header() {
-
-    // No serach functionality present
-
-    // let history = useHistory();
-    // const [data, setData] = useState({search: ''});
-
-    // const handleChange = (e) => {
-    //     // update state from value of input 
-    //     setData({
-    //         ...data,
-    //         search: e.target.value
-    //     })
-    // }
-
-    // const handleSubmit = (e) => {
-    //     console.log(data);
-    //     history.push({
-    //         pathname: `/search/`,
-    //         search: `?search=${data.search}`
-    //     });
-    //     // reload is necessary to tell browser 
-    //     // we have arrived to this page 
-    //     window.location.reload();
-    // }
+    const history = useHistory();
+    const [burger, setBurger] = useState(true);
+    const navbarRef = useRef(null);
+    /* 
+        toggle navbar burger click
+    */
+    const handleOpenNav = () => {
+        let el = navbarRef.current;
+        el.style.width = (el.style.width == '100%') ? '0' : '100%';
+        setBurger(!burger);
+    }
+    /* 
+        when width < 900px
+    */
+    const handlePageChange = () => {
+        if(!burger) {
+            handleOpenNav();
+        }
+    }
+    /* 
+        go home
+    */
+    const redirectHome = () => {
+         history.push('/');
+    }
 
     return (
-        <div className="topnav">
-            <Link 
-                className='active'
-                to="/"
-                color="textPrimary"
+        <>
+        <div className={style.header}>
+            <span 
+                className={style.logo}
+                onClick={redirectHome}
             >
-                Home
-            </Link>
+                Vita
+            </span>
             
-            {/* login, logout, register */}
-            <AuthControl />
+            {/* burgur */}
+            <span 
+                className={style.openbtn}
+                onClick={handleOpenNav}
+            >
+                {
+                    (burger)
+                    ? (<i className="fa fa-bars"></i>)
+                    : (<i className="fa fa-times"></i>)
+                }
+            </span>
 
+            <div className={style.navbar} ref={navbarRef}>
+                <div className={style.navbarLinkContainer}>
+                    
+                    <Link to="/search">
+                        <div className={style.navbarLink} onClick={handlePageChange}>
+                            <span className={style.navItem}>
+                                <i className={`fa fa-search ${style.icon}`}></i>
+                                Search
+                            </span>
+                        </div>
+                    </Link>
+
+                    <Link to="/categories">
+                        <div className={style.navbarLink} onClick={handlePageChange}>
+                            <span className={style.navItem}>
+                                <i className={`fa fa-film ${style.icon}`}></i>
+                                Categories
+                            </span>
+                        </div>
+                    </Link>
+
+                    <Link to="/subscribe">
+                        <div className={style.navbarLink} onClick={handlePageChange}>
+                            <span className={style.navItem}>
+                                <i className={`fa fa-star-o ${style.icon}`}></i>
+                                Subscribe
+                            </span>
+                        </div>
+                    </Link>
+                    
+                    {
+                        (checkLoggedIn())
+                        ? (
+                            <>
+                            <div className={style.navbarLink} onClick={handlePageChange}>
+                                {
+                                    (checkAdminLoggedIn())
+                                    ? (
+                                        <Link to="/admin">
+                                            <span className={style.navItem}>
+                                                <i className={`fa fa-user-cog ${style.icon}`}></i>
+                                                Admin
+                                            </span>
+                                        </Link>
+                                    ): (
+                                        <Link to="/profile">
+                                            <span className={style.navItem}>
+                                                <i className={`fa fa-user ${style.icon}`}></i>
+                                                Profile
+                                            </span>
+                                        </Link>
+                                    ) 
+                                }
+                            </div>
+                                
+                            <Link to="/logout">
+                                <div className={style.navbarLink} onClick={handlePageChange}>
+                                    <span className={style.navItem}>
+                                        Logout
+                                    </span>
+                                </div>
+                            </Link>
+                            </>
+                        ) : (
+                            <Link to="/login">
+                                <div className={style.navbarLink} onClick={handlePageChange}>
+                                    <span className={style.navItem}>
+                                        Login
+                                    </span>
+                                </div>
+                            </Link>
+                        )
+                    }
+                </div>
+            </div>
         </div>
+        <div className={style.mainContent}>
+        #
+        </div>
+        </>
+
+        // <div className="topnav">
+        //     <Link 
+        //         className='active'
+        //         to="/"
+        //         color="textPrimary"
+        //     >
+        //         Home
+        //     </Link>
+            
+        //     {/* login, logout, register */}
+        //     <AuthControl />
+
+        // </div>
     );
 }
     

@@ -7,14 +7,20 @@ function Logout() {
 	const history = useHistory();
 
 	// if user is not logged in and tries to logout rect
-	if(!checkLoggedIn()) {
-		history.push('/');	
+	if(!checkLoggedIn() ||  !window.confirm('Are your sure to logout')) {
+		history.goBack();	
 		return <></>;
 	}
 
-	const response = axiosInstance.post('user/logout/blacklist/', {
+	axiosInstance.post('user/logout/blacklist/', {
 		refresh_token: localStorage.getItem('refresh_token'),
-	});
+	})
+	.then(res => {
+		console.log(res);
+	})
+	.catch(err => {
+		console.log(err);
+	})
 
 	localStorage.removeItem('access_token');
 	localStorage.removeItem('refresh_token');
