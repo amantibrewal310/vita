@@ -120,7 +120,7 @@ function Login() {
 
     return (
         <div className={formStyles.formBG}>
-            <Popup show={showPopup} message="Sigup Successfull!" type="success"/>
+            <Popup show={showPopup} message="Log In Successfull!" type="success"/>
             <div className={formStyles.formContainer}>
                 <h2 className={formStyles.heading}>Login</h2>
                 {
