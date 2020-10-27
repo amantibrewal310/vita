@@ -1,28 +1,22 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-
-* {
-    box-sizing: border-box;
-}
-
-.category-container {
+.categoryContainer {
     margin: 40px 20px;
-    background-color: rgb(26, 22, 22);
+    background-color: var(--vita-dark-blue);
     padding: 0 10px 40px 10px;
     border-radius: 6px;
 }
-.category-container > h3 {
+.categoryContainerHeading {
     color: whitesmoke;
     margin: 0;
     padding: 10px;
     font-size: 40px;
 }
-.category-row {
+.categoryRow {
     display: flex;
     flex-wrap: wrap;
 }
 
-.category-column {
+.categoryColumn {
     flex: 16.66%;
     max-width: 16.66%;
     padding: 0 6px;
@@ -37,13 +31,13 @@
     border-radius: 4px;
 }
 
-.category > img {
+.categoryImage {
     width: 100%;
     border-radius: 4px;
     opacity: 0.65;
 }
 
-.category-name {
+.categoryName {
     position: absolute;
     top: 80%;
     left: 50%;
@@ -61,19 +55,22 @@
     transform: translateX(8px);
     /* transform: scale(1.06); */
 }
-.category>img:hover {
+.categoryImage:hover {
     opacity: 0.85;
 }
 
-@media screen and (max-width: 800px) {
-    .category-column {
+@media screen and (max-width: 900px) {
+    .categoryColumn {
         flex: 32%;
         max-width: 32%;
+    }
+    .categoryName {
+        font-size: 16px;
     }
 }
 
 @media screen and (max-width: 600px) {
-    .category-column {
+    .categoryColumn {
         flex: 50%;
         max-width: 50%;
     }

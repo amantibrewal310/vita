@@ -1,32 +1,17 @@
-:root {
-    --player-color: rgba(26, 29, 26, 0.25);
-    --progress-color: #eb2b9b;
-    --progressbar-color: rgba(177, 145, 192, 0.55);
-    --text-color: #a2aebb;
-    /* --video-player-width: 800px; */
-    --easing: 0.25s;
-}
-
 .videoPlayer {
+    width: 98vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-bottom: 0;
-    margin: 10px;
+    margin: 10px 1vw 10px 1vw;
     position: relative;
     display: inline-flex;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.835);
     overflow: hidden;
+    background-color: var(--vita-dark-blue);
 }
 .videoPlayer video {
-    max-width: var(--video-player-width);
+    width: 70%;
     margin: auto;
-    /* 
-    TODO: 
-    add media queries to video 
-    */
-    min-width: 800px;
-    min-height: 500px;
-    max-width: 1000px;
-    max-height: 600px;
 }
 
 .video-info {
@@ -54,7 +39,7 @@
 
 .video-info .progress-bar {
     height: 4px;
-    background-color: var(--progressbar-color);
+    background-color: var(--vita-dark-grey);
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -94,21 +79,23 @@
     align-items: center;
     border: none;
     background: transparent;
-    color: var(--text-color);
+    color: var(--vita-light-grey);
     outline: 0;
     transition: 0.3s ease;
     cursor: pointer;
+    outline: none;
+    border: none;
 }
 .control-btn:hover {
     color: #ff1e74;
 }
 .time-control {
     display: flex;
-    color: var(--text-color);
+    color: var(--vita-light-grey);
     font-size: 14px;
 }
 .time {
-    color: var(--text-color);
+    color: var(--vita-light-grey);
     width: 64px;
     justify-content: center;
     display: flex;
@@ -117,7 +104,7 @@
 
 .start-time, .end-time {
     transition: 0.1s ease;
-    color: var(--text-color);
+    color: var(--vita-light-grey);
 }
 .start-time:hover {
     color: #fa761d;
@@ -140,14 +127,14 @@
     width: 42%;
 }
 .volume-controls {
-    color: var(--text-color);
+    color: var(--vita-light-grey);
     display: flex;
     align-items: center;
 }
 .playback-btn i {
     padding: 3px;
     font-size: 14px;
-    color: var(--text-color);
+    color: var(--vita-light-grey);
     cursor: pointer;
     transition: all ease 0.2s;
 }
@@ -175,7 +162,7 @@
     display: inline-flex;
     width: 100px;
     height: 4px;
-    background-color: var(--progressbar-color);
+    background-color: var(--vita-dark-grey);
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -206,7 +193,7 @@
     align-content: center;
 }
 
-.skip-btn, .fullscreen-btn {
+.skip-btn, .fullscreen-btn, .pip-btn {
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -234,6 +221,12 @@
 .fullscreen-btn:hover {
     background-image: url('../../images/fullscr.png');
 }
+.pip-btn {
+    background-image: url('../../images/pipN.png');
+}
+.pip-btn:hover {
+    background-image: url('../../images/pip.png');
+}
 
 .options-btn:hover {
     background-image: url('../../images/options.png');
@@ -245,7 +238,7 @@
 
 .right-side-controls {
     display: flex;
-    width: 23%;
+    width: 25%;
     flex-direction: row;
     justify-content: space-between;
     position: relative;
@@ -263,6 +256,9 @@
 
 /* hiding the standard video controls in fullscreen*/
 /* uncomment to fullscreen */
-/* ::-webkit-media-controls {
+::-webkit-media-controls {
     display:none !important;
-} */
+}
+.video-info { 
+    z-index:2147483647; 
+}

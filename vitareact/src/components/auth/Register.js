@@ -1,9 +1,9 @@
-
 import React, {useState} from 'react';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import Popup from '../utils/Popup';
-import '../css/register.css';
+import formStyles from '../css/forms.module.css';
+
 
 function SignUp() {
     const history = useHistory();
@@ -40,6 +40,8 @@ function SignUp() {
             return;
         }
 
+        console.log(formData);
+
         axios.post(`http://127.0.0.1:8000/api/user/`, {
                 email: formData.email.trim(),
                 username: formData.username.trim(),
@@ -47,12 +49,19 @@ function SignUp() {
             })
             .then(response => {
                 setShowPopup(true);
+                setError({
+                    emptyFormError: null,
+                    emailError: null,
+                    usernameError: null,
+                    passwordError: null
+                });
                 setTimeout(() => {
                     history.push('/login');
                 }, 2000);
             })
             .catch(err => {
                 // some credential errors
+                err = err.response;
                 if(err.data.email) {
                     setError({
                         ...error,
@@ -95,51 +104,81 @@ function SignUp() {
     }
 
     return (
-        <>
-        <Popup show={showPopup} message="Sigup Successfull, Redirecting to Login..." type="success"/>
-        <div className='form-container'>
-            <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
-            <div>{error.emailError ? error.emailError: ''}</div>
-            <div>{error.usernameError ? error.usernameError: ''}</div>
-            <div>{error.passwordError ? error.passwordError: ''}</div>
-            <h2>Register Here</h2>
-            <form>
-                <div>
-                    <label>Email </label>
-                    <input 
-                        type="text" 
-                        required
-                        name="email"
-                        onChange={handleChange}
-                    />
+        <div className={formStyles.formBG}>
+           
+            <div className={formStyles.formContainer}>
+            <h2 className={formStyles.heading}>Sign Up</h2>
+                {
+                    (error.emptyFormError) 
+                    ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.usernameError)
+                    ? (<div className={formStyles.error}> {error.usernameError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.emailError) 
+                    ? (<div className={formStyles.error}> {error.emailError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.passwordError)
+                    ? (<div className={formStyles.error}> {error.passwordError} </div>)
+                    : (<></>)
+                }
+                <form className={formStyles.form}>
+                    <div>
+                        <input 
+                            type="text" 
+                            required
+                            name="email"
+                            placeholder="Email"
+                            className={formStyles.input}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            type="text" 
+                            required
+                            name="username"
+                            placeholder="Username"
+                            onChange={handleChange}
+                            className={formStyles.input}
+                        /> 
+                    </div>
+                    <div>
+                        <input 
+                            type="password" 
+                            required
+                            name="password"
+                            placeholder='Password'
+                            onChange={handleChange}
+                            className={formStyles.input}
+                        />
+                    </div>
+                    <button 
+                        className={formStyles.submitBtn}
+                        type="submit"
+                        onClick={handleSubmit}
+                    >
+                        Sign Up    
+                    </button>
+                </form>
+                <div className={formStyles.redirectLink}>
+                    <p>
+                        Already with us? 
+                    <Link to="../login">
+                        <span className={formStyles.redirectBtn}>
+                            <b> Log In </b>
+                        </span>
+                    </Link>
+                    </p>
                 </div>
-                <div>
-                    <label>Username </label>
-                    <input 
-                        type="text" 
-                        required
-                        name="username"
-                        onChange={handleChange}
-                    /> 
-                </div>
-                <div>
-                    <label>Password </label>
-                    <input 
-                        type="password" 
-                        required
-                        name="password"
-                        onChange={handleChange}
-                    />
-                </div>
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}
-                >
-                    Submit    
-                </button>
-            </form>
+            </div>
         </div>
-        </>
     )
 }
 

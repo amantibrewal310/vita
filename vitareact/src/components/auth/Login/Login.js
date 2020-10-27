@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import AxiosLoginInstance from './AxiosLogin';
-import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { useHistory, Link } from 'react-router-dom';
 import FbLogin from 'react-facebook-login';
 import FacebookLogin from './FacebookLogin';
-import checkLoggedIn from '../checkLoggedIn';
-import setAdminStatus from '../setAdminStatus';
-import '../../css/register.css';
+// import checkLoggedIn from '../checkLoggedIn';
+import checkAdminLoggedIn from '../checkAdminLoggedIn';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, FB_APP_ID} from '../../../Backend';
+import formStyles from '../../css/forms.module.css';
+import Popup from '../../utils/Popup';
 
 
 function Login() {
-
 	const initialFormData = Object.freeze({
 		email: '',
     	password: '',
@@ -24,7 +25,7 @@ function Login() {
 
 	const [formData, updateFormData] = useState(initialFormData);
     const [error, setError] = useState(intialErrors);
-    
+    const [showPopup, setShowPopup] = useState(false);    
 
 	const handleChange = (e) => {
 		updateFormData({
@@ -58,8 +59,17 @@ function Login() {
                 localStorage.setItem('expiry_time', expiry_time);
 				localStorage.setItem('access_token', res.data.access_token);
                 localStorage.setItem('refresh_token', res.data.refresh_token);
-                setAdminStatus(formData.email);
+                setAdminStatus();
                 // home page on succefull login 
+                setShowPopup(true);
+                setTimeout(() => {
+                    if(checkAdminLoggedIn())  {
+                        history.push('/admin');
+                    } else {
+                        history.push('/');
+                    }
+                    window.location.reload();
+                }, 1500);
             })
             .catch(err => {
                 // wrong credentials 
@@ -102,49 +112,75 @@ function Login() {
         }
     }
 
-    if(checkLoggedIn()) {
-        history.push('/');
-        return <></>
-    }
+    const setAdminStatus = async () => {
+        const res = await axios.get(`http://127.0.0.1:8000/api/user/byemail/${formData.email}/`);
+        const admin = (res.data.is_staff ? '1' : '0');
+        localStorage.setItem('admin', admin);
+    } 
 
     return (
-        <div className='form-container'>
-            <h2>Login Here</h2>
-            <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
-            <div>{error.credentialsError ? error.credentialsError: ''}</div>
-            <form>
-                <div>
-                    <label>Email </label>
-                    <input 
-                        type="text" 
-                        required
-                        name="email"
-                        onChange={handleChange}
-                    />
+        <div className={formStyles.formBG}>
+            <Popup show={showPopup} message="Sigup Successfull!" type="success"/>
+            <div className={formStyles.formContainer}>
+                <h2 className={formStyles.heading}>Login</h2>
+                {
+                    (error.emptyFormError) 
+                    ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.credentialsError)
+                    ? (<div className={formStyles.error}> {error.credentialsError} </div>)
+                    : (<></>)
+                }
+                <form className={formStyles.form}>
+                    <div>
+                        <input 
+                            type="text" 
+                            required
+                            name="email"
+                            placeholder='Email'
+                            onChange={handleChange}
+                            className={formStyles.input}
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            type="password" 
+                            required
+                            name="password"
+                            placeholder='Password'
+                            onChange={handleChange}
+                            className={formStyles.input}
+                        />
+                    </div>
+                    <button 
+                        className={formStyles.submitBtn}
+                        type="submit"
+                        onClick={handleSubmit}
+                    >
+                        Log In    
+                    </button>
+                </form>
+                <div className={formStyles.fblogin}>
+                    <FbLogin
+		    	    	appId={FB_APP_ID}
+		    	    	fields="name,email,picture"
+		    	    	callback={responseFacebook}
+                        size="medium"
+		    	    />
                 </div>
-                <div>
-                    <label>Password </label>
-                    <input 
-                        type="password" 
-                        required
-                        name="password"
-                        onChange={handleChange}
-                    />
+                <div className={formStyles.redirectLink}>
+                    <p>
+                        Not a member yet? 
+                    <Link to="../register">
+                        <span className={formStyles.redirectBtn}>
+                            <b> Sign Up </b>
+                        </span>
+                    </Link>
+                    </p>
                 </div>
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}
-                >
-                    Submit    
-                </button>
-            </form>
-        
-            <FbLogin
-				appId={FB_APP_ID}
-				fields="name,email,picture"
-				callback={responseFacebook}
-			/>
-        
+            </div>
         </div>
     )
 }
