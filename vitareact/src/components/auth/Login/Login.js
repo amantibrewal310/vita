@@ -120,7 +120,7 @@ function Login() {
 
     return (
         <div className={formStyles.formBG}>
-            <Popup show={showPopup} message="Sigup Successfull!" type="success"/>
+            <Popup show={showPopup} message="Log In Successfull!" type="success"/>
             <div className={formStyles.formContainer}>
                 <h2 className={formStyles.heading}>Login</h2>
                 {
@@ -176,6 +176,15 @@ function Login() {
                     <Link to="../register">
                         <span className={formStyles.redirectBtn}>
                             <b> Sign Up </b>
+                        </span>
+                    </Link>
+                    </p>
+                </div>
+                <div className={formStyles.redirectLink}>
+                    <p>
+                    <Link to="../reset-password">
+                        <span className={formStyles.redirectBtn}>
+                            <b> Forgot Password </b>
                         </span>
                     </Link>
                     </p>

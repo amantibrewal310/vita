@@ -15,6 +15,13 @@
 
 # Django
     - user can report only once
+    - video model add 
+        - playtime
+        - category
+        - poster 
+    - validation backend (in serializer)
+        - https://www.youtube.com/watch?v=u0qpTOmXvvs&list=PLx-q4INfd95EsUuON1TIcjnFZSqUfMf7s&index=3
+    - change database postgres
 
 # React
     - increase video views on play
@@ -28,6 +35,11 @@
     - success pop up boxes after form fill
     - reply feature in comments
     - pin feature in comments 
-    - wacth list for user   
+    - watch list for user   
 
 # Ideas 
+
+
+# Tasks
+    - captions
+    - realtime notif 

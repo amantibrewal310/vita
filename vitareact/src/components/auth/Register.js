@@ -105,7 +105,7 @@ function SignUp() {
 
     return (
         <div className={formStyles.formBG}>
-           
+            <Popup show={showPopup} message="Welcome to Vita!" type="success"/>
             <div className={formStyles.formContainer}>
             <h2 className={formStyles.heading}>Sign Up</h2>
                 {

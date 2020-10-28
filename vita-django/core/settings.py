@@ -1,6 +1,8 @@
 
 from pathlib import Path
 from datetime import timedelta
+
+from django.urls import conf
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -207,6 +209,14 @@ SOCIAL_AUTH_USER_FIELDS = ['email', 'username', 'first_name', 'password']
 # # 500MB
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 1048576000
 
+
+# SMTP CONFIG
+
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER=config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
 
 
 
