@@ -2,11 +2,13 @@ from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
 
+from membership.serializers import MembershipSerializer
+
 from .models import (Video, Comment, VideoCategory, ReportReason,
                      VideoVote, CommentVote, VideoReport, CommentReport)
 
 
-class VideoSerializer(serializers.HyperlinkedModelSerializer):
+class VideoSerializer(serializers.ModelSerializer):
     # adds user to the comment
     user = serializers.ReadOnlyField(source='user.id')
     thumbnail = serializers.ImageField(
@@ -14,10 +16,14 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     videoFile = serializers.FileField(
         allow_empty_file=False, allow_null=True, required=False)
 
+    # allowed_membership = MembershipSerializer(many=True)
+    allowed_membership = models.CharField(max_length=1024)
+
     class Meta:
         model = Video
         fields = ('id', 'title', 'description', 'thumbnail',
-                  'videoFile', 'user', 'likes', 'dislikes', 'views', 'reported', 'status', 'allowed_membership')
+                  'videoFile', 'user', 'likes', 'dislikes', 
+                  'views', 'reported', 'status', 'category', 'playtime', 'allowed_membership')
 
 
 class CommentSerializer(serializers.ModelSerializer):
