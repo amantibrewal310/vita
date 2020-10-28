@@ -1,0 +1,62 @@
+.resultItem {
+    width: 100%;
+    margin-top: 15px;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.resultThumbnail {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.overlay {
+    background: linear-gradient(to bottom,  #061a3118, #061a31dc, #061a31e7, #061a31);
+    position: absolute;
+    transition: all 0.3s ease;
+    opacity: 0;
+    border-radius: 6px;
+}
+
+.resultInfo {
+    font-family: 'Raleway', sans;
+    color: white;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 0 8px;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 0.03em;
+}
+
+.resultTitle {
+    margin: 0;
+}
+
+.resultDescription {
+    margin: 3px;
+    font-size: 11px;
+}
+
+.overlayBottom {
+    height: 0;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.resultItem:hover .overlayBottom {
+    height: 40%;
+}
+
+.resultItem:hover .overlay {
+    opacity: 1;
+}
+
+.resultItem:hover {
+    transform: scale(1.07);
+}

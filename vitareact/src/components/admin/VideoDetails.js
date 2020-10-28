@@ -19,9 +19,9 @@ function VideoDetails() {
     return (
         <div>
             <h1><u>Video Details Page for Admin</u></h1>
+            <EditVideo id={id} />
             <GetVideo />
             <DeleteVidCom type="Video" urlSuffix="video/video-list/" id={id} />
-            <EditVideo id={id} />
             <ReportList type="video" id={id} />
             {/* TODO: 5. */}
         </div>

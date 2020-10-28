@@ -27,7 +27,7 @@ function VideoPreplay() {
         const q = title.replace(/[^a-zA-Z ]/g, "").split(' ').join('+');
         const baseurl = `https://www.googleapis.com/youtube/v3/search`;
         const key = `AIzaSyCZy2OBsSgT6FkZbyefZbZT_-Im11dzsbs`
-        const maxResults = 1
+        const maxResults = 5
         const url = `${baseurl}?part=snippet&key=${key}&type=video&q=${q},trailer&order=viewCount&maxResults=${maxResults}`;
 
         axios.get(url)

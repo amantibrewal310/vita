@@ -1,45 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import axiosInstance from '../axios';
+import axios from 'axios';
 import style from './css/category.module.css';
 import {Link} from 'react-router-dom'
+import StoreInRows from './utils/StoreInRows';
 
 function Category() {
 
     const [loading, setLoading] = useState(true);
     const [categories, setCategories] = useState([]);
+    const rows = 6;
 
     useEffect(() => {
-        axiosInstance
-            .get(`video/categories/`)
+        axios.get(`http://127.0.0.1:8000/api/video/categories/`)
             .then(res => {
+                const rowWise = StoreInRows(rows, res.data);
+                setCategories(rowWise);
                 setLoading(false);
-                storeInRows(res.data);
             })
             .catch(err => {
                 console.log(err)
             });
     }, []);
-
-    const storeInRows = (arr) => {
-        const rows = 6;
-        const eachSize = Math.round(arr.length / rows);
-        const rowWise = [];
-
-        var i, j;
-        var items = [];
-        for(i = 0; i<rows; i++) {            
-            for(j=eachSize*i; j<eachSize*(i+1); j++) {
-                items.push(arr[j]);
-            }
-            rowWise.push(items);
-            items = [];
-        }   
-        for(j=rows*eachSize; j<arr.length; j++) {
-            rowWise[rows-1].push(arr[j]);
-        }
-
-        setCategories(rowWise);
-    }
 
     return (
         <div className={style.categoryContainer}>
@@ -58,7 +39,7 @@ function Category() {
                                         <Link key={item.id} to={`/category/results/${item.id}`}>
                                             <div className={style.category}>
                                                 <img className={style.categoryImage} src={item.image} alt="cat-img" />
-                                                <div className={style.categoryName}>{item.category}</div>
+                                                <div className={style.categoryName}>{item.category.charAt(0).toUpperCase() + item.category.slice(1)}</div>
                                             </div> 
                                         </Link>
                                     ))
