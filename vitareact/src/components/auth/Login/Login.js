@@ -89,81 +89,80 @@ function Login() {
 		window.location.reload();
 	};
 
-    return (
-        <div className={formStyles.formBG}>
-            <Popup show={showPopup} message="Log In Successfull!" type="success"/>
-            <div className={formStyles.formContainer}>
-                <h2 className={formStyles.heading}>Login</h2>
-                {
-                    (error.emptyFormError) 
-                    ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
-                    : (<></>)
-                }
-                {
-                    (error.credentialsError)
-                    ? (<div className={formStyles.error}> {error.credentialsError} </div>)
-                    : (<></>)
-                }
-                <form className={formStyles.form}>
-                    <div>
-                        <input 
-                            type="text" 
-                            required
-                            name="email"
-                            placeholder='Email'
-                            onChange={handleChange}
-                            className={formStyles.input}
-                        />
-                    </div>
-                    <div>
-                        <input 
-                            type="password" 
-                            required
-                            name="password"
-                            placeholder='Password'
-                            onChange={handleChange}
-                            className={formStyles.input}
-                        />
-                    </div>
-                    <button 
-                        className={formStyles.submitBtn}
-                        type="submit"
-                        onClick={handleSubmit}
-                    >
-                        Log In    
-                    </button>
-                </form>
-                <div className={formStyles.fblogin}>
-                    <FbLogin
-		    	    	appId={FB_APP_ID}
-		    	    	fields="name,email,picture"
-		    	    	callback={responseFacebook}
-                        size="medium"
-		    	    />
-                </div>
-                <div className={formStyles.redirectLink}>
-                    <p>
-                        Not a member yet? 
-                    <Link to="../register">
-                        <span className={formStyles.redirectBtn}>
-                            <b> Sign Up </b>
-                        </span>
-                    </Link>
-                    </p>
-                </div>
-                <div className={formStyles.redirectLink}>
-                    <p>
-                    <Link to="../reset-password">
-                        <span className={formStyles.redirectBtn}>
-                            <b> Forgot Password </b>
-                        </span>
-                    </Link>
-                    </p>
-                </div>
-            </div>
-        </div>
-    )
-}
+	// return (
+	//     <div className={formStyles.formBG}>
+	//         <Popup show={showPopup} message="Log In Successfull!" type="success"/>
+	//         <div className={formStyles.formContainer}>
+	//             <h2 className={formStyles.heading}>Login</h2>
+	//             {
+	//                 (error.emptyFormError)
+	//                 ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
+	//                 : (<></>)
+	//             }
+	//             {
+	//                 (error.credentialsError)
+	//                 ? (<div className={formStyles.error}> {error.credentialsError} </div>)
+	//                 : (<></>)
+	//             }
+	//             <form className={formStyles.form}>
+	//                 <div>
+	//                     <input
+	//                         type="text"
+	//                         required
+	//                         name="email"
+	//                         placeholder='Email'
+	//                         onChange={handleChange}
+	//                         className={formStyles.input}
+	//                     />
+	//                 </div>
+	//                 <div>
+	//                     <input
+	//                         type="password"
+	//                         required
+	//                         name="password"
+	//                         placeholder='Password'
+	//                         onChange={handleChange}
+	//                         className={formStyles.input}
+	//                     />
+	//                 </div>
+	//                 <button
+	//                     className={formStyles.submitBtn}
+	//                     type="submit"
+	//                     onClick={handleSubmit}
+	//                 >
+	//                     Log In
+	//                 </button>
+	//             </form>
+	//             <div className={formStyles.fblogin}>
+	//                 <FbLogin
+	// 	    	    	appId={FB_APP_ID}
+	// 	    	    	fields="name,email,picture"
+	// 	    	    	callback={responseFacebook}
+	//                     size="medium"
+	// 	    	    />
+	//             </div>
+	//             <div className={formStyles.redirectLink}>
+	//                 <p>
+	//                     Not a member yet?
+	//                 <Link to="../register">
+	//                     <span className={formStyles.redirectBtn}>
+	//                         <b> Sign Up </b>
+	//                     </span>
+	//                 </Link>
+	//                 </p>
+	//             </div>
+	//             <div className={formStyles.redirectLink}>
+	//                 <p>
+	//                 <Link to="../reset-password">
+	//                     <span className={formStyles.redirectBtn}>
+	//                         <b> Forgot Password </b>
+	//                     </span>
+	//                 </Link>
+	//                 </p>
+	//             </div>
+	//         </div>
+	//     </div>
+	// )
 
 	const setAdminStatus = async () => {
 		const res = await axios.get(
