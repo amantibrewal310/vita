@@ -47,7 +47,7 @@ class Video(models.Model):
     # time in mins
     playtime = models.IntegerField(default=0)
 
-    allowed_membership = models.ManyToManyField(Membership)
+    allowed_membership = models.ManyToManyField(Membership, blank=True)
 
     def __str__(self):
         return self.title
