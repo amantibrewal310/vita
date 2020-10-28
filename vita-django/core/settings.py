@@ -29,9 +29,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+
+
     'users',
     'vita_api',
     'video',
+    'payment',
+    'membership',
+
+
     'corsheaders',
     # Oauth
     'oauth2_provider',
@@ -46,8 +52,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-     # Oauth
-     # 'social_django.middleware.SocialAuthExceptionMiddleware',
+    # Oauth
+    # 'social_django.middleware.SocialAuthExceptionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -129,7 +135,7 @@ STATIC_URL = '/static/'
 
 # media
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/ 'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Custom user model
@@ -149,8 +155,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    
-    # NOTE: when DEFAULT_AUTHENTICATION_CLASSES is uncommented 
+
+    # NOTE: when DEFAULT_AUTHENTICATION_CLASSES is uncommented
     # 1. Django REST framework GUI does not allow login, since tokens are required
     # 2. Postman does not allow auth with username(email) and password
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -172,7 +178,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-# Facebook configuration 
+# Facebook configuration
 # Generated from developers.facebook <<<
 SOCIAL_AUTH_FACEBOOK_KEY = config('FB_SOCIAL_AUTH_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('FB_SOCIAL_SECRET')
@@ -187,8 +193,7 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 SOCIAL_AUTH_USER_FIELDS = ['email', 'username', 'first_name', 'password']
 
 
-
-#S3 BUCKETS CONFIG
+# S3 BUCKETS CONFIG
 
 # AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
@@ -200,14 +205,12 @@ SOCIAL_AUTH_USER_FIELDS = ['email', 'username', 'first_name', 'password']
 # AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# # look for files first in aws 
+# # look for files first in aws
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # # 500MB
 # FILE_UPLOAD_MAX_MEMORY_SIZE = 1048576000
-
-
 
 
 # CONFIG FOR STACK OVERFLOW ANS

@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.fields.related import ForeignKey
 from users.models import NewUser
+from membership.models import Membership
 # Create your models here.
 
 
@@ -42,6 +43,8 @@ class Video(models.Model):
 
     category = models.ForeignKey(
         VideoCategory, on_delete=models.SET_NULL, null=True)
+
+    allowed_membership = models.ManyToManyField(Membership)
 
     def __str__(self):
         return self.title

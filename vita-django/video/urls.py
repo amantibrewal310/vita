@@ -36,5 +36,8 @@ urlpatterns = [
     # search
     path('video-search/', views.VideoSearchView.as_view(), name='videosearch'),
     # filters
-    path('video-order/', views.VideoOrderView.as_view(), name='videoorder')
+    path('video-order/', views.VideoOrderView.as_view(), name='videoorder'),
+
+    # check access for the video
+    path('check-access/<int:pk>/', views.VideoAccess, name="video-access"),
 ]

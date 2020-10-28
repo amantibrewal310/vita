@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('video/', include('video.urls'), name='video'),
     path('videos/', views.GetVideosByCategory, name="videos-by-category"),
+    path('membership/', include('membership.urls'), name="membership"),
 ]

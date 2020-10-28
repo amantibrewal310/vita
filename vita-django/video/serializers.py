@@ -17,7 +17,7 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Video
         fields = ('id', 'title', 'description', 'thumbnail',
-                  'videoFile', 'user', 'likes', 'dislikes', 'views', 'reported', 'status')
+                  'videoFile', 'user', 'likes', 'dislikes', 'views', 'reported', 'status', 'allowed_membership')
 
 
 class CommentSerializer(serializers.ModelSerializer):
