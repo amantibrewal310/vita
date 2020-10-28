@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from django.http import JsonResponse
+from django.core import serializers
 from .serializers import (VideoSerializer, CommentSerializer,
                           VideoCategorySerializer, ReportReasonSerializer,
                           VideoVoteSerializer, CommentVoteSerializer,
@@ -15,11 +16,14 @@ from .models import (ReportReason, Video, Comment,
                      VideoCategory, VideoVote, CommentVote, VideoReport, CommentReport)
 from .permissions import IsOwnerOrReadOnly
 
+from membership.models import UserMembership
+from membership.serializers import UserMembershipSerializer
+
 
 # For Viewing comments of particular video
 @api_view(['GET'])
 def comment(request, pk):
-    comments = Comment.objects.filter(video=pk).order_by('-created_at')
+    comments = Comment.commentobjects.filter(video=pk).order_by('-created_at')
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -44,6 +48,35 @@ class VideoViewSet(viewsets.ModelViewSet):
     # user is not manually picked from list options
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+@api_view(["GET"])
+def VideoAccess(request, pk):
+    user = request.user
+    print(user)
+
+    video = Video.videoobjects.get(id=pk)
+    qs_allowed_membership = video.allowed_membership.all()
+    allowed_membership = []
+    print(allowed_membership)
+    for x in qs_allowed_membership:
+        print(str(x))
+        allowed_membership.append(str(x))
+    print(allowed_membership)
+    membership_type = UserMembership.objects.get(user=user).membership
+    print(membership_type)
+    # qs_json = serializers.serialize("json", allowed_membership)
+    if str(membership_type) in allowed_membership:
+        return Response(data={
+            "accessible": True,
+            "msg": "You are allowed to watch this video"
+        }, status=status.HTTP_200_OK)
+
+    return Response(data={
+        "accessible": False,
+        "msg": "You are not allowed to watch this video please upgrade your membership",
+        "allowed_membership": allowed_membership
+    }, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -101,7 +134,7 @@ def updateVideoVoteStatus(video_id, action, value):
 
 
 # vote video
-@api_view(['POST'])
+@ api_view(['POST'])
 def videoVote(request):
     videoID = request.data['video']
     action = request.data['action']
@@ -125,7 +158,7 @@ def videoVote(request):
                 "error": True,
                 "msg": "Please send request with valid parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
-    
+
     else:
         try:
             result = VideoVote.objects.filter(video=videoID, user=request.user)
@@ -196,9 +229,9 @@ def updateCommentVoteStatus(commentID, action, value):
         print(serializer.errors)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def commentVote(request):
-    commentID = request.data['comment']    
+    commentID = request.data['comment']
     action = request.data['action']
 
     if action == 'checkStatus':
@@ -273,7 +306,7 @@ def commentVote(request):
                 "msg": "Please pass with proper parameter"
             }, status=status.HTTP_400_BAD_REQUEST)
 
-          
+
 # video search, for both admin and user
 # end point - /api/video/video-search/?search=[query string]
 class VideoSearchView(generics.ListAPIView):
@@ -293,11 +326,11 @@ class VideoOrderView(generics.ListAPIView):
 
         # likes, dislikes, views, reported
         orderby = dict.get('orderby', None)
-        if orderby is not None: 
+        if orderby is not None:
             queryset = queryset.order_by('-' + orderby)
 
         return queryset
-        
+
 
 def updateVideoReportStatus(videoID):
 
@@ -313,7 +346,7 @@ def updateVideoReportStatus(videoID):
         print(serializer.errors)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def ReportVideo(request):
 
     serializer = VideoReportSerializer(data=request.data)
@@ -349,7 +382,7 @@ def updateCommentReportStatus(commentID):
         print(serializer.errors)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def ReportComment(request):
 
     serializer = CommentReportSerializer(data=request.data)
@@ -370,7 +403,7 @@ def ReportComment(request):
     }, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def ReportedVideoList(request):
     result = Video.objects.exclude(reported=0).exclude(status="reported")
 
@@ -379,7 +412,7 @@ def ReportedVideoList(request):
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def ReportedCommentList(request):
     result = Comment.objects.exclude(reported=0).exclude(status="reported")
 
@@ -388,7 +421,7 @@ def ReportedCommentList(request):
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def ReportedVideoDetail(request, pk):
     try:
         result = VideoReport.objects.filter(video=pk)
@@ -402,7 +435,7 @@ def ReportedVideoDetail(request, pk):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
 def ReportedCommentDetail(request, pk):
     try:
         result = CommentReport.objects.filter(comment=pk)
@@ -416,7 +449,7 @@ def ReportedCommentDetail(request, pk):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def UpdateVideoStatus(request):
     videoID = request.data['video_id']
     action = request.data['action']
@@ -457,7 +490,7 @@ def UpdateVideoStatus(request):
         })
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def UpdateCommentStatus(request):
     commentID = request.data['comment_id']
     action = request.data['action']
