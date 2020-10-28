@@ -22,6 +22,7 @@ import CommentReportAction from "./components/admin/CommentReportAction";
 import Category from "./components/Category";
 import CategoryResults from "./components/CategoryResults";
 import VideoPreplay from './components/VideoPreplay';
+import ForgotPassword from "./components/auth/ResetPassword/ForgotPassword";
 
 
 const routing = (
@@ -77,6 +78,11 @@ const routing = (
                     exact
                     path="/category/results/:id"
                     component={CategoryResults}
+                />
+                <Route 
+                    exact 
+                    path="/reset-password" 
+                    component={ForgotPassword} 
                 />
 
                 <Route path="*" component={NotFound} />

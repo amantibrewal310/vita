@@ -180,6 +180,15 @@ function Login() {
                     </Link>
                     </p>
                 </div>
+                <div className={formStyles.redirectLink}>
+                    <p>
+                    <Link to="../reset-password">
+                        <span className={formStyles.redirectBtn}>
+                            <b> Forgot Password </b>
+                        </span>
+                    </Link>
+                    </p>
+                </div>
             </div>
         </div>
     )

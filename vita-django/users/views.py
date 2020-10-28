@@ -66,7 +66,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
         email = request.data.get('email', '')
         
         if not email:
-            return Response({'error': 'email required in body'})
+            return Response({'success': False ,'message': 'Provide an email'}, status=status.HTTP_400_BAD_REQUEST)
 
         if NewUser.objects.filter(email=email).exists():
             user = NewUser.objects.get(email=email)
@@ -81,9 +81,11 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
                     'email_subject': 'Reset your passsword'}
             
             Util.send_email(data)
-            
-        return Response({'success': 'Please, check you mail for token'}, status=status.HTTP_200_OK)
+            print('sent email')
+            return Response({'success': True, 'message': 'Please, check you mail for token'}, status=status.HTTP_200_OK)
 
+        else:
+            return Response({'success': False ,'message': 'No user found'})
 
 # check the user with the token recieved
 class PasswordTokenCheckAPI(generics.GenericAPIView):
@@ -96,13 +98,13 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
 
         try:
             if not PasswordResetTokenGenerator().check_token(user, token):
-                return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'success': False ,'message': 'Token is not valid, please request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
             return Response({'success': True, 'message': 'Credentials valid', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
 
         except DjangoUnicodeDecodeError as identifier:
             if not PasswordResetTokenGenerator().check_token(user):
-                return Response({'error': 'Token is not valid, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({'success': False ,'message': 'Token is not valid, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 # set new password when token-user validation is done
