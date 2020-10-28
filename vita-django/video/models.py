@@ -43,6 +43,8 @@ class Video(models.Model):
 
     category = models.ForeignKey(
         VideoCategory, on_delete=models.SET_NULL, null=True)
+    # time in mins
+    playtime = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
