@@ -5,14 +5,18 @@ from rest_framework import serializers
 from .models import (Video, Comment, VideoCategory, ReportReason,
                      VideoVote, CommentVote, VideoReport, CommentReport)
 
+from membership.serializers import MembershipSerializer
 
-class VideoSerializer(serializers.HyperlinkedModelSerializer):
+
+class VideoSerializer(serializers.ModelSerializer):
     # adds user to the comment
     user = serializers.ReadOnlyField(source='user.id')
     thumbnail = serializers.ImageField(
         max_length=None, allow_empty_file=False, allow_null=True, required=False)
     videoFile = serializers.FileField(
         allow_empty_file=False, allow_null=True, required=False)
+
+    # allowed_membership = models.CharField()
 
     class Meta:
         model = Video

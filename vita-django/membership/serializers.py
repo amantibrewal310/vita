@@ -7,7 +7,7 @@ from .models import Membership, UserMembership, Subscription
 class MembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Membership
-        fields = "__all__"
+        fields = ('memebership_type',)
 
 
 class UserMembershipSerializer(serializers.ModelSerializer):
