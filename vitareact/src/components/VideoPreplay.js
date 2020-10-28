@@ -118,7 +118,8 @@ function VideoPreplay() {
                                         <iframe 
                                             width='320px' height='180px' 
                                             frameBorder='0'
-                                            src={`http://www.youtube.com/embed/${item.id.videoId}`} title="Trailer">
+                                            style={{borderRadius: '6px'}}
+                                            src={`http://www.youtube.com/embed/${item.id.videoId}`} title="Trailer" allowfullscreen="allowfullscreen">
                                         </iframe>
                                         {/* <span className={style.extrasTitle}>{item.snippet.title}</span> */}
                                     </div>

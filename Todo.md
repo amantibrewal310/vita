@@ -16,8 +16,6 @@
 # Django
     - user can report only once
     - video model add 
-        - playtime
-        - category
         - poster 
     - validation backend (in serializer)
         - https://www.youtube.com/watch?v=u0qpTOmXvvs&list=PLx-q4INfd95EsUuON1TIcjnFZSqUfMf7s&index=3
@@ -38,8 +36,7 @@
     - watch list for user   
 
 # Ideas 
-
-
-# Tasks
+    - live search
     - captions
     - realtime notif 
+    - register user activate
