@@ -9,11 +9,12 @@ from .serializers import (VideoSerializer, CommentSerializer,
                           VideoCategorySerializer, ReportReasonSerializer,
                           VideoVoteSerializer, CommentVoteSerializer,
                           VideoReportSerializer,
-                          CommentReportSerializer)
+                          CommentReportSerializer, WatchlistSerializer)
 
 
 from .models import (ReportReason, Video, Comment,
-                     VideoCategory, VideoVote, CommentVote, VideoReport, CommentReport)
+                     VideoCategory, VideoVote, CommentVote, 
+                     VideoReport, CommentReport, Watchlist)
 from .permissions import IsOwnerOrReadOnly
 
 from membership.models import UserMembership
@@ -529,3 +530,24 @@ def UpdateCommentStatus(request):
             "success": False,
             "msg": "Something went Wrong!"
         })
+
+
+
+
+# CRUD view for watchlist 
+
+class WatchlistViewSet(viewsets.ModelViewSet):
+    queryset = Watchlist.objects.all()
+    serializer_class = WatchlistSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+# watchlist for a user 
+# must send Auth token, since user is caught by request
+@api_view(['GET'])
+def watchListOfUser(request):
+    lists = Watchlist.objects.filter(user=request.user)
+    serializer =WatchlistSerializer(lists, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

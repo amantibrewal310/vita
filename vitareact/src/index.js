@@ -23,6 +23,7 @@ import Category from "./components/Category";
 import CategoryResults from "./components/CategoryResults";
 import VideoPreplay from './components/VideoPreplay';
 import ForgotPassword from "./components/auth/ResetPassword/ForgotPassword";
+import VideoSearch from './components/VideoSearch';
 
 
 const routing = (
@@ -83,6 +84,11 @@ const routing = (
                     exact 
                     path="/reset-password" 
                     component={ForgotPassword} 
+                />
+                <Route
+                    exact
+                    path="/search"
+                    component={VideoSearch}
                 />
 
                 <Route path="*" component={NotFound} />

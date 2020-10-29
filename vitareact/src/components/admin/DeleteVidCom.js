@@ -1,6 +1,7 @@
 import React from 'react'
 import {useHistory} from 'react-router-dom'
 import axiosInstance from '../../axios';
+import formStyles from '../css/forms.module.css'
 
 // Deletes video/comment 
 // props - type, id, urlSuffix
@@ -33,7 +34,12 @@ function DeleteVidCom({type, id, urlSuffix}) {
     return (
         <div>
             <h2>Delete {type}</h2>
-            <button onClick={handleDelete}>Delete</button>
+            <button 
+                onClick={handleDelete}
+                className={formStyles.dangerBtn}
+            >
+                Delete
+            </button>
         </div>
     )
 }

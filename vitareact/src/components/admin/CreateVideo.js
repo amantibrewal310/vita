@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axiosInstance from '../../axios';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import formStyles from '../css/forms.module.css';
+import Popup from '../utils/Popup';
 
 function CreateVideo() {
 
@@ -15,7 +17,9 @@ function CreateVideo() {
 
     const initTextData = Object.freeze({
         title: '',
-        description: ''
+        description: '',
+        playtime: 0,
+        category: -1
     });
     const initErrors = {
         emptyFormError: null,
@@ -26,12 +30,31 @@ function CreateVideo() {
         source:null
     }
 
-    // states 
-    const [textData, setTextData] = useState(initTextData);
+    // states
+    // category options
+    const [categoryOptions, setCategoryOptions] = useState([])
+    // form data 
+    const [textData, setTextData] = useState(initTextData)
     const [thumbnail, setThumbnail] = useState(null);
     const [videoFile, setVideoFile] = useState(null);
+    // form error
     const [error, setError] = useState(initErrors);
+    // form upload
     const [uploadState, setUploadState] = useState(initUploadState);
+    // popup
+    const [showPopup, setShowPopup] = useState(false); 
+
+    useEffect(() => {
+        // getting category options
+        axiosInstance
+            .get(`video/categories/`)
+            .then(res => {
+                setCategoryOptions(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
 
     // listener
     const handleChange = (e) => {
@@ -56,6 +79,7 @@ function CreateVideo() {
     // upload progress bar 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         // validate form
         if(!vaidateDetails()) {
             return;
@@ -65,6 +89,8 @@ function CreateVideo() {
 
         formData.append('title', textData.title.trim());
         formData.append('description', textData.description.trim());
+        formData.append('category', textData.category);
+        formData.append('playtime', textData.playtime);
         formData.append('thumbnail',thumbnail.thumbnail[0]);
         formData.append('videoFile', videoFile.videoFile[0]);
         console.log(formData);
@@ -80,6 +106,8 @@ function CreateVideo() {
         // TODO: 
         // progress not in sync with upload 
         // try putting a loader in place of progress bar 
+
+        // config for upload progress
         let config = {
             onUploadProgress: function(progressEvent) {
                 let percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total);
@@ -91,13 +119,17 @@ function CreateVideo() {
             cancelToken: source.token
         };
 
+        // send post request to create video 
         axiosInstance
             .post(`video/video-list/`, formData, config)
             .then(res => {
-                history.push({
-                    pathname: `/admin/video-details/${res.data.id}`,
-                });
-                window.location.reload();
+                setShowPopup(true);
+                setTimeout(() => {
+                    history.push({
+                        pathname: `/admin/video-details/${res.data.id}`,
+                    });
+                    window.location.reload();
+                }, 1500);
             })
             .catch(err => {
                 console.log(err);
@@ -110,7 +142,7 @@ function CreateVideo() {
             });
     }
 
-    // cancel handler 
+    // upload cancel handler 
     const handleCancelUpload = () => {
         console.log(uploadState.source);
         uploadState.source.cancel();
@@ -122,7 +154,9 @@ function CreateVideo() {
 
     // form validators 
     const vaidateDetails = () => {
-        if(textData.title === "" || textData.description === "" || thumbnail === null || videoFile === null) {
+        if (textData.title === "" || textData.description === "" || 
+            textData.category === -1 || textData.playtime <= 0 ||
+            thumbnail === null || videoFile === null) {
             // update the errors in form
             setError({
                 authError: null,
@@ -140,76 +174,137 @@ function CreateVideo() {
     }
 
     return (
-        <div className='form-container'>
-            {/* TODO:
-                create seperate error component, 
-                to be used it in all forms
-            */}
-            <div>{error.authError ? error.authError: ''}</div>
-            <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
-            <h2>Create Video Page</h2>
-            <form>
-                <div>
-                    <label>Title </label>
-                    <input 
-                        type="text" 
-                        name="title"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Description </label>
-                    <input 
-                        type="text" 
-                        name="description"
-                        onChange={handleChange}
-                        required
-                    /> 
-                </div>
-                <div>
-                    <input 
-                        type="file"
-                        accept="image/*" 
-                        id="thumbnail"
-                        name="thumbnail"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input 
-                        type="file"
-                        accept="video/*" 
-                        id="videoFile"
-                        name="videoFile"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}
-                >
-                    Create    
-                </button>
+        <div className={formStyles.formBG}>
+            <Popup show={showPopup} message="Video Uploaded Successfully" type="success"/>
+            <div className={formStyles.videoFormContainer}>
+                <h2 className={formStyles.heading}>Create new video</h2>
+                {/* TODO:
+                    create seperate error component, 
+                    to be used it in all forms
+                */}
+                {
+                    (error.authError) 
+                    ? (<div className={formStyles.error}> {error.authError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.emptyFormError)
+                    ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
+                    : (<></>)
+                }
                 {
                     (uploadState.uploadProgress > 0) 
                     ? (
-                        <>
-                            <div>Upload: {uploadState.uploadProgress}%</div>
+                        <div className={formStyles.uploadProgress}>
+                            <div  className={formStyles.error}>Upload: {uploadState.uploadProgress}%</div>
                             <button 
+                                className={formStyles.videoSubmitBtn}
                                 type="submit"
                                 onClick={handleCancelUpload}
                             >
-                                Cancel    
+                                Cancel
                             </button>
-                        </>
+                        </div>
                     ) : (
                         <></>
                     )
                 }
-            </form>
+                
+                <div className={formStyles.videoFormRow}>
+                    <div className={formStyles.videoFormCol}>
+                        <div>
+                            <input 
+                                type="text" 
+                                name="title"
+                                required
+                                placeholder="Video title"
+                                onChange={handleChange}
+                                className={formStyles.videoInput}
+                            />
+                        </div>
+                        <div>
+                            <textarea 
+                                rows="10"
+                                name="description"
+                                required
+                                placeholder="Storyline"
+                                onChange={handleChange}
+                                className={formStyles.videoInput}
+                                style={{resize: 'none'}}
+                            /> 
+                        </div>
+                    </div>
+                    <div className={formStyles.videoFormCol}>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="file"
+                                accept="image/*" 
+                                id="thumbnail"
+                                name="thumbnail"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="file"
+                                accept="video/*" 
+                                id="videoFile"
+                                name="videoFile"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="number" 
+                                name="playtime"
+                                required
+                                placeholder="Play time (minutes)"
+                                onChange={handleChange}
+                                min='0'
+                            /> 
+                        </div>
+                        <div className={formStyles.videoSelectInputContainer}>
+                            <select 
+                                value={textData.category} 
+                                onChange={(e) => {
+                                    setTextData({
+                                        ...textData,
+                                        category: e.target.value
+                                    })
+                                }}>
+                                <option 
+                                    key='0'
+                                    value='-1'
+                                > 
+                                    Select
+                                </option>
+                                {
+                                    categoryOptions.map(option => (
+                                        <option 
+                                            key={option.id} 
+                                            value={option.id}
+                                        > 
+                                            {option.category}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button 
+                        type="submit"
+                        onClick={handleSubmit}
+                        className={formStyles.videoSubmitBtn}
+                    >
+                        Create    
+                    </button> 
+                </div>
+            </div>
         </div>
     )
 }
