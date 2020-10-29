@@ -126,6 +126,7 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
     align-items: center;
+    padding-bottom: 15px;
 }
 
 .extrasItem {

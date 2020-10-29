@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import axiosInstance from '../../axios';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import formStyles from '../css/forms.module.css';
+import Popup from '../utils/Popup';
 
 // Returns the edit video form
 
@@ -19,7 +21,9 @@ function EditVideo({id}) {
 
     const initTextData = Object.freeze({
         title: '',
-        description: ''
+        description: '',
+        playtime: 0,
+        category: -1
     });
     const initErrors = {
         emptyFormError: null,
@@ -31,21 +35,31 @@ function EditVideo({id}) {
     }
 
     // states 
-    const [textData, setTextData] = useState(initTextData);
+    // category options
+    const [categoryOptions, setCategoryOptions] = useState([])
+    // form data 
+    const [textData, setTextData] = useState(initTextData)
     const [thumbnail, setThumbnail] = useState(null);
     const [videoFile, setVideoFile] = useState(null);
+    // form error
     const [error, setError] = useState(initErrors);
+    // form upload
     const [uploadState, setUploadState] = useState(initUploadState);
+    // popup
+    const [showPopup, setShowPopup] = useState(false);
 
     // fill the edit form with current values 
     useEffect(() => {
         axiosInstance
             .get(`video/video-list/${id}/`)
             .then(res => {
+                console.log(res);
                 setTextData({
                     ...textData,
                     title: res.data.title,
-                    description: res.data.description
+                    description: res.data.description,
+                    playtime: res.data.playtime,
+                    category: res.data.category
                 })
             })
             .catch(err => {
@@ -58,8 +72,21 @@ function EditVideo({id}) {
             });
     }, []);
 
-     // listener
-     const handleChange = (e) => {
+    // getting category options
+    useEffect(() => {
+        // getting category options
+        axiosInstance
+            .get(`video/categories/`)
+            .then(res => {
+                setCategoryOptions(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
+    // listener
+    const handleChange = (e) => {
         if([e.target.name] == 'thumbnail') {
             setThumbnail({
                 thumbnail: e.target.files
@@ -80,6 +107,9 @@ function EditVideo({id}) {
     // TODO: 
     // upload progress bar 
     const handleSubmit = (e) => {
+        console.log(textData);
+        console.log(thumbnail);
+        console.log(videoFile);
         e.preventDefault();
         // validate form
         if(!vaidateDetails()) {
@@ -90,7 +120,9 @@ function EditVideo({id}) {
 
         formData.append('title', textData.title.trim());
         formData.append('description', textData.description.trim());
-        
+        formData.append('category', textData.category);
+        formData.append('playtime', textData.playtime);
+
         if(thumbnail) {
             formData.append('thumbnail',thumbnail.thumbnail[0]);
         }
@@ -122,8 +154,13 @@ function EditVideo({id}) {
         axiosInstance
             .patch(`video/video-list/${id}/`, formData, config)
             .then(res => {
-                console.log(res);
-                window.location.reload();
+                setShowPopup(true);
+                setTimeout(() => {
+                    history.push({
+                        pathname: `/admin/video-details/${res.data.id}`,
+                    });
+                    window.location.reload();
+                }, 1500);
             })
             .catch(err => {
                 console.log(err);
@@ -148,15 +185,16 @@ function EditVideo({id}) {
 
     // form validators 
     const vaidateDetails = () => {
-        if(textData.title === "" || textData.description === "") {
+        if (textData.title === "" || textData.description === "" || 
+            textData.category === -1 || textData.playtime <= 0) {
             // update the errors in form
             setError({
                 authError: null,
-                emptyFormError: 'Fields cannot be empty'
+                emptyFormError: 'Fileds cannot be empty, invalid'
             });
             return false;
         } else {
-            // form is for path request
+            // form is completely filled
             setError({
                 authError:null,
                 emptyFormError: null
@@ -166,78 +204,137 @@ function EditVideo({id}) {
     }
 
     return (
-        <div className='form-container'>
-            {/* TODO:
-                create seperate error component, 
-                to be used it in all forms
-            */}
-            <div>{error.authError ? error.authError: ''}</div>
-            <div>{error.emptyFormError ? error.emptyFormError: ''}</div>
-            <h2>Edit Video</h2>
-            <form>
-                <div>
-                    <label>Title </label>
-                    <input 
-                        type="text" 
-                        name="title"
-                        value={textData.title}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Description </label>
-                    <input 
-                        type="text" 
-                        name="description"
-                        value={textData.description}
-                        onChange={handleChange}
-                        required
-                    /> 
-                </div>
-                <div>
-                    <input 
-                        type="file"
-                        accept="image/*" 
-                        id="thumbnail"
-                        name="thumbnail"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <input 
-                        type="file"
-                        accept="video/*" 
-                        id="videoFile"
-                        name="videoFile"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button 
-                    type="submit"
-                    onClick={handleSubmit}
-                >
-                    Edit    
-                </button>
+        <div className={formStyles.formBG}>
+            <Popup show={showPopup} message="Changes Saved Successfully" type="success"/>
+            <div className={formStyles.videoFormContainer}>
+                <h2 className={formStyles.heading}>Edit Video Details</h2>
+                {
+                    (error.authError) 
+                    ? (<div className={formStyles.error}> {error.authError} </div>)
+                    : (<></>)
+                }
+                {
+                    (error.emptyFormError)
+                    ? (<div className={formStyles.error}> {error.emptyFormError} </div>)
+                    : (<></>)
+                }
                 {
                     (uploadState.uploadProgress > 0) 
                     ? (
-                        <>
-                            <div>Upload: {uploadState.uploadProgress}%</div>
+                        <div className={formStyles.uploadProgress}>
+                            <div  className={formStyles.error}>Upload: {uploadState.uploadProgress}%</div>
                             <button 
+                                className={formStyles.videoSubmitBtn}
                                 type="submit"
                                 onClick={handleCancelUpload}
                             >
-                                Cancel    
+                                Cancel
                             </button>
-                        </>
+                        </div>
                     ) : (
                         <></>
                     )
                 }
-            </form>
+                <div className={formStyles.videoFormRow}>
+                    <div className={formStyles.videoFormCol}>
+                        <div>
+                            <input 
+                                type="text" 
+                                name="title"
+                                value={textData.title}
+                                required
+                                placeholder="Video title"
+                                onChange={handleChange}
+                                className={formStyles.videoInput}
+                            />
+                        </div>
+                        <div>
+                            <textarea 
+                                rows="10"
+                                name="description"
+                                required
+                                value={textData.description}
+                                placeholder="Storyline"
+                                onChange={handleChange}
+                                className={formStyles.videoInput}
+                                style={{resize: 'none'}}
+                            /> 
+                        </div>
+                    </div>
+            
+                    <div className={formStyles.videoFormCol}>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="file"
+                                accept="image/*" 
+                                id="thumbnail"
+                                name="thumbnail"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="file"
+                                accept="video/*" 
+                                id="videoFile"
+                                name="videoFile"
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input 
+                                className={formStyles.videoInput}
+                                type="number" 
+                                name="playtime"
+                                required
+                                value={textData.playtime}
+                                placeholder="Play time (minutes)"
+                                onChange={handleChange}
+                                min='0'
+                            /> 
+                        </div>
+                    
+                        <div className={formStyles.videoSelectInputContainer}>
+                            <select 
+                                value={textData.category} 
+                                onChange={(e) => {
+                                    setTextData({
+                                        ...textData,
+                                        category: e.target.value
+                                    })
+                                }}>
+                                <option 
+                                    key='0'
+                                    value='-1'
+                                > 
+                                    Select
+                                </option>
+                                {
+                                    categoryOptions.map(option => (
+                                        <option 
+                                            key={option.id} 
+                                            value={option.id}
+                                        > 
+                                            {option.category}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <button 
+                        type="submit"
+                        onClick={handleSubmit}
+                        className={formStyles.videoSubmitBtn}
+                    >
+                        Update Changes    
+                    </button> 
+                </div>
+            </div>
         </div>
     )
 }

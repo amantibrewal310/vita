@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields.related import ForeignKey
+from django.db.models.fields.related import ForeignKey, ManyToManyField
 from users.models import NewUser
 from membership.models import Membership
 # Create your models here.
@@ -154,3 +154,18 @@ class CommentReport(models.Model):
     # def __str__(self):
     #     return self.comment
     #     # return self.user.username + ' | ' + self.reason.reason + ' | ' + self.comment.text
+
+
+
+
+
+
+
+# watchlist model
+class Watchlist(models.Model):
+    name = models.CharField(max_length=50)
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    videos = models.ManyToManyField(Video, blank=True)
+
+    def __str__(self):
+        return self.name
