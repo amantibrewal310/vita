@@ -118,7 +118,7 @@ function VideoPreplay() {
                     </div>
                 </div>
                 
-                {/* add to playlist */}
+                {/* add to watchlist */}
                 {
                     (addTo)
                     ? ( <div className={style.detailBanner} style={{paddingBottom: '20px'}}>
