@@ -10,6 +10,7 @@ router.register(r'video-list', views.VideoViewSet)
 router.register(r'comment-list', views.CommentViewSet)
 router.register(r'categories', views.VideoCategoryViewSet)
 router.register(r'report-reason', views.ReportReasonViewSet)
+router.register(r'watchlist', views.WatchlistViewSet)
 
 urlpatterns = [
     # For Viewing comments of particular video
@@ -40,4 +41,7 @@ urlpatterns = [
 
     # check access for the video
     path('check-access/<int:pk>/', views.VideoAccess, name="video-access"),
+
+    # get watchlists for a user 
+    path('get-watchlist/user/', views.watchListOfUser, name='watchlist-of-user'),
 ]

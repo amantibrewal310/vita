@@ -5,7 +5,8 @@ from rest_framework import serializers
 from membership.serializers import MembershipSerializer
 
 from .models import (Video, Comment, VideoCategory, ReportReason,
-                     VideoVote, CommentVote, VideoReport, CommentReport)
+                     VideoVote, CommentVote, VideoReport, CommentReport, 
+                     Watchlist)
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -80,3 +81,16 @@ class CommentReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentReport
         fields = ('comment', 'reason', 'user')
+
+
+
+
+# watchlist serializer 
+class WatchlistSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.id')
+    # videos = models.CharField(max_length=1024)
+    videos = models.ForeignKey(Video, on_delete=models.CASCADE)
+
+    class Meta:
+        model = Watchlist
+        fields = '__all__'

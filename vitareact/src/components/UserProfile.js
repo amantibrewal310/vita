@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import checkLoggedIn from './auth/checkLoggedIn'
 import axiosInstance from '../axios'
+import GetAllWatchList from './Watchlist/GetAllWatchList'
+
 
 function UserProfile() {
     // init user data 
@@ -12,6 +14,7 @@ function UserProfile() {
         about: '',
         first_name: ''
     }
+    const [loading, setLoading] = useState(true)
     const [user, setUser] = useState(userInit);
     const history = useHistory();
 
@@ -31,6 +34,7 @@ function UserProfile() {
                         about: res.data.about,
                         first_name: res.data.first_name
                     })
+                    setLoading(false)
                 });
         } 
     },[setUser])
@@ -41,11 +45,21 @@ function UserProfile() {
     if(checkLoggedIn()) {
         return (
             <div>
-                <h1>User Profile</h1>
-                <h2>Hi {user.first_name}, How are you today?</h2>
-                <p>@{user.username}</p>
-                <p>{user.email}</p>
-                <p>About: {user.about}</p>
+                <div>
+                    <h1>User Profile</h1>
+                    <h2>Hi {user.first_name}, How are you today?</h2>
+                    <p>@{user.username}</p>
+                    <p>{user.email}</p>
+                    <p>About: {user.about}</p>
+                </div>
+                <div>
+                    <h3>Watchlists</h3>
+                    {
+                        (!loading)
+                        ? <GetAllWatchList userId={user.id} />
+                        : <></>
+                    }
+                </div>
             </div>
         )
     }
