@@ -36,7 +36,6 @@ function VideoPreplay() {
 
         axios.get(url)
             .then(res => {
-                console.log(res.data.items);
                 setExtras(res.data.items);
                 setExtrasLoading(false);
             })
@@ -118,6 +117,17 @@ function VideoPreplay() {
                         </div>
                     </div>
                 </div>
+                
+                {/* add to playlist */}
+                {
+                    (addTo)
+                    ? ( <div className={style.detailBanner} style={{paddingBottom: '20px'}}>
+                            <h3 style={{padding:'10px'}}> Select Watchlist</h3>
+                            <AddToWatchlist setAddTo={setAddTo} setShowPopup={setShowPopup} videoId={id}/>
+                        </div>
+                    ): 
+                    (<></>)
+                }
 
                 {/* trailers/Extras from youtube */}
                 {/* make a horizontal scroll bar */}
@@ -135,7 +145,7 @@ function VideoPreplay() {
                                                 width='320px' height='180px' 
                                                 frameBorder='0'
                                                 style={{borderRadius: '6px'}}
-                                                src={`http://www.youtube.com/embed/${item.id.videoId}`} title="Trailer" allowfullscreen="allowfullscreen">
+                                                src={`http://www.youtube.com/embed/${item.id.videoId}`} title="Trailer" allowFullScreen="allowfullscreen">
                                             </iframe>
                                             {/* <span className={style.extrasTitle}>{item.snippet.title}</span> */}
                                         </div>
@@ -145,16 +155,6 @@ function VideoPreplay() {
                         }
                     </div>
                 </div>
-
-                {
-                    (addTo)
-                    ? ( <div className={style.detailBanner}>
-                            <h3 style={{padding:'10px'}}> Select Watchlist</h3>
-                            <AddToWatchlist setAddTo={setAddTo} setShowPopup={setShowPopup} videoId={id}/>
-                        </div>
-                    ): 
-                    (<></>)
-                }
             </>
         )
         }
