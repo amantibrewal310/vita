@@ -2,8 +2,7 @@ from django.db import models
 from users.models import NewUser
 from django.db.models.signals import post_save
 import braintree
-from payment.views import gateway
-
+from payment.configure import gateway
 # Create your models here.
 
 MEMBERSHIP_CHOICES = (
@@ -31,10 +30,11 @@ class UserMembership(models.Model):
     user = models.OneToOneField(NewUser, on_delete=models.CASCADE)
     braintree_customer_id = models.CharField(max_length=40)
     membership = models.ForeignKey(
-        Membership, on_delete=models.SET_NULL, null=True)
+        Membership, on_delete=models.SET_NULL, null=True, default=1)
 
     def __str__(self):
         return self.user.username
+# from payment.views import gateway
 
 
 def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
@@ -62,5 +62,5 @@ class Subscription(models.Model):
     braintree_subscription_id = models.CharField(max_length=40)
     active = models.BooleanField(default=True)
 
-    def __str__(self):
-        return self.user_membership.user
+    # def __str__(self):
+    #     return self.user_membership.user
