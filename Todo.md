@@ -1,42 +1,53 @@
 # TODO:
-* [x] Video Model
-* [x] Comment Model
-* [x] Custome User Model
-* [x] Content Moderation Model 
-* [x] Adding Category to Video model
-* [ ] Payment
-* [x] Social Login
-* [x] Basic Video Player
-* [ ] Advanced Video Player
-* [ ] Frontend
+
+-   [x] Video Model
+-   [x] Comment Model
+-   [x] Custome User Model
+-   [x] Content Moderation Model
+-   [x] Adding Category to Video model
+-   [x] Payment Gateway
+-   [x] Social Login
+-   [x] Basic Video Player
+-   [ ] Advanced Video Player
+-   [ ] Frontend
+-   [x] Membership Type
+-   [x] Create Subscription
+-   [ ] Cancel/Change Subcripton Plan
+-   [ ] Change Database to Postgresql
+-   [ ] Readme
 
 # BUGS:
-	- FB login Bug - Doesn't properly store token in localstorage
+
+    - FB login Bug - Doesn't properly store token in localstorage
 
 # Django
+
     - user can report only once
-    - video model add 
-        - poster 
+    - video model add
+        - poster
     - validation backend (in serializer)
         - https://www.youtube.com/watch?v=u0qpTOmXvvs&list=PLx-q4INfd95EsUuON1TIcjnFZSqUfMf7s&index=3
     - change database postgres
 
 # React
+
     - increase video views on play
 
 # Admin Dashboard
-    - for description of upload video add makdown editor 
+
+    - for description of upload video add makdown editor
     - upload progress bar (or a preloader)
 
+# Features
 
-# Features 
     - success pop up boxes after form fill
     - reply feature in comments
-    - pin feature in comments 
-    - watch list for user   
+    - pin feature in comments
+    - watch list for user
 
-# Ideas 
+# Ideas
+
     - live search
     - captions
-    - realtime notif 
+    - realtime notif
     - register user activate
