@@ -1,6 +1,26 @@
+
+/* flex container */
+
+.resultContainer {
+    width: 97%;
+    padding: 15px 0 15px 0;
+    margin: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    background-color: var(--vita-light-blue);
+    border-radius: 6px;
+    color: white;
+}
+
+/* Styling for overlay image item for movies  */
+
 .resultItem {
-    width: 100%;
-    margin-top: 15px;
+    width: 350px;
+    margin: 8px;
     position: relative;
     display: inline-block;
     transition: all 0.3s ease;
@@ -59,4 +79,23 @@
 
 .resultItem:hover {
     transform: scale(1.07);
+}
+
+@media screen and (max-width: 1100px) {
+    .resultItem {
+        width: 250px
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .resultItem {
+        width: 350px
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .resultItem {
+        width: 90vw;
+    }
 }

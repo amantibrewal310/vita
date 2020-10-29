@@ -3,7 +3,6 @@ import './css/videoplayer.css'
 import axiosInstance from '../axios'
 // import screenfull from 'screenfull'
 import ReportVideo from './ReportVidCom'
-import './sample.vtt'
 
 // exports video player 
 // TODO: 
@@ -399,7 +398,6 @@ class VideoPlayer extends Component {
                onVolumeChange={this.updateVolume}
                allowFullScreen
              >
-               <track label="English" kind="subtitles" srcLang="es" src="sample.vtt" metadatatype="xml/scte35schemadef"></track>
              </video>
              
              <div className="video-info">

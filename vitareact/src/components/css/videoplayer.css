@@ -119,7 +119,7 @@
 .left-side-controls, .playback-rate {
     display: flex;
     flex-direction: row;
-    width: 30%;
+    width: 300px;
     align-content: center;
     justify-content: space-between;
 }
@@ -228,17 +228,18 @@
     background-image: url('../../images/pip.png');
 }
 
-.options-btn:hover {
-    background-image: url('../../images/options.png');
-}
 .skip-btn>img{
     padding-top: 5px;
     width: 100%;
 }
+#backward-skip, #forward-skip, .fullscreen-btn, .pip-btn {
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
 .right-side-controls {
     display: flex;
-    width: 25%;
+    width: 250px;
     flex-direction: row;
     justify-content: space-between;
     position: relative;
@@ -261,4 +262,31 @@
 }
 .video-info { 
     z-index:2147483647; 
+}
+
+@media screen and (max-width: 900px) {
+    .left-side-controls {
+        width: 200px
+    }
+    .right-side-controls {
+        width: 170px
+    }
+    .end-time {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .time-control, .playback-value {
+        display: none;
+    }
+    .left-side-controls {
+        width: 170px;  
+    }
+    .volume-progressbar {
+        width: 60px;
+    }
+    .right-side-controls {
+        width: 70px;
+    }
 }
