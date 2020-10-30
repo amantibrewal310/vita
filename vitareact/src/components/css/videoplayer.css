@@ -1,8 +1,8 @@
 .videoPlayer {
-    width: 98vw;
+    width: 97vw;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding-bottom: 0;
-    margin: 10px 1vw 10px 1vw;
+    margin: 15px 1.1vw;
     position: relative;
     display: inline-flex;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.835);
@@ -251,8 +251,17 @@
     cursor: pointer;
 }
 
-.like, .dislike {
-    color: rgb(60, 112, 255);
+.like {
+    color: var(--vita-light-pink);
+}
+.dislike {
+    color: var(--vita-light-orange);
+}
+.danger {
+    color: var(--vita-light-green)
+}
+.cool {
+    color: var(--vita-bright-blue);
 }
 
 /* hiding the standard video controls in fullscreen*/
@@ -260,9 +269,9 @@
 ::-webkit-media-controls {
     display:none !important;
 }
-.video-info { 
+/* .video-info { 
     z-index:2147483647; 
-}
+} */
 
 @media screen and (max-width: 900px) {
     .left-side-controls {
@@ -274,19 +283,25 @@
     .end-time {
         display: none;
     }
+    .videoPlayer {
+        margin-top: 10px;
+    }
 }
 
 @media screen and (max-width: 600px) {
-    .time-control, .playback-value {
+    .time-control, .playback-value, .playback-meter {
         display: none;
     }
     .left-side-controls {
-        width: 170px;  
+        width: 100px;  
     }
     .volume-progressbar {
-        width: 60px;
+        width: 45px;
     }
     .right-side-controls {
         width: 70px;
+    }
+    .videoPlayer {
+        margin-top: 5px;
     }
 }

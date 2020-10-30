@@ -38,24 +38,22 @@ function VideoSearch() {
     return (
         <div>
             <div>
-                <div className="resultContainer">
+                <div className="resultContainer" style={{flexDirection:'column'}}>
+                    <h3>Lets find it for you!</h3>  
                     <input
                         type="text"
                         placeholder="Type in movies.."
                         onChange={(e) => {setQuery(e.target.value)}}
-                        className={fromStyles.videoInput}
+                        className={fromStyles.input}
                     />
                 </div>
-
-                <div className="resultContainer">
-                    <h3>Search Results</h3>   
-                </div>
-                <div className="resultContainer">
+                
                 {
                     (searchResults.length == 0)
                     ? (<></>)
                     : ( 
-                        searchResults.map(item => (
+                        <div className="resultContainer">
+                        {searchResults.map(item => (
                             <Link key={item.id} to={`../../preplay/${item.id}`}>
                                 <div className="resultItem">
                                     <img src={item.thumbnail} alt="img" className="resultThumbnail" />
@@ -79,10 +77,11 @@ function VideoSearch() {
                                     </div>
                                 </div>
                             </Link>
-                        ))   
+                        ))} 
+                        </div>  
                     )
                 }
-                </div>
+                
             </div> 
         </div>
     )

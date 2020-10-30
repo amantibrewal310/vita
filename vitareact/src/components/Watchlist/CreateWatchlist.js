@@ -24,16 +24,19 @@ function CreateWatchlist({setShowCreateNewOption, refreshOptions}) {
                 type="text"
                 placeholder="Name your playlist"
                 onChange={(e) => setName(e.target.value)}
-                className={formStyle.input}
+                className={formStyle.videoInput}
+                style={{borderColor: 'white'}}
             />
-            <button 
-                onClick={handleCreateNew}
-                className={formStyle.videoSubmitBtn}
-            > Create </button>
-            <button 
-                onClick={() => setShowCreateNewOption(false)}
-                className={formStyle.dangerBtn}
-            > Cancel </button>
+            <div className={formStyle.buttonBox}>
+                <button 
+                    onClick={handleCreateNew}
+                    className={formStyle.smallSubmitBtn}
+                > Create </button>
+                <button 
+                    onClick={() => setShowCreateNewOption(false)}
+                    className={formStyle.smallDangerBtn}
+                > Cancel </button>
+            </div>
         </div>
     )
 }

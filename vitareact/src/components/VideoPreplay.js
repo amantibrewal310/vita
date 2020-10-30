@@ -34,14 +34,30 @@ function VideoPreplay() {
         const maxResults = 5
         const url = `${baseurl}?part=snippet&key=${key}&type=video&q=${q},trailer&order=viewCount&maxResults=${maxResults}`;
 
-        axios.get(url)
-            .then(res => {
-                setExtras(res.data.items);
-                setExtrasLoading(false);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        // axios.get(url)
+        //     .then(res => {
+        //         setExtras(res.data.items);
+        //         setExtrasLoading(false);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
+    }
+
+    const getPlayTime = (timeInmins) => {
+        const hrs = Math.floor(timeInmins / 60)
+        const mins = timeInmins % 60
+        let playtime = '';
+        if(hrs > 0) {
+            playtime += `${hrs} hrs`
+        }
+        if(mins > 0) {
+            playtime += ` ${mins} mins`
+        }
+        return playtime
+    }
+    const getCategory = (categoryId) => {
+        // return ("Adventure")
     }
 
     // handler for add to watchlist 
@@ -69,16 +85,30 @@ function VideoPreplay() {
                             <div className={style.titleAndDetail}>
                                 <h1 className={style.videoTitle}><b>{video.title}</b></h1>
                                 <p className={style.timeGenre}>
-                                    <b>2 hr 10 min . 2019 . Drama</b>
+                                    <b>{getPlayTime(video.playtime)} . 2019 . {getCategory(video.category)}</b>
                                 </p>
                                 <p className={style.description}>
                                     {video.description}
                                 </p>
                             </div>
+                            <div className={style.videoStats}>
+                                <span>
+                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                    {video.views} 
+                                </span>
+                                <span>
+                                    <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                    {video.likes} 
+                                </span>
+                                <span>
+                                <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                    {video.dislikes} 
+                                </span>
+                            </div>
                             <div className={style.watchOptions}>
                                 <div className={style.watchOptionsDiv}>
-                                    <i style={{cursor:'pointer'}} className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
                                     <Link key={video.id} to={`../play/${video.id}`} >
+                                        <i style={{cursor:'pointer', color:'white'}} className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
                                         <b style={{color:'white', cursor:'pointer'}}>Play Now</b>
                                     </Link>
                                 </div>
@@ -93,8 +123,8 @@ function VideoPreplay() {
                             </div>
                             <div className={style.backupWatchOptions}>
                                 <div className={style.backupWatchOptionsDiv}>
-                                    <i className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
                                     <Link key={video.id} to={`play/${video.id}`} >
+                                        <i style={{color:'white'}} className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
                                         <b style={{color:'white'}}>Play Now</b>
                                     </Link>
                                 </div>
@@ -109,11 +139,25 @@ function VideoPreplay() {
                         <div className={style.bottomTitleAndDetail}>
                             <h1 className={style.bottomTitle}><b>{video.title}</b></h1>
                             <p className={style.timeGenre}>
-                                <b>2 hr 10 min . 2019 . Drama</b>
+                                <b>{getPlayTime(video.playtime)} . 2019 . {getCategory(video.category)}</b>
                             </p>
                             <p className={style.description}>
                                 {video.description}
                             </p>
+                        </div>
+                        <div className={style.bottomVideoStats}>
+                            <span>
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                                {video.views} 
+                            </span>
+                            <span>
+                                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                {video.likes} 
+                            </span>
+                            <span>
+                            <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                {video.dislikes} 
+                            </span>
                         </div>
                     </div>
                 </div>

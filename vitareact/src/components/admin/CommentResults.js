@@ -22,7 +22,7 @@ function CommentResults({allComments}) {
                                     {comment.dislikes}
                                 </span>
                                 <span>
-                                    <i className="fa fa-flag-o btn" aria-hidden="true"></i>
+                                    <i className="fa fa-flag-o danger btn" aria-hidden="true"></i>
                                     {comment.reported}
                                 </span>
                             </div>

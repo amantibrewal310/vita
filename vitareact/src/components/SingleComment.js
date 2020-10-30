@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axiosInstance from '../axios';
 import ReportComment from './ReportVidCom';
+import commentStyles from './css/commentStyles.module.css'
+import preplayStyles from './css/videoPreplay.module.css'
+import UserAvatar from './UserAvatar';
 
 // Returns a single comment
 // props -> single comment object
@@ -24,9 +27,11 @@ function SingleComment({comment}) {
     const [likeState, setLikeState] = useState(initLikeState);
     const [countState, setCountState] = useState(initCountState);
     const [report, setReport] = useState(true);
+    const [commentUser, setCommentUser] = useState('')
 
     useEffect(() => {
         getVoteStatus();
+        getCommentUser();
     }, []);
 
     /* 
@@ -44,6 +49,16 @@ function SingleComment({comment}) {
         .catch(err => {
             console.log(err);
         })
+    }
+    /*
+      get name of user that made comment
+    */
+    const getCommentUser = () => {
+        axiosInstance
+            .get(`user/${comment.user}/`)
+            .then(res => {
+                setCommentUser(res.data.username)
+            })
     }
     /* 
       set status for buttons to glow
@@ -110,39 +125,53 @@ function SingleComment({comment}) {
     }
 
     return (
-        <div>
+        <div className={commentStyles.commentItem}>
             {/* display user avatar and name like yt */}
-            <span>By {comment.user}</span>
-            <p>{comment.text}</p>
-            <span className='vote-btn' onClick={() => handleVote('like')}>
-                <i className={"fa fa-thumbs-o-up" + (likeState.like ? " like" : "")} 
-                    aria-hidden="true">
-                </i>
-                {countState.commentLikes}
-            </span>
-            <span className='vote-btn' onClick={() => handleVote('dislike')}> 
-                <i className={"fa fa-thumbs-o-down" + (likeState.dislike ? " dislike" : "")}
-                    aria-hidden="true">
-                </i> 
-                {countState.commentDislikes}
-            </span>
-            <span> 
-                <i className="fa fa-clock-o" aria-hidden="true"></i>
-                {comment.created_at}
-            </span>
-            {/* report */}
-
-            { report ? (
-                    <span className='report-btn' onClick={toggleReportBtn}>
-                        <i  className="fa fa-flag-o" 
+            <div className={commentStyles.avatarBox}>
+                <UserAvatar letter={commentUser.charAt(0)} />
+            </div>
+            
+            <div className={commentStyles.restDetailsBox}>
+                
+                <p><b>{commentUser}</b></p>
+                <p>{comment.text}</p>
+                
+                <div className={preplayStyles.bottomVideoStats} style={{marginTop:'5px'}}>
+                    <span className='vote-btn' onClick={() => handleVote('like')}>
+                        <i className={"fa fa-thumbs-o-up" + (likeState.like ? " like" : "")} 
                             aria-hidden="true">
                         </i>
+                        {countState.commentLikes}
                     </span>
-                ):(
-                    <ReportComment type="comment" id={comment.id} toggleReportBtn={toggleReportBtn} />
-                )
-            }
-            <hr />
+                    <span className='vote-btn' onClick={() => handleVote('dislike')}> 
+                        <i className={"fa fa-thumbs-o-down" + (likeState.dislike ? " dislike" : "")}
+                            aria-hidden="true">
+                        </i> 
+                        {countState.commentDislikes}
+                    </span>
+                    <span> 
+                        <i className="fa fa-clock-o" aria-hidden="true"></i>
+                        {comment.created_at}
+                    </span>
+                    {/* report */}
+
+                    { report ? (
+                            <span 
+                                className='report-btn' 
+                                onClick={toggleReportBtn}
+                                style={{float: 'right'}}
+                            >
+                                <i  className="fa fa-flag-o danger" 
+                                    aria-hidden="true">
+                                </i>
+                                Report
+                            </span>
+                        ):(
+                            <ReportComment type="comment" id={comment.id} toggleReportBtn={toggleReportBtn} />
+                        )
+                    }
+                </div>
+            </div>
         </div>
     )
 }

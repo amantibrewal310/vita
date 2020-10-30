@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axiosInstance from '../axios';
+import formStyle from './css/forms.module.css'
 
 function ReportVidCom({type, id, toggleReportBtn}) {
 
@@ -43,9 +44,14 @@ function ReportVidCom({type, id, toggleReportBtn}) {
     }
 
     return (
-        <span>
-            <label>
-                <select value={reason} onChange={(e) => handleChange(e)}>
+        <>
+            <div className={formStyle.videoSelectInputContainer}>
+                <select 
+                    value={reason} 
+                    onChange={(e) => handleChange(e)}
+                    className={formStyle.input}
+                    style={{color: 'white'}} 
+                >
                     <option 
                         key='0'
                         value='-1'
@@ -62,11 +68,19 @@ function ReportVidCom({type, id, toggleReportBtn}) {
                             </option>
                         ))
                     }
-                    </select>
-                </label>
-            <button onClick={sendReport}>Report</button>
-            <button onClick={() => toggleReportBtn()}>Cancel</button>
-        </span>
+                </select>
+            </div>
+            <div className={formStyle.buttonBox}>
+                <button 
+                    onClick={sendReport} 
+                    className={formStyle.smallSubmitBtn}>
+                Report</button>
+                <button 
+                    onClick={() => toggleReportBtn()}
+                    className={formStyle.smallDangerBtn}>
+                Cancel</button>
+            </div>
+        </>
       );
   
 }

@@ -24,10 +24,9 @@
     - loader for the payment gateway and also hide buy now button after one click.
 
 # Django
-
+    - video model (add field)
+        - realease_at
     - user can report only once
-    - video model add
-        - poster
     - validation backend (in serializer)
         - https://www.youtube.com/watch?v=u0qpTOmXvvs&list=PLx-q4INfd95EsUuON1TIcjnFZSqUfMf7s&index=3
     - change database postgres
@@ -35,6 +34,8 @@
 # React
 
     - increase video views on play
+    - correct routes 
+    - add a lot of description so search works well
 
 # Admin Dashboard
 
@@ -52,5 +53,13 @@
 
     - live search
     - captions
-    - realtime notif
+    - realtime notif 
     - register user activate
+
+
+# Today
+    - admin
+    - loaders
+    - home page 
+    - add to watchlist
+        - convert into popup 
