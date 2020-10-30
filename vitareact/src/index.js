@@ -27,7 +27,6 @@ import Subscription from './components/Subscription';
 import Payment from './components/Payment';
 import VideoSearch from './components/VideoSearch';
 
-
 const routing = (
 	<Router>
 		<React.StrictMode>
@@ -76,7 +75,6 @@ const routing = (
 					component={CommentReportAction}
 				/>
 
-<<<<<<< HEAD
 				<Route exact path='/categories' component={Category} />
 				<Route
 					exact
@@ -88,30 +86,8 @@ const routing = (
 					path='/reset-password'
 					component={ForgotPassword}
 				/>
+				<Route exact path='/search' component={VideoSearch} />
 				<Route exact path='/subscribe' component={Subscription} />
-				<Route exact path='/payment' component={Payment} />
-=======
-                <Route 
-                    exact
-                    path="/categories"
-                    component={Category}
-                />
-                <Route 
-                    exact
-                    path="/category/results/:id"
-                    component={CategoryResults}
-                />
-                <Route 
-                    exact 
-                    path="/reset-password" 
-                    component={ForgotPassword} 
-                />
-                <Route
-                    exact
-                    path="/search"
-                    component={VideoSearch}
-                />
->>>>>>> baa138be7825b100f9061bccbd6665a411b7aa97
 
 				<Route path='*' component={NotFound} />
 			</Switch>

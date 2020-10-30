@@ -59,6 +59,34 @@ def CreateSubscriptionView(request):
         try:
             qs = Subscription.objects.get(user_membership__user=request.user)
 
+            serializer = SubscriptionSerializer(qs, data={
+                "braintree_subcription_id": subscriptonID
+            }, partial=True)
+
+            if serializer.is_valid():
+                print("isValid")
+                serializer.save(user_membership=userMembership)
+
+                membershipID = Membership.objects.get(
+                    braintree_plan_id=planID).id
+
+                userMembershipSerializer = UserMembershipSerializer(userMembership, data={
+                    "membership": membershipID
+                }, partial=True)
+
+                if userMembershipSerializer.is_valid():
+                    userMembershipSerializer.save()
+                    return JsonResponse({
+                        "success": True,
+                        "error": False,
+                        "msg": "You have subcribed the plan"
+                    })
+            return JsonResponse({
+                "success": False,
+                "Error": True,
+                "msg": "Something went wrong"
+            })
+
         except Subscription.DoesNotExist:
             serializer = SubscriptionSerializer(data={
                 "braintree_subscription_id": subscriptonID,
@@ -69,11 +97,22 @@ def CreateSubscriptionView(request):
             if serializer.is_valid():
                 print("isValid")
                 serializer.save(user_membership=userMembership)
-                return JsonResponse({
-                    "success": True,
-                    "error": False,
-                    "msg": "You have subcribed the plan"
-                })
+
+                membershipID = Membership.objects.get(
+                    braintree_plan_id=planID).id
+
+                userMembershipSerializer = UserMembershipSerializer(userMembership, data={
+                    "membership": membershipID
+                }, partial=True)
+
+                if userMembershipSerializer.is_valid():
+                    userMembershipSerializer.save()
+                    return JsonResponse({
+                        "success": True,
+                        "error": False,
+                        "msg": "You have subcribed the plan"
+                    })
+
             return JsonResponse({
                 "success": False,
                 "Error": True,
