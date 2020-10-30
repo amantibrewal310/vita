@@ -3,21 +3,26 @@ import DropIn from 'braintree-web-drop-in-react';
 import axiosInstance from '../axios';
 import { processPayment } from './paymentHelper';
 import { createSubscription } from './subscriptionHelper';
+import Preloader from './utils/Preloader';
+import formStyles from './css/forms.module.css';
+import Popup from './utils/Popup';
+import {useHistory} from 'react-router-dom';
 
-const Payment = ({
-	plan_id,
-	amount,
-	reload = undefined,
-	setReload = (f) => f,
-}) => {
+const Payment = ({plan_id, amount}) => {
+
+	const history = useHistory();
+
 	const [info, setInfo] = useState({
-		loading: false,
 		success: false,
 		clientToken: null,
 		error: '',
 		instance: {},
+		message: `Your bill is ${amount}`
 	});
 
+	const [showPopup, setShowPopup] = useState(false);
+
+	
 	const getToken = () => {
 		axiosInstance
 			.get(`payment/gettoken/`)
@@ -36,7 +41,13 @@ const Payment = ({
 	}, []);
 
 	const onPurchase = () => {
-		setInfo({ loading: true });
+		// setting token null to hide drop in
+		setInfo({
+			...info,
+			clientToken: null,
+			message: `Activating the subscription plan...`
+		})
+
 		let nonce;
 		let getNonce = info.instance.requestPaymentMethod().then((data) => {
 			console.log('MYDATA', data);
@@ -58,6 +69,8 @@ const Payment = ({
 					createSubscription(subscriptionData)
 						.then((res) => {
 							console.log('Subscribed', res);
+							setShowPopup(true);
+							setTimeout(() => history.push("/"), 2000)
 						})
 						.catch((error) =>
 							console.log('SUBSCRIPTION FAILED', error)
@@ -80,25 +93,29 @@ const Payment = ({
 						></DropIn>
 						<button
 							onClick={onPurchase}
-							className='btn btn-block btn-success'
+							className={formStyles.submitBtn}
+							style={{minWidth: '250px'}}
 						>
 							Buy Now
 						</button>
 					</div>
 				) : (
-					<h3>Please login first or add something in cart</h3>
+					<div style={{width: '100vw', height: '20vh'}}>
+                		<Preloader />
+            		</div>
 				)}
 			</div>
 		);
 	};
 
-	console.log(plan_id);
-
 	return (
+		<>
+		<Popup show={showPopup} message="New subscription activated!" type="success"/>
 		<div>
-			<h3>Your bill is $ {amount}</h3>
+			<h4 style={{textAlign: 'center'}}>{info.message}</h4>
 			{showbtnDropIn()}
 		</div>
+		</>
 	);
 };
 export default Payment;

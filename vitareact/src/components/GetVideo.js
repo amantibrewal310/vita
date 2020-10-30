@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
-import ContentLoading from './ContentLoading';
 import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
 import AddComments from './AddComment';
 import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 import detailStyle from './css/videoDetails.module.css';
+import Preloader from './utils/Preloader';
 
 // Get video data for a particular video 
 // Get all comments on the video
@@ -14,8 +14,6 @@ import detailStyle from './css/videoDetails.module.css';
 function GetVideo() {
     // video Id
     const {id} = useParams();
-    const VideoLoading = ContentLoading(VideoPlayer);
-    const CommentsLoading = ContentLoading(CommentList);
 
     const [videoData, setVideoData] = useState({
         loading: true,
@@ -68,12 +66,19 @@ function GetVideo() {
     // TODO:
     // display a sidebar with video-list like youtube
     return (
-        <div className=''>
+        <div>
             {/* Returns a component with video players and video details */}
-            <VideoLoading 
-                isLoading={videoData.loading} 
-                video={videoData.video} 
-            />
+            {
+                (videoData.loading)
+                ? (
+                    <div style={{width: '100vw', height: '70vh'}}>
+                        <Preloader />
+                    </div>
+                )
+                : (
+                    <VideoPlayer video={videoData.video} />
+                )
+            }
             {/* TODO
                 - User able to 
                     - Report video
@@ -85,14 +90,24 @@ function GetVideo() {
             */}
             <div className={detailStyle.videoDetailContainer}>
                 <h4>Comments</h4>
-                <AddComments videoId={id} addCommentToList={addCommentToList} />
-                <hr />
-                {/* Returns comment list for this video */}
-                <CommentsLoading 
-                    isLoading={commentsData.loading}
-                    comments={commentsData.comments}
-                    videoId={id}
+                <AddComments 
+                    videoId={id} 
+                    addCommentToList={addCommentToList} 
                 />
+                {
+                    (commentsData.loading)
+                    ? (
+                        <div style={{width: '100vw', height: '12vh'}}>
+                            <Preloader />
+                        </div>
+                    )
+                    : (
+                        <CommentList 
+                            comments={commentsData.comments}
+                            videoId={id}
+                        />
+                    )
+                }
             </div>
             {/* TODO:
                 - User should be able to 

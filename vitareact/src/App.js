@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import ContentLoading from './components/ContentLoading'
 import VideoList from './components/VideoList';
+import Preloader from './components/utils/Preloader';
 
 function App() {
-
-    const VideoListLoading = ContentLoading(VideoList)
     const [appState, setAppState] = useState({
         loading: true,
         videoList: null
@@ -28,16 +26,14 @@ function App() {
     }, [setAppState]);
 
     return (
-        <div>
-            <h1>Latest Vidoes</h1>
-            {/* TODO: 
-                search box
-            */}
-            <VideoListLoading 
-                isLoading={appState.loading} 
-                videoList={appState.videoList} 
-            />
-        </div>
+        (appState.loading)
+        ? (
+            <div style={{width: '100vw', height: '80vh'}}>
+                <Preloader />
+            </div>
+        ) : (
+            <VideoList videoList={appState.videoList} />
+        )
     )
 }
 

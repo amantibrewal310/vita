@@ -16,16 +16,10 @@ function ReportVidCom({type, id, toggleReportBtn}) {
             });
     }, []);
 
-    // select handler
-    const handleChange = (e) => {
-        console.log(e.target.value);
-        setReason(e.target.value);
-    }   
     // submit handler 
     const sendReport = () => {
         // check
         if(reason == -1) {
-            console.log('choose a value');
             return;
         }
 
@@ -35,7 +29,6 @@ function ReportVidCom({type, id, toggleReportBtn}) {
                 reason: reason
             })
             .then(res => {
-                console.log(res);
                 toggleReportBtn()
             })
             .catch(err => {
@@ -48,7 +41,7 @@ function ReportVidCom({type, id, toggleReportBtn}) {
             <div className={formStyle.videoSelectInputContainer}>
                 <select 
                     value={reason} 
-                    onChange={(e) => handleChange(e)}
+                    onChange={(e) => setReason(e.target.value)}
                     className={formStyle.input}
                     style={{color: 'white'}} 
                 >

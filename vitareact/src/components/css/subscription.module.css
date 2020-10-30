@@ -1,0 +1,38 @@
+
+.plansContainer {
+    background-color: orange;
+    width: 97vw;
+    margin: 100px auto;
+    border-radius: 6px;
+    background-color: var(--vita-light-blue);
+    color: white;
+    padding: 15px 0 30px 0;
+}
+
+.plansContainer h1 {
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+
+.allPlans {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.plan {
+    padding: 10px;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .allPlans {
+        flex-direction: column;
+    }
+    .plan {
+        margin: 10px;
+        width: 100%;
+    }
+}

@@ -22,7 +22,7 @@ function VideoResults({allVideos}) {
                         >
                             <div>
                                 <div>
-                                    <img src={video.thumbnail} alt="thumbnail" width="100px"/>
+                                    <img src={`http://127.0.0.1:8000${video.thumbnail}`} alt="thumbnail" width="100px"/>
                                     <span> {video.title} </span>
                                 </div>
                                 <div>

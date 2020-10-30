@@ -13,6 +13,8 @@ function VideoList(props) {
         if not logged int set [to] => same page 
     */
     return (
+        <>
+        <h2>Latest Videos</h2>
         <div>
         {
             videoList.map(video => (
@@ -29,6 +31,7 @@ function VideoList(props) {
             ))
         }
         </div>
+        </>
     )
 }
 

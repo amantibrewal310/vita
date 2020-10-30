@@ -15,7 +15,6 @@ function ReportListVidCom({type, id}) {
         axiosInstance
             .get(`video/reported-${type}/${id}/`)
             .then(res => {
-                console.log(res);
                 setReportList({
                     list: res.data,
                     loading: false

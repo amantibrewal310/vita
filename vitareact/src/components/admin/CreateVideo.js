@@ -93,7 +93,6 @@ function CreateVideo() {
         formData.append('playtime', textData.playtime);
         formData.append('thumbnail',thumbnail.thumbnail[0]);
         formData.append('videoFile', videoFile.videoFile[0]);
-        console.log(formData);
 
         // upload progress
         const cancelToken = axios.CancelToken;
@@ -144,7 +143,6 @@ function CreateVideo() {
 
     // upload cancel handler 
     const handleCancelUpload = () => {
-        console.log(uploadState.source);
         uploadState.source.cancel();
         setUploadState({
             source: null,

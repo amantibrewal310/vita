@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axiosInstance from '../../axios'
 import '../css/gridResults.css'
+import Preloader from '../utils/Preloader'
 
 function GetWatchList({id, name, videoIds}) {
     const [loading, setLoading] = useState(true);
@@ -32,7 +33,11 @@ function GetWatchList({id, name, videoIds}) {
         <div>
         {   
             (loading)
-            ? (<>loading</>)
+            ? ( 
+                <div style={{width: '100vw', height: '25vh'}}>
+                    <Preloader />
+                </div>
+            )
             : (
                 <>
                 <h3>{name}</h3>
