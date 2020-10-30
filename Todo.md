@@ -19,6 +19,7 @@
 # BUGS:
 
     - FB login Bug - Doesn't properly store token in localstorage
+    - By default membership is not Free bcz if set membership to Free bydefault then when we delete the database and then try to create super user it throws Model DoesNot exist error and IntegrityError ---- Suggestion apply pre_save to membership model
 
 # Django
 
