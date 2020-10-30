@@ -17,6 +17,8 @@ class UserMembershipSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
+    user_membership = serializers.ReadOnlyField(source='user_membership.id')
+
     class Meta:
         model = Subscription
-        fields = "__all__"
+        fields = ('braintree_subscription_id', "active", "user_membership")

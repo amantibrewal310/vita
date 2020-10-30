@@ -8,6 +8,8 @@ from .models import (Video, Comment, VideoCategory, ReportReason,
                      VideoVote, CommentVote, VideoReport, CommentReport, 
                      Watchlist)
 
+from membership.serializers import MembershipSerializer
+
 
 class VideoSerializer(serializers.ModelSerializer):
     # adds user to the comment
@@ -23,7 +25,7 @@ class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
         fields = ('id', 'title', 'description', 'thumbnail',
-                  'videoFile', 'user', 'likes', 'dislikes', 
+                  'videoFile', 'user', 'likes', 'dislikes',
                   'views', 'reported', 'status', 'category', 'playtime', 'allowed_membership')
 
 
