@@ -3,6 +3,8 @@ import './css/videoplayer.css'
 import axiosInstance from '../axios'
 // import screenfull from 'screenfull'
 import ReportVideo from './ReportVidCom'
+import detailStyles from './css/videoDetails.module.css'
+import preplayStyles from './css/videoPreplay.module.css'
 
 // exports video player 
 // TODO: 
@@ -510,35 +512,49 @@ class VideoPlayer extends Component {
            </div>
                     
             {/* Other video details */}
-            <div className='player-video-info'>
-               <h1>{video.title}</h1>
-               <span>Description: {video.description}</span>
-               <span className='vote-btn' onClick={this.handleLike}>
-                 <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 
-                    aria-hidden="true">
-                  </i>
-                 {this.state.videoLikes} 
-               </span> 
-               <span className='vote-btn' onClick={this.handleDislike}> 
-                 <i className={"fa fa-thumbs-o-down" + (this.state.dislike ? " dislike" : "")}
-                    aria-hidden="true">
-                  </i>
-                 {this.state.videoDislikes}
-               </span>
-
-               {/* report */}
-
-               { this.state.report ? (
-                   <span className='report-btn' onClick={this.toggleReportBtn}>
-                    <i className="fa fa-flag-o" 
-                      aria-hidden="true">
-                    </i>
-                   </span>
-                  ):(
-                   <ReportVideo type="video" id={this.props.video.id} toggleReportBtn={this.toggleReportBtn} />
-                  )
-               }
+            <div className={detailStyles.videoDetailContainer}>
                
+               <h2 className={detailStyles.videoTitle}>{video.title}</h2>   
+               <p style={{fontSize:'20px'}}>{video.description}</p>
+               
+               <div className={preplayStyles.bottomVideoStats}>
+                <span>
+                   <i className="fa fa-eye cool" aria-hidden="true"></i>
+                   {video.views} 
+                 </span>
+                <span className='vote-btn' onClick={this.handleLike}>
+                  <i className={"fa fa-thumbs-o-up" + (this.state.like ? " like" : "")} 
+                     aria-hidden="true">
+                   </i>
+                  {this.state.videoLikes} 
+                </span> 
+                <span className='vote-btn' onClick={this.handleDislike}> 
+                  <i className={"fa fa-thumbs-o-down" + (this.state.dislike ? " dislike" : "")}
+                     aria-hidden="true">
+                   </i>
+                  {this.state.videoDislikes}
+                </span>
+
+                {/* report */}
+
+                { this.state.report ? (
+                    <span 
+                      className='report-btn' 
+                      onClick={this.toggleReportBtn}
+                      style={{float: 'right'}}
+                    >
+                     <i className="fa fa-flag-o danger" 
+                       aria-hidden="true">
+                     </i>
+                     Report
+                    </span>
+                   ):(
+                    <div style={{marginTop: '10px'}}>
+                      <ReportVideo type="video" id={this.props.video.id} toggleReportBtn={this.toggleReportBtn} />
+                    </div>
+                   )
+                }
+               </div>               
             </div>
           </div>
        )

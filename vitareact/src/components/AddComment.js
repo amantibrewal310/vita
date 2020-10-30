@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react';
 import axiosInstance from '../axios';
+import formStyle from './css/forms.module.css';
 
 // exports a comment fomr 
 // adds comment to comment list
@@ -64,24 +65,28 @@ function AddComment({videoId, addCommentToList}) {
                     required
                     ref = {inputBoxRef}
                     placeholder="Add a public comment"
+                    className={formStyle.input}
+                    style={{borderColor:'white'}}
                 />
             </span>
             {
             commentData.showButtons 
-            ? ( <span >
-                    <button 
-                        type="submit"
-                        onClick={handleCancel}
-                    >
-                        Cancel
-                    </button>
+            ? ( <div className={formStyle.buttonBox}>
                     <button 
                         type="submit"
                         onClick={handleSubmit}
+                        className={formStyle.smallSubmitBtn}
                     >
                         Comment
                     </button>
-                </span>
+                    <button 
+                        type="submit"
+                        onClick={handleCancel}
+                        className={formStyle.smallDangerBtn}
+                    >
+                        Cancel
+                    </button>
+                </div>
             )
             : <></>
             }

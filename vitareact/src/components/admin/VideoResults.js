@@ -27,7 +27,7 @@ function VideoResults({allVideos}) {
                                 </div>
                                 <div>
                                     <span>
-                                        <i className="fa fa-eye btn" aria-hidden="true"></i>
+                                        <i className="fa fa-eye cool btn" aria-hidden="true"></i>
                                         {video.views}
                                     </span>
                                     <span>
@@ -39,7 +39,7 @@ function VideoResults({allVideos}) {
                                         {video.dislikes}
                                     </span>
                                     <span>
-                                        <i className="fa fa-flag-o btn" aria-hidden="true"></i>
+                                        <i className="fa fa-flag-o danger btn" aria-hidden="true"></i>
                                         {video.reported}
                                     </span>
                                 </div>

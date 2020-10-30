@@ -61,7 +61,7 @@ function AddToWatchlist({setAddTo, setShowPopup, videoId}) {
                     value={selected} 
                     onChange={(e) => setSelected(e.target.value)}
                     className={formStyle.input}
-                    style={{color: 'white'}}
+                    style={{color: 'white', marginTop:'10px'}}
                 >
 
                     <option 
@@ -83,14 +83,16 @@ function AddToWatchlist({setAddTo, setShowPopup, videoId}) {
                     }
                 </select>
             </div>
-            <button 
-                onClick={handleAddThisVideo} 
-                className={formStyle.videoSubmitBtn}
-            >Add</button>
-            <button 
-                onClick={() => setShowCreateNewOption(!showCreateNewOption)} 
-                className={formStyle.videoSubmitBtn}
-            >Create New Watchlist</button>
+            <div className={formStyle.buttonBox}>
+                <button 
+                    onClick={handleAddThisVideo} 
+                    className={formStyle.smallSubmitBtn}
+                >Add</button>
+                <button 
+                    onClick={() => setShowCreateNewOption(!showCreateNewOption)} 
+                    className={formStyle.smallDangerBtn}
+                >Create New</button>
+            </div>
             {
                 (showCreateNewOption)
                 ? (<CreateWatchlist setShowCreateNewOption={setShowCreateNewOption} refreshOptions={getWatchlistOptions}/>)

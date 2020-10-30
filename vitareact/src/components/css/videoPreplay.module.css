@@ -68,6 +68,7 @@
 }
 
 .timeGenre {
+    margin-top: 5px;
     font-size: 20px;
     color: rgb(173, 173, 173);
 }
@@ -80,6 +81,24 @@
 
 .fa {
     padding: 0 5px;
+}
+
+.videoStats {
+    width: 200px;
+    position: absolute;
+    right: 0;
+    bottom: 18%;
+    display: flex;
+    display: flex;
+    justify-content: right;
+    padding: 0 30px;
+}
+
+.videoStats span {
+    font-size: 22px;
+    width: 30px;
+    margin: 10px;
+    text-align: center;
 }
 
 .watchOptions {
@@ -118,9 +137,15 @@
     display: none;
 }
 .bottomTitle {
+    font-size: 28px;
     margin: 10px 0;
 }
-
+.bottomVideoStats span {
+    margin: 0 5px;
+}
+.bottomVideoStats span i {
+    padding: 0 5px;
+}
 .extras {
     display: flex;
     justify-content: space-evenly;
@@ -170,6 +195,11 @@
     .backupWatchOptions div {
         font-size: 16px;
     }
+    .videoStats span {
+        font-size: 18px;
+        margin: 10px;
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 750px) {
@@ -184,7 +214,8 @@
     
     .titleAndDetail,
     .watchOptions,
-    .imageGradient {
+    .imageGradient, 
+    .videoStats {
         display: none;
     }
     .backupWatchOptions {
@@ -196,4 +227,5 @@
     .bottomDetailContainer {
         display: block;
     }
+    
 }

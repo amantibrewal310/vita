@@ -6,6 +6,7 @@ import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
 import AddComments from './AddComment';
 import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
+import detailStyle from './css/videoDetails.module.css';
 
 // Get video data for a particular video 
 // Get all comments on the video
@@ -82,15 +83,17 @@ function GetVideo() {
             {/* TODO:
                 hide Add comments component when logged int user is admin 
             */}
-            <h3>Comments</h3>
-            <AddComments videoId={id} addCommentToList={addCommentToList} />
-            <hr />
-            {/* Returns comment list for this video */}
-            <CommentsLoading 
-                isLoading={commentsData.loading}
-                comments={commentsData.comments}
-                videoId={id}
-            />
+            <div className={detailStyle.videoDetailContainer}>
+                <h4>Comments</h4>
+                <AddComments videoId={id} addCommentToList={addCommentToList} />
+                <hr />
+                {/* Returns comment list for this video */}
+                <CommentsLoading 
+                    isLoading={commentsData.loading}
+                    comments={commentsData.comments}
+                    videoId={id}
+                />
+            </div>
             {/* TODO:
                 - User should be able to 
                     - add comment, additional(/edit/delete)
@@ -98,6 +101,10 @@ function GetVideo() {
                 - Admin 
                     - hide add commet, report, add link to /admin/comment-detail/:id
             */}
+            {/* 
+                TODO: 
+                - Similar movies horizontal bar 
+             */}
         </div>
     )
 }

@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     background-color: var(--vita-dark-blue);
-    z-index: 10;
+    z-index: 20;
 }
 
 .mainContent {
@@ -36,7 +36,7 @@
 }
 
 .openbtn {
-    color: var(--vita-orange);
+    color: white;
     font-size: 25px;
 }
 

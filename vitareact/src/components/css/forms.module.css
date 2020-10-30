@@ -7,7 +7,9 @@
     background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink));
 }
 
-.formContainer, .smallFormContainer, .mediumFormContainer {
+.formContainer, 
+.smallFormContainer, 
+.mediumFormContainer {
     background: rgba(3, 3, 55, 0.144);
     width: 600px;
     height: 580px;
@@ -47,7 +49,9 @@
     border-radius: 6px 6px 0 0;
 }
 
-.input, .error, .videoInput {
+.input, 
+.error, 
+.videoInput {
     background: transparent;
     border: 0;
     border: 1px solid ;
@@ -79,7 +83,16 @@
     color: #d3d3d3;
 }
 
-.submitBtn, .videoSubmitBtn, .dangerBtn {
+.input option {
+    color: #d3d3d3;
+    background-color: var(--vita-dark-blue);
+}
+
+.submitBtn, 
+.videoSubmitBtn, 
+.dangerBtn, 
+.smallSubmitBtn, 
+.smallDangerBtn {
     background: var(--vita-light-pink);
     border: 0;
     display: block;
@@ -98,19 +111,39 @@
     height: 50px;
     background-color: var(--vita-light-orange);
 }
+.smallSubmitBtn, 
+.smallDangerBtn {
+    width: 120px;
+    height: 40px;
+    padding: 0;
+}
+.smallDangerBtn {
+    background-color: var(--vita-light-orange);
+}
 
-.submitBtn:focus, .videoSubmitBtn:focus, .dangerBtn:focus {
+.submitBtn:focus, 
+.videoSubmitBtn:focus, 
+.dangerBtn:focus, 
+.smallSubmitBtn:focus, 
+.smallDangerBtn:focus{
     outline: none;
 }
 
-.submitBtn:hover, .videoSubmitBtn:hover {
+.submitBtn:hover, 
+.videoSubmitBtn:hover, 
+.smallSubmitBtn:hover {
     background: var(--vita-pink);
 }
-.dangerBtn:hover {
+.dangerBtn:hover, 
+.smallDangerBtn:hover {
     background-color: var(--vita-orange);
 }
 
-.submitBtn:active, .videoSubmitBtn:active, .dangerBtn:active{  
+.submitBtn:active, 
+.videoSubmitBtn:active, 
+.dangerBtn:active, 
+.smallSubmitBtn:active, 
+    .smallDangerBtn:active {  
     transform: scale(0.98);
 }
 
@@ -179,6 +212,12 @@
     height: 50px;
 }
 
+.buttonBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .videoInput {
     width: 85%;
 }
@@ -236,5 +275,7 @@
     .videoSubmitBtn {
         width: 80%;
     }
-    
+    .videoSubmitBtn, .dangerBtn {
+        width: 40%;
+    }
 }
