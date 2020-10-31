@@ -1,231 +1,232 @@
 .detailBanner {
-    width: 95vw;
-    margin: 10px auto;
-    border-radius: 6px;
-    background-color: #061a31;
-    color: white;
+	width: 96vw;
+	margin: 10px auto;
+	/* border-radius: 6px; */
+	background-color: transparent;
+	color: white;
 }
 .detailInfoContainer {
-    letter-spacing: 0.1em;
-    color: white;
-    position: relative;
-    width: 100%;
-    height: 550px;
-    background-color: #061a31;
-    border-radius: 6px;
+	letter-spacing: 0.1em;
+	color: white;
+	position: relative;
+	width: 100%;
+	height: 550px;
+	background-color: var(--color-1);
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+	/* border-radius: 6px; */
 }
 
 .imageContainer {
-    width: 100%;
-    height: inherit;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
+	width: 100%;
+	height: inherit;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
 }
 
 .imageHolder {
-    height: 100%;
+	height: 100%;
 }
 
 .imageHolder img {
-    width: 977px;
-    height: inherit;
-    position: relative;
-    border-radius: 6px;
+	width: 977px;
+	height: inherit;
+	position: relative;
+	border-radius: 6px;
 }
 
 .imageGradient {
-    width: 300px;
-    height: inherit;
-    position: absolute;
-    top: 0;
-    left: 678px;
-    background: linear-gradient(to right, #061a3100, #061a31);
+	width: 300px;
+	height: inherit;
+	position: absolute;
+	top: 0;
+	left: 678px;
+	background: linear-gradient(to right, #061a3100, var(--color-1));
 }
 
 .detailContainer {
-    height: inherit;
-    width: 100%;
-    background: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
+	height: inherit;
+	width: 100%;
+	background: transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .titleAndDetail {
-    width: 50%;
-    position: absolute;
-    /* background-color: aqua; */
-    right: 0;
-    top: 10%;
-    text-align: right;
-    padding-right: 30px;
+	width: 50%;
+	position: absolute;
+	/* background-color: aqua; */
+	right: 0;
+	top: 10%;
+	text-align: right;
+	padding-right: 30px;
 }
 
 .videoTitle {
-    margin: 0;
-    font-size: 50px;
+	margin: 0;
+	font-size: 50px;
 }
 
 .timeGenre {
-    margin-top: 5px;
-    font-size: 20px;
-    color: rgb(173, 173, 173);
+	margin-top: 5px;
+	font-size: 20px;
+	color: rgb(173, 173, 173);
 }
 
 .description {
-    font-size: 18px;
-    color: rgb(223, 223, 223);
-    font-weight: 600;
+	font-size: 18px;
+	color: rgb(223, 223, 223);
+	font-weight: 600;
 }
 
 .fa {
-    padding: 0 5px;
+	padding: 0 5px;
 }
 
 .videoStats {
-    width: 200px;
-    position: absolute;
-    right: 0;
-    bottom: 18%;
-    display: flex;
-    display: flex;
-    justify-content: right;
-    padding: 0 30px;
+	width: 200px;
+	position: absolute;
+	right: 0;
+	bottom: 18%;
+	display: flex;
+	display: flex;
+	justify-content: right;
+	padding: 0 30px;
 }
 
 .videoStats span {
-    font-size: 22px;
-    width: 30px;
-    margin: 10px;
-    text-align: center;
+	font-size: 22px;
+	width: 30px;
+	margin: 10px;
+	text-align: center;
 }
 
 .watchOptions {
-    width: 40%;
-    position: absolute;
-    /* background-color: aqua; */
-    right: 0;
-    bottom: 10%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 30px;
+	width: 40%;
+	position: absolute;
+	/* background-color: aqua; */
+	right: 0;
+	bottom: 10%;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 30px;
 }
 
 .backupWatchOptions {
-    position: absolute;
-    bottom: 6%;
-    left: 0;
-    display: flex;
-    width: 60%;
-    display: none;
-    padding-left: 30px;
+	position: absolute;
+	bottom: 6%;
+	left: 0;
+	display: flex;
+	width: 60%;
+	display: none;
+	padding-left: 30px;
 }
 
 .watchOptionsDiv,
 .backupWatchOptionsDiv {
-    font-size: 20px;
-    width: 50%;
-    margin: 10px 0 0 0;
-    text-align: right;
+	font-size: 20px;
+	width: 50%;
+	margin: 10px 0 0 0;
+	text-align: right;
 }
 
 .bottomDetailContainer {
-    margin-top: 0;
-    padding: 0 10px 5px 10px;
-    width: 100%;
-    display: none;
+	margin-top: 0;
+	padding: 0 10px 5px 10px;
+	width: 100%;
+	display: none;
 }
 .bottomTitle {
-    font-size: 28px;
-    margin: 10px 0;
+	font-size: 28px;
+	margin: 10px 0;
 }
 .bottomVideoStats span {
-    margin: 0 5px;
+	margin: 0 5px;
 }
 .bottomVideoStats span i {
-    padding: 0 5px;
+	padding: 0 5px;
 }
 .extras {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    align-items: center;
-    padding-bottom: 15px;
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	align-items: center;
+	padding-bottom: 15px;
 }
 
 .extrasItem {
-    cursor: pointer;
-    margin: 20px 10px;
+	cursor: pointer;
+	margin: 20px 10px;
 }
 
 @media screen and (max-width: 1050px) {
-    .detailInfoContainer {
-        height: 400px;
-    }
-    
-    .titleAndDetail h1 {
-        margin: 0;
-        font-size: 40px;
-    }
-    
-    .timeGenre {
-        font-size: 18px;
-    }
-    
-    .description {
-        font-size: 16px;
-    }
-    
-    .detailContainer {
-        height: 400px;
-    }
-    
-    .imageHolder img {
-        width: 710px;
-        height: 400px;
-    }
-    
-    .imageGradient {
-        width: 250px;
-        left: 460px;
-    }
-    
-    .watchOptions div,
-    .backupWatchOptions div {
-        font-size: 16px;
-    }
-    .videoStats span {
-        font-size: 18px;
-        margin: 10px;
-        text-align: center;
-    }
+	.detailInfoContainer {
+		height: 400px;
+	}
+
+	.titleAndDetail h1 {
+		margin: 0;
+		font-size: 40px;
+	}
+
+	.timeGenre {
+		font-size: 18px;
+	}
+
+	.description {
+		font-size: 16px;
+	}
+
+	.detailContainer {
+		height: 400px;
+	}
+
+	.imageHolder img {
+		width: 710px;
+		height: 400px;
+	}
+
+	.imageGradient {
+		width: 250px;
+		left: 460px;
+	}
+
+	.watchOptions div,
+	.backupWatchOptions div {
+		font-size: 16px;
+	}
+	.videoStats span {
+		font-size: 18px;
+		margin: 10px;
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 750px) {
-    .imageHolder {
-        width: 100%;
-    }
-    .imageHolder > img {
-        width: 100%;
-        object-fit: cover;
-        border-radius: 6px 6px 0 0;
-    }
-    
-    .titleAndDetail,
-    .watchOptions,
-    .imageGradient, 
-    .videoStats {
-        display: none;
-    }
-    .backupWatchOptions {
-        display: block;
-    }
-    .backupWatchOptions>div {
-        text-align: left;
-    }
-    .bottomDetailContainer {
-        display: block;
-    }
-    
+	.imageHolder {
+		width: 100%;
+	}
+	.imageHolder > img {
+		width: 100%;
+		object-fit: cover;
+		border-radius: 6px 6px 0 0;
+	}
+
+	.titleAndDetail,
+	.watchOptions,
+	.imageGradient,
+	.videoStats {
+		display: none;
+	}
+	.backupWatchOptions {
+		display: block;
+	}
+	.backupWatchOptions > div {
+		text-align: left;
+	}
+	.bottomDetailContainer {
+		display: block;
+	}
 }

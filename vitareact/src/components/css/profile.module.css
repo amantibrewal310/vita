@@ -1,37 +1,37 @@
-
 .profContainer {
-    width: 60%;
-    margin: auto;
-    text-align: center;
-    margin-top: 20px;
-    background-color: var(--vita-dark-blue);
-    padding: 15px 0;
-    border-radius: 6px;
+	width: 60%;
+	margin: auto;
+	text-align: center;
+	margin-top: 20px;
+	background-color: transparent;
+	padding: 15px 0;
+	border-radius: 6px;
 }
 
-.profContainer h1, .profContainer p {
-    background: linear-gradient(to right, var(--vita-bright-blue), white);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.profContainer h1,
+.profContainer p {
+	background: linear-gradient(to right, var(--color-2), white);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .avatarContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .watchlistContainer {
-    width: 97%;
-    margin: 30px auto 0 auto;
+	width: 97%;
+	margin: 30px auto 0 auto;
 }
 .watchlistContainer > h2 {
-    text-align: center;
-    padding: 10px 0 20px 0;
+	text-align: center;
+	padding: 10px 0 20px 0;
 }
 
 @media screen and (max-width: 600px) {
 	.profContainer {
-        width: 80%;
-    }
+		width: 80%;
+	}
 }

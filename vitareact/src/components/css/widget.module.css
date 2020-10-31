@@ -1,0 +1,45 @@
+.widgetWrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background: transparent;
+	align-items: center;
+	text-align: center;
+	border: 4px solid;
+	border-color: var(--color-1);
+	border-radius: 8px;
+	min-width: 200px;
+	min-height: 175px;
+	margin-top: 15px;
+}
+
+.widgetTitle {
+	border-bottom: 1px solid #665151;
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 13px;
+	font-weight: 600;
+	padding: 10px 10px;
+	background-color: var(--color-1);
+	text-align: center;
+	width: 100%;
+}
+
+.widgetValue .value {
+	font-size: 57px;
+	font-weight: 700;
+	text-align: left;
+	padding: 0px 7px;
+	line-height: 100%;
+}
+.description {
+	text-align: center;
+}
+
+.widgetValue {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+text {
+	fill: white;
+}

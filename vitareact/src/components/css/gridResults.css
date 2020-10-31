@@ -1,101 +1,105 @@
-
 /* flex container */
 
 .resultContainer {
-    width: 97%;
-    padding: 15px 0 15px 0;
-    margin: auto;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content:center;
-    align-items: center;
-    background-color: var(--vita-light-blue);
-    border-radius: 6px;
-    color: white;
+	width: 97%;
+	padding: 15px 0 15px 0;
+	margin: auto;
+	margin-bottom: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-color: transparent;
+	border-radius: 6px;
+	color: white;
 }
 
 /* Styling for overlay image item for movies  */
 
 .resultItem {
-    width: 350px;
-    margin: 8px;
-    position: relative;
-    display: inline-block;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border-radius: 4px;
+	width: 350px;
+	margin: 8px;
+	position: relative;
+	display: inline-block;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	border-radius: 4px;
 }
 
 .resultThumbnail {
-    width: 100%;
-    border-radius: 4px;
+	width: 100%;
+	border-radius: 4px;
 }
 
 .overlay {
-    background: linear-gradient(to bottom,  #061a3118, #061a31dc, #061a31e7, #061a31);
-    position: absolute;
-    transition: all 0.3s ease;
-    opacity: 0;
-    border-radius: 6px;
+	background: linear-gradient(
+		to bottom,
+		#061a3118,
+		#6a097d,
+		#c060a1,
+		#f1d4d4
+	);
+	position: absolute;
+	transition: all 0.3s ease;
+	opacity: 0;
+	border-radius: 6px;
 }
 
 .resultInfo {
-    font-family: 'Raleway', sans;
-    color: white;
-    position: absolute;
-    font-size: 18px;
-    font-weight: 700;
-    padding: 0 8px;
-    display: flex;
-    flex-direction: column;
-    letter-spacing: 0.03em;
+	font-family: 'Raleway', sans;
+	color: white;
+	position: absolute;
+	font-size: 18px;
+	font-weight: 700;
+	padding: 0 8px;
+	display: flex;
+	flex-direction: column;
+	letter-spacing: 0.03em;
 }
 
 .resultTitle {
-    margin: 0;
+	margin: 0;
 }
 
 .resultDescription {
-    margin: 3px;
-    font-size: 11px;
+	margin: 3px;
+	font-size: 11px;
 }
 
 .overlayBottom {
-    height: 0;
-    width: 100%;
-    bottom: 0;
-    left: 0;
+	height: 0;
+	width: 100%;
+	bottom: 0;
+	left: 0;
 }
 
 .resultItem:hover .overlayBottom {
-    height: 40%;
+	height: 40%;
 }
 
 .resultItem:hover .overlay {
-    opacity: 1;
+	opacity: 1;
 }
 
 .resultItem:hover {
-    transform: scale(1.07);
+	transform: scale(1.07);
 }
 
 @media screen and (max-width: 1100px) {
-    .resultItem {
-        width: 250px
-    }
+	.resultItem {
+		width: 250px;
+	}
 }
 
 @media screen and (max-width: 850px) {
-    .resultItem {
-        width: 350px
-    }
+	.resultItem {
+		width: 350px;
+	}
 }
 
-
 @media screen and (max-width: 600px) {
-    .resultItem {
-        width: 90vw;
-    }
+	.resultItem {
+		width: 90vw;
+	}
 }
