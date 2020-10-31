@@ -1,6 +1,7 @@
 import React from 'react'
 import {useParams, useHistory} from 'react-router-dom'
 import axiosInstance from '../../axios';
+import Header from '../Header';
 import ReportList from './ReportListVidCom';
 
 function CommentReportAction() {
@@ -28,6 +29,7 @@ function CommentReportAction() {
 
     return (
         <>
+            <Header />
             <div style={{margin: '20px', float: 'right'}}>
                 <button onClick={() => handleAction('approve')}>Approve</button>
                 <button onClick={() => handleAction('decline')}>Decline</button>

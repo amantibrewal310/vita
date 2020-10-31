@@ -26,8 +26,7 @@ function CategoryRow(props) {
 		<div className={style.row}>
 			<h1>{heading}</h1>
 			<div className={style.row_posters}>
-				{videos.map((video) => {
-					console.log('category', video);
+				{videos.map((video) => {;
 					return (
 						// <Link key={video.id} to={`preplay/${video.id}`}>
 						<img

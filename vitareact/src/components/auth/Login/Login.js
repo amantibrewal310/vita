@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AxiosLoginInstance from './AxiosLogin';
 import axios from 'axios';
+import axiosInstance from '../../../axios';
 import { useHistory, Link } from 'react-router-dom';
 import FbLogin from 'react-facebook-login';
 import FacebookLogin from './FacebookLogin';
@@ -9,6 +10,7 @@ import checkAdminLoggedIn from '../checkAdminLoggedIn';
 import { FB_CLIENT_ID, FB_CLIENT_SECRET, FB_APP_ID} from '../../../Backend';
 import formStyles from '../../css/forms.module.css';
 import Popup from '../../utils/Popup';
+import logo from '../../../images/vita-log.png';
 
 
 function Login() {
@@ -60,16 +62,16 @@ function Login() {
 				localStorage.setItem('access_token', res.data.access_token);
                 localStorage.setItem('refresh_token', res.data.refresh_token);
                 setAdminStatus();
-                // home page on succefull login 
-                setShowPopup(true);
-                setTimeout(() => {
-                    if(checkAdminLoggedIn())  {
+                
+                if(checkAdminLoggedIn()) {
+                    setShowPopup(true);
+                    setTimeout(() => {
                         history.push('/admin');
-                    } else {
-                        history.push('/');
-                    }
-                    window.location.reload();
-                }, 1500);
+                    }, 1500);
+               
+                } else {
+                    redirectBySubscription();
+                }
             })
             .catch(err => {
                 // wrong credentials 
@@ -118,9 +120,40 @@ function Login() {
         localStorage.setItem('admin', admin);
     } 
 
+    const redirectBySubscription = () => {
+        axiosInstance
+            .get(`http://127.0.0.1:8000/api/membership/user/type/`)
+            .then(res => {
+                if(res.data.membership_type === "None") {
+                    setShowPopup(true);
+                    setTimeout(() => {
+                        history.push("/subscribe");
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        history.push("/home");
+                    }, 1500);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                setError({
+                    ...error,
+                    credentialsError: 'could not login, please retry'
+                })
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000)    
+            })
+    }
+
+
     return (
         <div className={formStyles.formBG}>
             <Popup show={showPopup} message="Welcome Back!" type="success"/>
+            <div className={formStyles.logoBox}>
+                <img src={logo} alt="logo" />
+            </div>
             <div className={formStyles.formContainer}>
                 <h2 className={formStyles.heading}>Login</h2>
                 {

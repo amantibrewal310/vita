@@ -4,6 +4,7 @@ import axios from 'axios';
 // import './css/gridResults.css'
 import fromStyles from './css/forms.module.css'
 import Preloader from './utils/Preloader'
+import Header from './Header';
 
 function VideoSearch() {
 
@@ -43,6 +44,8 @@ function VideoSearch() {
     }
 
     return (
+        <>
+        <Header />
         <div>
             <div>
                 <div className="resultContainer" style={{flexDirection:'column'}}>
@@ -106,6 +109,7 @@ function VideoSearch() {
                 
             </div> 
         </div>
+        </>
     )
 }
 

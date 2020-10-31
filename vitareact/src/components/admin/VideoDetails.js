@@ -1,6 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom'
 import GetVideo from '../GetVideo';
+import Header from '../Header';
 import DeleteVidCom from './DeleteVidCom';
 import EditVideo from './EditVideo';
 import ReportList from './ReportListVidCom';
@@ -15,6 +16,8 @@ function VideoDetails() {
     const {id} = useParams();
 
     return (
+        <>
+        <Header />
         <div>
             <h1><u>Video Details Page for Admin</u></h1>
             <EditVideo id={id} />
@@ -22,6 +25,7 @@ function VideoDetails() {
             <ReportList type="video" id={id} />
             <DeleteVidCom type="Video" urlSuffix="video/video-list/" id={id} />
         </div>
+        </>
     )
 }
 

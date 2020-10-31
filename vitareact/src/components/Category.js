@@ -6,6 +6,7 @@ import './css/categoryItem.css';
 import './css/gridResults.css';
 import { API } from '../Backend';
 import { getCategoriesList } from '../request';
+import Header from './Header';
 
 function Category() {
 	const [loading, setLoading] = useState(true);
@@ -19,6 +20,8 @@ function Category() {
 	}, []);
 
 	return (
+		<>
+		<Header />
 		<div>
 			<div className='resultContainer'>
 				<h3>Categories</h3>
@@ -41,6 +44,7 @@ function Category() {
 				))}
 			</div>
 		</div>
+		</>
 	);
 }
 

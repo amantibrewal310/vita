@@ -4,6 +4,7 @@ import checkLoggedIn from './auth/checkLoggedIn'
 import axiosInstance from '../axios'
 import GetAllWatchList from './Watchlist/GetAllWatchList'
 import Preloader from './utils/Preloader'
+import Header from './Header'
 
 function UserProfile() {
     // init user data 
@@ -44,6 +45,8 @@ function UserProfile() {
 
     if(checkLoggedIn()) {
         return (
+            <>
+            <Header />
             <div>
                 {
                     (!loading)
@@ -66,6 +69,7 @@ function UserProfile() {
                     <GetAllWatchList userId={user.id} />
                 </div>
             </div>
+            </>
         )
     }
 

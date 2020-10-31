@@ -6,6 +6,7 @@ import AddToWatchlist from './Watchlist/AddToWatchlist';
 import Popup from './utils/Popup';
 import Preloader from './utils/Preloader';
 import axiosInstance from '../axios';
+import Header from './Header';
 
 function VideoPreplay() {
     const {id} = useParams();
@@ -81,6 +82,8 @@ function VideoPreplay() {
     }
 
     return (
+        <>
+        <Header />
         <div>
         <Popup show={showPopup} message="Added to Watchlist" type="success"/>
         {
@@ -221,6 +224,7 @@ function VideoPreplay() {
         )
         }
         </div>
+        </>
     )
 }
 

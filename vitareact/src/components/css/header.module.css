@@ -14,24 +14,11 @@
 }
 
 .logo {
-	font-family: 'Cookie', cursive;
-	font-size: 33px;
-	letter-spacing: 0.18em;
-	color: white;
-	border-left: 10px solid white;
-	border-right: 10px solid white;
+	width: 80px;
+	height: 70px;
 	position: relative;
-	top: -6px;
-	padding: 0 15px 10px 15px;
-	border-radius: 10px;
+	top: -20px;
 	cursor: pointer;
-	transition: all 0.3s ease;
-}
-
-.logo:hover {
-	color: var(--vita-orange);
-	border-left: 10px solid var(--vita-orange);
-	border-right: 10px solid var(--vita-orange);
 }
 
 .openbtn {
