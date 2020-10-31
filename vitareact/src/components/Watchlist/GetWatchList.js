@@ -1,31 +1,28 @@
-
 // Component Returns a watchlist
-
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axiosInstance from '../../axios'
-import '../css/gridResults.css'
+// import '../css/gridResults.css'
 import Preloader from '../utils/Preloader'
 
-function GetWatchList({id, name, videoIds}) {
-    const [loading, setLoading] = useState(true);
-    const [videos, setVideos] = useState([])
+function GetWatchList({ id, name, videoIds }) {
+	const [loading, setLoading] = useState(true);
+	const [videos, setVideos] = useState([]);
 
-    useEffect(() => {
-        getVideosInPlayList(videoIds)
-    }, [])
+	useEffect(() => {
+		getVideosInPlayList(videoIds);
+	}, [videoIds]);
 
-    const getVideosInPlayList = async (arr) => {
-        const promises = arr.map(async (videoId) => {
-            return await axiosInstance.get(`video/video-list/${videoId}/`)
-        });
-        
-        const responses = await Promise.all(promises)
-        const allvideos = responses.map(element => element.data)
-        setVideos(allvideos)
-        setLoading(false)
-    }
+	const getVideosInPlayList = async (arr) => {
+		const promises = arr.map(async (videoId) => {
+			return await axiosInstance.get(`video/video-list/${videoId}/`);
+		});
 
+		const responses = await Promise.all(promises);
+		const allvideos = responses.map((element) => element.data);
+		setVideos(allvideos);
+		setLoading(false);
+	};
     // TODO:
     // 1. return a horizontal scroll-list
     // 2. remove from playlist
@@ -77,4 +74,4 @@ function GetWatchList({id, name, videoIds}) {
     )
 }
 
-export default GetWatchList
+export default GetWatchList;
