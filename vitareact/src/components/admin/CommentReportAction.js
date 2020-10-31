@@ -14,7 +14,6 @@ function CommentReportAction() {
                 comment_id: id,
                 action: action
             }
-            console.log(body);
             
             axiosInstance
                 .post(`video/reported-comment/final/`, body)

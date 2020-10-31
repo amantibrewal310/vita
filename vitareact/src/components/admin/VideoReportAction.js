@@ -15,7 +15,6 @@ function VideoReportAction() {
                 video_id: id,
                 action: action
             }
-            console.log(body);
             axiosInstance
                 .post(`video/reported-video/final/`, body)
                 .then(res => {

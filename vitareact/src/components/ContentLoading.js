@@ -1,21 +1,14 @@
 
 import React from 'react'
+import Preloader from './utils/Preloader'
 
 function ContentLoading(WrappedComponent) {
     return function ContentLoadingComponent({isLoading, ...props}) {
         if(!isLoading) {
             return <WrappedComponent {...props} />
         }
-        // TODO:
-        // display a nice loader, write css for 
-        //  a smaller and a bigger version
-        // >> <Loader type="big/small" />
-        // write css of both in PreLoader.js file 
-        // apply css with respect to props[big/small] 
         return ( 
-            <div>
-                Waiting for the data......
-            </div>
+                <Preloader />
         )
     }
 }

@@ -4,6 +4,8 @@ import axios from 'axios';
 import style from  './css/videoPreplay.module.css';
 import AddToWatchlist from './Watchlist/AddToWatchlist';
 import Popup from './utils/Popup';
+import Preloader from './utils/Preloader';
+import axiosInstance from '../axios';
 
 function VideoPreplay() {
     const {id} = useParams();
@@ -13,13 +15,15 @@ function VideoPreplay() {
     const [extrasLoading, setExtrasLoading] = useState(true);
     const [videoLoading, setVideoLoading] = useState(true);
     const [addTo, setAddTo] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);  
+    const [calculatedData,  setCalculatedData] = useState({playtime: "", category: "", year: ""})
+    const [showPopup, setShowPopup] = useState(false); 
 
     useEffect(() => {
         axios.get(`http://127.0.0.1:8000/api/video/video-list/${id}/`)
             .then(res => {
                 setVideoLoading(false);
                 setVideo(res.data);
+                setCalculated(res.data.playtime, res.data.category)
                 getExtras(res.data.title);
             })
             .catch(err => {
@@ -44,7 +48,8 @@ function VideoPreplay() {
         //     });
     }
 
-    const getPlayTime = (timeInmins) => {
+    const setCalculated = async (timeInmins, categoryId) => {
+        // calculte play time in hrs, mins
         const hrs = Math.floor(timeInmins / 60)
         const mins = timeInmins % 60
         let playtime = '';
@@ -54,10 +59,20 @@ function VideoPreplay() {
         if(mins > 0) {
             playtime += ` ${mins} mins`
         }
-        return playtime
-    }
-    const getCategory = (categoryId) => {
-        // return ("Adventure")
+        
+        // get category
+        let res = await axiosInstance.get(`video/categories/${categoryId}`)
+        let category = res.data.category
+        category = category.charAt(0).toUpperCase() + category.slice(1)
+        
+        // year
+        let year = 2010 + Math.floor(Math.random() * 10)
+
+        setCalculatedData({
+            playtime: playtime,
+            category: category,
+            year: year
+        })
     }
 
     // handler for add to watchlist 
@@ -85,7 +100,7 @@ function VideoPreplay() {
                             <div className={style.titleAndDetail}>
                                 <h1 className={style.videoTitle}><b>{video.title}</b></h1>
                                 <p className={style.timeGenre}>
-                                    <b>{getPlayTime(video.playtime)} . 2019 . {getCategory(video.category)}</b>
+                                    <b>{calculatedData.playtime} . {calculatedData.year} . {calculatedData.category}</b>
                                 </p>
                                 <p className={style.description}>
                                     {video.description}
@@ -139,7 +154,7 @@ function VideoPreplay() {
                         <div className={style.bottomTitleAndDetail}>
                             <h1 className={style.bottomTitle}><b>{video.title}</b></h1>
                             <p className={style.timeGenre}>
-                                <b>{getPlayTime(video.playtime)} . 2019 . {getCategory(video.category)}</b>
+                                <b>{calculatedData.playtime} . 2019 . {calculatedData.category}</b>
                             </p>
                             <p className={style.description}>
                                 {video.description}
@@ -180,8 +195,11 @@ function VideoPreplay() {
                     <div className={style.extras}>
                         {
                             (extrasLoading)
-                            ? <>Loading...</>
-                            : (
+                            ? (
+                                <div style={{width: '100vw', height: '25vh'}}>
+                                    <Preloader />
+                                </div>
+                            ) : (
                                 extras.map((item, index) => (
                                     <div key={index} className={style.extrasItem}>
                                         <div className={style.iframe}>

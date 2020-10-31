@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import './Subscription.css';
 import axiosInstance from '../axios';
 import Payment from './Payment';
 import Pricing from './Pricing';
+import subStyles from './css/subscription.module.css'
 
 const Subscription = () => {
 	const [flag, setFlag] = useState(true);
@@ -15,37 +15,32 @@ const Subscription = () => {
 	const [currentMembershipType, setCurrentMembershipType] = useState('');
 
 	useEffect(() => {
+		// get all membership types 
 		axiosInstance
 			.get(`membership/type/`)
 			.then((res) => {
-				console.log(res);
 				setLoading(false);
 				setMemberships(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+		
+		// currently active membershhip of user 
 		axiosInstance
 			.get(`membership/user/type/`)
 			.then((res) => {
-				console.log(res.data);
 				setLoading(false);
 				setCurrentMembershipType(res.data.membership_type);
 			})
 			.catch((err) => console.log(err));
 	}, []);
-	// useEffect(() => {
-	// 	if (!flag) {
-	// 		setPlainID(plainID);
-	// 	}
-	// });
-	console.log(memberships);
-	console.log(plainID);
+	
 	return (
 		<React.Fragment>
-			<section className='container'>
+			<section className={subStyles.plansContainer}>
 				<h1 className='text-center'>Pricing</h1>
-				<div className='row'>
+				<div className={subStyles.allPlans}>
 					{flag ? (
 						memberships.map((type) => (
 							// console.log(type);

@@ -3,8 +3,11 @@ import notfound from '../images/notfound.png'
 
 function NotFound() {
     return (
-        <div>
-            <img src={notfound} alt='not found' style={{backgroundSize: "100%"}}/>
+        <div className='page-not-found'>
+            <div>
+                <p className="fourofour">Error 404</p>
+                <p>Are you lost?</p>
+            </div>
         </div>
     )
 }

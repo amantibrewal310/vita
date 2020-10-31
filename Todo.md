@@ -31,8 +31,10 @@
         - https://www.youtube.com/watch?v=u0qpTOmXvvs&list=PLx-q4INfd95EsUuON1TIcjnFZSqUfMf7s&index=3
     - change database postgres
 
-# React
+    - single model that can handle, video watch count and store the previous palytime of the user 
 
+# React
+    - set a link/button for admin for video detail page / comment detail page
     - increase video views on play
     - correct routes 
     - add a lot of description so search works well
@@ -50,8 +52,7 @@
     - watch list for user
 
 # Ideas
-
-    - live search
+    - use google charts 
     - captions
     - realtime notif 
     - register user activate

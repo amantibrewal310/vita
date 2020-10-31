@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import Preloader from './utils/Preloader'
 // import './css/gridResults.css';
 import { API, SERVER } from '../Backend';
 import { getCategoryName, getCategoryVideos } from '../request';
@@ -10,7 +11,6 @@ function CategoryResults() {
 	const [loading, setLoading] = useState(true);
 	const [videos, setVideos] = useState([]);
 	const [categoryName, setCategoryName] = useState('');
-
 	// videos
 	useEffect(() => {
 		getCategoryVideos(id)
@@ -28,7 +28,6 @@ function CategoryResults() {
 			})
 			.catch((error) => console.log(error));
 	});
-
 	return (
 		<div>
 			<div className='resultContainer'>

@@ -40,3 +40,25 @@ a:hover {
 a:active {
 	color: grey;
 }
+
+.page-not-found {
+    width: 100vw;
+    height: 90vh;
+    background: linear-gradient(to right, var(--vita-dark-blue),var(--vita-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-not-found div {
+    padding: 20vh 0;
+}
+
+.page-not-found p {
+    font-size: 7vw;
+    width: 60%;
+    text-align: center;
+    margin: auto;
+    color: white;
+    font-weight: bold;
+}   
+

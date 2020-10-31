@@ -10,7 +10,6 @@ function ReportListItem({userId, reasonId}) {
         axiosInstance
             .get(`video/report-reason/${reasonId}/`)
             .then(res => {
-                console.log(res);
                 setReason(res.data.reason);
             })
             .catch(err => {
@@ -22,7 +21,6 @@ function ReportListItem({userId, reasonId}) {
         axiosInstance
             .get(`user/${userId}/`)
             .then(res => {
-                console.log(res);
                 setUsername(res.data.username);
             });
     }, []);

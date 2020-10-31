@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom'
 import checkLoggedIn from './auth/checkLoggedIn'
 import axiosInstance from '../axios'
 import GetAllWatchList from './Watchlist/GetAllWatchList'
-
+import Preloader from './utils/Preloader'
 
 function UserProfile() {
     // init user data 
@@ -45,20 +45,25 @@ function UserProfile() {
     if(checkLoggedIn()) {
         return (
             <div>
+                {
+                    (!loading)
+                    ? (
+                        <div>
+                            <h1>User Profile</h1>
+                            <h2>Hi {user.first_name}, How are you today?</h2>
+                            <p>@{user.username}</p>
+                            <p>{user.email}</p>
+                            <p>About: {user.about}</p>
+                        </div>
+                    ) : (
+                        <div style={{width: '100vw', height: '25vh'}}>
+                            <Preloader />
+                        </div>
+                    )
+                }
                 <div>
-                    <h1>User Profile</h1>
-                    <h2>Hi {user.first_name}, How are you today?</h2>
-                    <p>@{user.username}</p>
-                    <p>{user.email}</p>
-                    <p>About: {user.about}</p>
-                </div>
-                <div>
-                    <h3>Watchlists</h3>
-                    {
-                        (!loading)
-                        ? <GetAllWatchList userId={user.id} />
-                        : <></>
-                    }
+                    <h2>Your Watchlists</h2>
+                    <GetAllWatchList userId={user.id} />
                 </div>
             </div>
         )

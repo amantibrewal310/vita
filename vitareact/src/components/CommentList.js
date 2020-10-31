@@ -9,7 +9,7 @@ import {Link} from 'react-router-dom';
 function CommentList({comments}) {
 
     const commentList = (comments.length == 0)
-    ? (<p>No comments</p>)
+    ? (<></>)
     : (comments.map(comment => (
             <SingleComment key={comment.id} comment={comment} />
         ))

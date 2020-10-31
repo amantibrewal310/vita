@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Preloader from './utils/Preloader';
 import { Link } from 'react-router-dom';
 // import './css/categoryItem.css';
 // import './css/gridResults.css';
 import { API } from '../Backend';
-import { getCategoriesList } from '../request';
+import { getCategoriesList } from '../request'
 
 function Category() {
 	const [loading, setLoading] = useState(true);
