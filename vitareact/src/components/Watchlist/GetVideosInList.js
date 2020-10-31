@@ -1,7 +1,7 @@
-import axiosInstance from '../../axios'
+import axiosInstance from '../../axios';
 
 async function GetVideosInList(id) {
-    return await axiosInstance.get(`video/watchlist/${id}/`)    
+	return await axiosInstance.get(`video/watchlist/${id}/`);
 }
 
-export default GetVideosInList
+export default GetVideosInList;

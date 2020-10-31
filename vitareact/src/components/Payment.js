@@ -86,7 +86,7 @@ const Payment = ({
 						</button>
 					</div>
 				) : (
-					<h3>Please login first or add something in cart</h3>
+					<h3>loading....................</h3>
 				)}
 			</div>
 		);

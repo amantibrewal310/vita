@@ -1,127 +1,126 @@
-
 .header {
-    position: fixed;
-    width: 100%;
-    height: 60px;
-    padding: 15px 20px 0 10px;
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--vita-dark-blue);
-    z-index: 20;
+	position: fixed;
+	width: 100%;
+	height: 60px;
+	padding: 15px 20px 0 10px;
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--vita-dark-blue);
+	z-index: 20;
 }
 
 .mainContent {
-    height: 60px;
+	height: 60px;
 }
 
 .logo {
-    font-family: 'Cookie', cursive;
-    font-size: 33px;
-    letter-spacing: 0.18em;
-    color: white;
-    border-left: 10px solid white;
-    border-right: 10px solid white;
-    position: relative;
-    top: -6px;
-    padding: 0 15px 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+	font-family: 'Cookie', cursive;
+	font-size: 33px;
+	letter-spacing: 0.18em;
+	color: white;
+	border-left: 10px solid white;
+	border-right: 10px solid white;
+	position: relative;
+	top: -6px;
+	padding: 0 15px 10px 15px;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
 .logo:hover {
-    color: var(--vita-orange);
-    border-left: 10px solid var(--vita-orange);
-    border-right: 10px solid var(--vita-orange);
+	color: var(--vita-orange);
+	border-left: 10px solid var(--vita-orange);
+	border-right: 10px solid var(--vita-orange);
 }
 
 .openbtn {
-    color: white;
-    font-size: 25px;
+	color: white;
+	font-size: 25px;
 }
 
 .navbar {
-    margin-top: 60px;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: var(--vita-dark-blue);
-    overflow-x: hidden;
-    transition: 0.4s;
+	margin-top: 60px;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: var(--vita-dark-blue);
+	overflow-x: hidden;
+	transition: 0.4s;
 }
 
 .navbarLinkContainer {
-    margin: 30px auto;
+	margin: 30px auto;
 }
 
 .navItem {
-    display: block;
-    text-decoration: none;
-    margin: 15px 5px auto;
-    padding: 10px 0 10px 15px;
-    background-color: var(--vita-dark-blue);
-    text-align: left;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 2;
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
-    letter-spacing: 0.08em;
-    transition: all 0.2s ease-out;
-    cursor: pointer;
+	display: block;
+	text-decoration: none;
+	margin: 15px 5px auto;
+	padding: 10px 0 10px 15px;
+	background-color: var(--vita-dark-blue);
+	text-align: left;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 2;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	letter-spacing: 0.08em;
+	transition: all 0.2s ease-out;
+	cursor: pointer;
 }
 
 .navItem:hover {
-    transform: translateX(5px);
-    color: var(--vita-orange);
+	transform: translateX(5px);
+	color: var(--vita-orange);
 }
 
 .icon {
-    position: relative;
-    font-size: 20px;
-    top: 0;
-    width: 40px;
-    text-align: center;
+	position: relative;
+	font-size: 20px;
+	top: 0;
+	width: 40px;
+	text-align: center;
 }
 
 @media (min-width: 900px) {
-    .header {
-        padding: 15px 40px 0 40px;
-    }
-    .openbtn {
-        display: none;
-    }
-    .navbar {
-        width: 100%;
-        margin: 0;
-        position: static;
-        overflow-y: hidden;
-    }
-    .navbarLinkContainer {
-        text-align: center;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: flex-end;
-    }
-    .navbarLink {
-        display: inline-block;
-        margin: 0;
-        padding: 5px 10px 0 15px;
-    }
-    .navItem {
-        text-align: center;
-        margin: 0;
-        padding: 10px 0;
-        border: none;
-        font-size: 15px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }    
+	.header {
+		padding: 15px 40px 0 40px;
+	}
+	.openbtn {
+		display: none;
+	}
+	.navbar {
+		width: 100%;
+		margin: 0;
+		position: static;
+		overflow-y: hidden;
+	}
+	.navbarLinkContainer {
+		text-align: center;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		justify-content: flex-end;
+	}
+	.navbarLink {
+		display: inline-block;
+		margin: 0;
+		padding: 5px 10px 0 15px;
+	}
+	.navItem {
+		text-align: center;
+		margin: 0;
+		padding: 10px 0;
+		border: none;
+		font-size: 15px;
+		height: 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 }

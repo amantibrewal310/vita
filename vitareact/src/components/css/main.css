@@ -1,28 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 @import url('//fonts.googleapis.com/css?family=Cookie');
 
-:root { 
-    --vita-pink: #eb2b9b;
-    --vita-light-pink: #eb4ca8;
-    --vita-orange: #fa761d;
-    --vita-light-orange: #ee833b;
-    --vita-light-green: #13e069;
-    --vita-bright-blue: #63bdf1;
-    --vita-dark-grey: #b191c08c;
-    --vita-light-blue: #0f2947;
-    --vita-dark-blue: #061a31;
-    --vita-light-grey: #a2aebb;
-    --easing: 0.25s;
+:root {
+	--vita-pink: #eb2b9b;
+	--vita-light-pink: #eb4ca8;
+	--vita-orange: #fa761d;
+	--vita-light-orange: #ee833b;
+	--vita-light-green: #13e069;
+	--vita-bright-blue: #63bdf1;
+	--vita-dark-grey: #b191c08c;
+	--vita-light-blue: #0f2947;
+	--vita-dark-blue: #061a31;
+	--vita-light-grey: #a2aebb;
+	--easing: 0.25s;
 }
-
 * {
-	box-sizing: border-box;
+	margin: 0;
 	font-family: 'Raleway', sans-serif;
+	color: white;
+
+	/* box-sizing: border-box; */
 }
 
 body {
-	margin: 0;
-	padding: 0;
+	background: var(--vita-light-blue);
+	/* margin: 0;
+	padding: 0; */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 a {
 	text-decoration: none;
