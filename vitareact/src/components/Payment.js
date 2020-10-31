@@ -21,7 +21,7 @@ const Payment = ({plan_id, amount}) => {
 	});
 
 	const [showPopup, setShowPopup] = useState(false);
-
+	const [paymentProcessing, setPaymentProcessing] = useState(false);
 	
 	const getToken = () => {
 		axiosInstance
@@ -44,9 +44,9 @@ const Payment = ({plan_id, amount}) => {
 		// setting token null to hide drop in
 		setInfo({
 			...info,
-			clientToken: null,
 			message: `Activating the subscription plan...`
 		})
+		setPaymentProcessing(true);
 
 		let nonce;
 		let getNonce = info.instance.requestPaymentMethod().then((data) => {
@@ -70,7 +70,7 @@ const Payment = ({plan_id, amount}) => {
 						.then((res) => {
 							console.log('Subscribed', res);
 							setShowPopup(true);
-							setTimeout(() => history.push("/"), 2000)
+							setTimeout(() => history.push("/home"), 2000)
 						})
 						.catch((error) =>
 							console.log('SUBSCRIPTION FAILED', error)
@@ -84,7 +84,8 @@ const Payment = ({plan_id, amount}) => {
 		return (
 			<div>
 				{info.clientToken !== null ? (
-					<div>
+					(!paymentProcessing)
+					? <div>
 						<DropIn
 							options={{ authorization: info.clientToken }}
 							onInstance={(instance) =>
@@ -99,6 +100,11 @@ const Payment = ({plan_id, amount}) => {
 							Buy Now
 						</button>
 					</div>
+					: (
+						<div style={{width: '100vw', height: '20vh'}}>
+                			<Preloader />
+            			</div>
+					)
 				) : (
 					<div style={{width: '100vw', height: '20vh'}}>
                 		<Preloader />

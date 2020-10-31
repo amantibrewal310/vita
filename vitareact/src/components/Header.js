@@ -3,6 +3,7 @@ import style from './css/header.module.css';
 import {Link, useHistory} from 'react-router-dom';
 import checkLoggedIn from '../components/auth/checkLoggedIn';
 import checkAdminLoggedIn from '../components/auth/checkAdminLoggedIn';
+import logo from '../images/vita-log.png';
 
 function Header() {
     const history = useHistory();
@@ -28,18 +29,17 @@ function Header() {
         go home
     */
     const redirectHome = () => {
-         history.push('/');
+         history.push('/home');
     }
 
     return (
         <>
         <div className={style.header}>
-            <span 
+            <img 
                 className={style.logo}
+                src={logo}
                 onClick={redirectHome}
-            >
-                Vita
-            </span>
+            />
             
             {/* burgur */}
             <span 
@@ -70,15 +70,6 @@ function Header() {
                             <span className={style.navItem}>
                                 <i className={`fa fa-film ${style.icon}`}></i>
                                 Categories
-                            </span>
-                        </div>
-                    </Link>
-
-                    <Link to="/subscribe">
-                        <div className={style.navbarLink} onClick={handlePageChange}>
-                            <span className={style.navItem}>
-                                <i className={`fa fa-star-o ${style.icon}`}></i>
-                                Subscribe
                             </span>
                         </div>
                     </Link>

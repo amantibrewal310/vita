@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import formStyles from '../../css/forms.module.css';
 import Popup from '../../utils/Popup';
-
+import logo from '../../../images/vita-log.png'
 
 function SetPassword({setAppDataOnProcess, token, uid}) {
     const initialFormData = Object.freeze({
@@ -93,6 +93,9 @@ function SetPassword({setAppDataOnProcess, token, uid}) {
     return (
         <div className={formStyles.formBG}>
             <Popup show={showPopup} message="New Password set!" type="success"/>
+            <div className={formStyles.logoBox}>
+                <img src={logo} alt="logo" />
+            </div>
             <div className={formStyles.mediumFormContainer}>
                 <h2 className={formStyles.heading}>Reset Password</h2>
                 {

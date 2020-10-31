@@ -5,6 +5,7 @@ import Preloader from './utils/Preloader';
 import './css/gridResults.css';
 import { API, SERVER } from '../Backend';
 import { getCategoryName, getCategoryVideos } from '../request';
+import Header from './Header';
 
 function CategoryResults() {
 	const { id } = useParams();
@@ -29,6 +30,8 @@ function CategoryResults() {
 			.catch((error) => console.log(error));
 	});
 	return (
+		<>
+		<Header />
 		<div>
 			<div className='resultContainer'>
 				<h3>Popular in {categoryName}</h3>
@@ -71,6 +74,7 @@ function CategoryResults() {
 				)}
 			</div>
 		</div>
+		</>
 	);
 }
 

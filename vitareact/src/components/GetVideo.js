@@ -7,6 +7,7 @@ import AddComments from './AddComment';
 import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 import detailStyle from './css/videoDetails.module.css';
 import Preloader from './utils/Preloader';
+import Header from './Header';
 
 // Get video data for a particular video 
 // Get all comments on the video
@@ -66,6 +67,8 @@ function GetVideo() {
     // TODO:
     // display a sidebar with video-list like youtube
     return (
+        <>
+        <Header />
         <div>
             {/* Returns a component with video players and video details */}
             {
@@ -121,6 +124,7 @@ function GetVideo() {
                 - Similar movies horizontal bar 
              */}
         </div>
+        </>
     )
 }
 

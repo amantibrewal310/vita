@@ -2,6 +2,7 @@
 	color: white;
 	object-fit: contain;
 	height: 448px;
+	margin-bottom: 15px;
 }
 
 .banner_container {
@@ -40,9 +41,13 @@
 }
 
 .banner_btn:hover {
-	color: rgba(6, 26, 49, 1);
-	background-color: #e6e6e6;
+	color: #fff;
+	background-color: var(--vita-pink);
 	transition: all 0.2s;
+}
+
+.banner_btn:active, .banner_btn:focus {
+	outline: none;
 }
 
 .banner_fadeBottom {

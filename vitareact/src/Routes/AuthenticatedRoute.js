@@ -1,19 +1,21 @@
+
+// prevents user fro goint to these pages when logged 
+
 import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
 import checkLoggedIn from '../components/auth/checkLoggedIn'
-import checkAdminLoggedIn from '../components/auth/checkAdminLoggedIn'
 
-const AdminRoute = ({component: Component, ...rest}) => {
+const AuthenticatedRoute = ({component: Component, ...rest}) => {
     return (
         <Route
             {...rest}
             render = {props =>
-                (checkLoggedIn() && checkAdminLoggedIn()) ? (
+                (!checkLoggedIn()) ? (
                     <Component {...props} />
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/login",
+                            pathname: "/home",
                             state: {from: props.location}
                         }}
                     />
@@ -23,4 +25,4 @@ const AdminRoute = ({component: Component, ...rest}) => {
     )
 }
 
-export default AdminRoute
+export default AuthenticatedRoute

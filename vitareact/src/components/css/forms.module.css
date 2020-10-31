@@ -3,8 +3,20 @@
     padding: 0;
     margin: 0;
     width: 100vw;
-    height: 93.85vh;
+    height: 100vh;
     background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink));
+}
+
+.logoBox {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    padding-top: 60px;
+}
+
+.logoBox > img {
+    width: 100px;
+    
 }
 
 .formContainer, 
@@ -172,6 +184,10 @@
         width: 80%;
         margin: 120px auto;
     }
+    .logoBox {
+        padding-top: 10px;
+    }
+    
 }
 
 /* forms for create and edit videos */

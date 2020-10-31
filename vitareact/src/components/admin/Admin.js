@@ -5,6 +5,7 @@ import axiosInstance from '../../axios';
 import VideoResults from './VideoResults';
 import ContentLoading from '../ContentLoading';
 import CommentResults from './CommentResults';
+import Header from '../Header';
 
 // Admin Options Avalailable 
 
@@ -75,7 +76,8 @@ function Admin() {
     }
 
     return (
-        
+        <>
+        <Header />
         <div>
             <h1><u>Admin Home</u></h1>
             
@@ -132,6 +134,7 @@ function Admin() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -14,28 +14,17 @@
 }
 
 .logo {
-	font-family: 'Cookie', cursive;
-	font-size: 33px;
-	letter-spacing: 0.18em;
-	color: white;
-	border-left: 10px solid white;
-	border-right: 10px solid white;
+	width: 80px;
+	height: 70px;
 	position: relative;
-	top: -6px;
-	padding: 0 15px 10px 15px;
-	border-radius: 10px;
+	top: -20px;
 	cursor: pointer;
-	transition: all 0.3s ease;
-}
-
-.logo:hover {
-	color: var(--vita-orange);
-	border-left: 10px solid var(--vita-orange);
-	border-right: 10px solid var(--vita-orange);
 }
 
 .openbtn {
-	color: white;
+	background: linear-gradient(to right, var(--vita-bright-blue), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 	font-size: 25px;
 }
 
@@ -63,7 +52,9 @@
 	padding: 10px 0 10px 15px;
 	background-color: var(--vita-dark-blue);
 	text-align: left;
-	color: white;
+	background: linear-gradient(to right, var(--vita-bright-blue), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 2;
@@ -76,7 +67,6 @@
 
 .navItem:hover {
 	transform: translateX(5px);
-	color: var(--vita-orange);
 }
 
 .icon {
@@ -85,6 +75,9 @@
 	top: 0;
 	width: 40px;
 	text-align: center;
+	background: linear-gradient(to right, var(--vita-bright-blue), white);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 @media (min-width: 900px) {

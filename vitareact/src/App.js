@@ -6,6 +6,9 @@ import { API } from './Backend';
 import { getCategoriesList, getCategoryVideos, getVideosList } from './request';
 import Banner from './components/Banner';
 import CategoryRow from './components/CategoryRow';
+import Header from './components/Header';
+
+
 function App() {
 	const VideoListLoading = ContentLoading(VideoList);
 	const [appState, setAppState] = useState({
@@ -33,10 +36,7 @@ function App() {
 
 	return (
 		<React.Fragment>
-			{/* <h1>Latest Vidoes</h1> */}
-			{/* TODO: 
-                search box
-            */}
+			<Header/>
 			<Banner />
 			<VideoListLoading
 				heading={'Latest Videos'}
