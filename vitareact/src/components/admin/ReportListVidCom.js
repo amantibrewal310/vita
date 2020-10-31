@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import ReportListItem from './ReportListItem'
+import Preloader from '../utils/Preloader';
+import reportStyle from '../css/reports.module.css'
 
 function ReportListVidCom({type, id}) {
     console.log(type);
@@ -27,32 +29,33 @@ function ReportListVidCom({type, id}) {
 
     if(reportList.loading) {
         return (
-            <>
-                <h2>{type} report list</h2>
-                <p>Loading..</p>
-            </>
+            <div style={{width: '100vw', height: '20vh'}}>
+                <Preloader />
+            </div>
         )
     } else {
         return (
             <>
-                <Link 
-                    to={`/admin/${type}-report-action/${id}`}
-                >
-                    <h2>{type} report list</h2>
-                </Link>
-                
-                {
-                    (reportList.list.length == 0) 
-                    ? (
-                        <p>No Reports found.</p>
-                    )
-                    : (
+            {
+                (reportList.list.length == 0) 
+                ? (
+                    <p>No Reports found.</p>
+                )
+                : (
+                    <>
+                    <div className={reportStyle.reportHeading}>
+                        <div><b>Reported By</b></div>
+                        <div><b>Report Reason</b></div>
+                    </div>
+                    {
                         reportList.list.map(item => (
                             <ReportListItem userId={item.user} reasonId={item.reason}/>
                         ))
-                    )
-                    
-                }
+                    }
+                    </>
+                )
+                
+            }
             </>
         )
     }

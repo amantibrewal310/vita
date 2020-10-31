@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import axiosInstance from '../../axios'
+import Preloader from '../utils/Preloader';
+import reportStyle from '../css/reports.module.css'
+import UserAvatar from '../UserAvatar';
 
 function ReportListItem({userId, reasonId}) {
     
@@ -28,11 +31,17 @@ function ReportListItem({userId, reasonId}) {
     return (
         (username && reason) 
         ? (
-            <ol>
-                <li>{username} - {reason}</li>
-            </ol>
+            <div className={reportStyle.reportItem}>
+                <div className={reportStyle.userInfo}>
+                    <UserAvatar letter={username.charAt(0)}/>
+                    <p>{username}</p>
+                </div>
+                <div>{reason}</div>
+            </div>
         ) : (
-            <>Loading</>
+            <div style={{width: '100vw', height: '80px'}}>
+                <Preloader />
+            </div>
         )
     )
 }

@@ -38,11 +38,33 @@
     - increase video views on play
     - correct routes 
     - add a lot of description so search works well
+    - put a preloader when video create in admin, edit video 
+    - add a form field for video type (membership allow)
 
 # Admin Dashboard
+    - Users
+        - total active users 
+        - monthly registered new users - bar graph using api
+        - membership wise + revenue 
+        - percentage user with subsciption
 
-    - for description of upload video add makdown editor
-    - upload progress bar (or a preloader)
+    videos 
+        - total
+        - total published, draft, reported
+        - change status, published, drafted, reported
+        - uploaded month wise chart - api
+        - most liked, disliked, reported 
+
+    - subscription 
+        - change price, allow discount 
+
+    - CRUD categories
+    
+    - reports 
+        - list
+        - detail 
+        - respond 
+    
 
 # Features
 
@@ -59,8 +81,17 @@
 
 
 # Today
-    - admin
-    - loaders
-    - home page 
+    - apex graphs 
     - add to watchlist
         - convert into popup 
+
+    - admin - features and calls 
+
+    - video form add functionality 
+        - allowed_membership
+        - status 
+
+
+# IMPORTANT 
+    - on video play page 
+        - check if the video is available for the user (by his subscription type)

@@ -8,6 +8,7 @@ import Preloader from './utils/Preloader';
 import axiosInstance from '../axios';
 import Header from './Header';
 import rowStyles from './css/row.module.css';
+import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 
 function VideoPreplay() {
     const {id} = useParams();
@@ -109,6 +110,15 @@ function VideoPreplay() {
                                 <p className={style.description}>
                                     {video.description}
                                 </p>
+                                {
+                                    checkAdminLoggedIn() && (
+                                        <Link to={`../../admin/video-details/${video.id}`}>
+                                            <p className={style.description}>
+                                               <button>View in Admin </button>
+                                            </p>
+                                        </Link>
+                                    )
+                                }
                             </div>
                             <div className={style.videoStats}>
                                 <span>
@@ -178,6 +188,15 @@ function VideoPreplay() {
                                 {video.dislikes} 
                             </span>
                         </div>
+                        {
+                            checkAdminLoggedIn() && (
+                                <Link to={`../../admin/video-details/${video.id}`}>
+                                    <p className={style.description}>
+                                       <button>View in Admin </button>
+                                    </p>
+                                </Link>
+                            )
+                        }
                     </div>
                 </div>
                 
