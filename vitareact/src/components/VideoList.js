@@ -3,7 +3,7 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import style from '../components/css/row.module.css';
 function VideoList(props) {
 	const history = useHistory();
-	console.log(props);
+	// console.log(props);
 	const videoList = props.videoList;
 	if (!videoList) {
 		return <div>No videos available</div>;
@@ -13,7 +13,7 @@ function VideoList(props) {
         set [to] in Link based on user logged in status, 
         if not logged int set [to] => same page 
     */
-	console.log(props.heading);
+	// console.log(props.heading);
 	return (
 		<div className={style.row}>
 			<h1>{props.heading}</h1>

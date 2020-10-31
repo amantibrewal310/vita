@@ -10,7 +10,7 @@ function Banner() {
 		console.log('useEffect');
 		async function fetchData() {
 			const request = await axios.get(`${API}video/video-list/`);
-			console.log('DATA', request.data);
+			// console.log('DATA', request.data);
 			var len = request.data.length;
 			// console.log(len);
 
@@ -20,7 +20,7 @@ function Banner() {
 		}
 		fetchData();
 	}, []);
-	console.log(video);
+	// console.log(video);
 
 	function truncate(str, n) {
 		return str?.length > n ? str.substr(0, n - 1) + '...' : str;

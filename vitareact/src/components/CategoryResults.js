@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import Preloader from './utils/Preloader'
-// import './css/gridResults.css';
+import Preloader from './utils/Preloader';
+import './css/gridResults.css';
 import { API, SERVER } from '../Backend';
 import { getCategoryName, getCategoryVideos } from '../request';
 

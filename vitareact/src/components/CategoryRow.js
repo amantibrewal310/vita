@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
+import { SERVER } from '../Backend';
 import style from '../components/css/row.module.css';
 import { getCategoryVideos } from '../request';
 function CategoryRow(props) {
@@ -26,13 +27,13 @@ function CategoryRow(props) {
 			<h1>{heading}</h1>
 			<div className={style.row_posters}>
 				{videos.map((video) => {
-					// console.log('category', video);
+					console.log('category', video);
 					return (
 						// <Link key={video.id} to={`preplay/${video.id}`}>
 						<img
 							key={video.id}
 							className={style.row_poster}
-							src={video.thumbnail}
+							src={`${SERVER}${video.thumbnail}`}
 							alt={video.title}
 							onClick={() => {
 								console.log('--');
