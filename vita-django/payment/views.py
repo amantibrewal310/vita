@@ -39,6 +39,7 @@ def generate_token(request):
 @csrf_exempt
 @api_view(["POST"])
 def process_payment(request):
+    print("Hello")
     id = request.user.id
     if not validate_user_session(id):
         return JsonResponse({'error': 'Invalid session, Please login agian!'})
@@ -55,6 +56,7 @@ def process_payment(request):
         "customer_id": customerID,
         "payment_method_nonce": nonce_from_the_client
     })
+    print(paymentResult)
 
     if paymentResult.is_success:
         print(paymentResult)

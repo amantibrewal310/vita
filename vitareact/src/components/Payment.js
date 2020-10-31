@@ -6,10 +6,9 @@ import { createSubscription } from './subscriptionHelper';
 import Preloader from './utils/Preloader';
 import formStyles from './css/forms.module.css';
 import Popup from './utils/Popup';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const Payment = ({plan_id, amount}) => {
-
+const Payment = ({ plan_id, amount }) => {
 	const history = useHistory();
 
 	const [info, setInfo] = useState({
@@ -17,12 +16,11 @@ const Payment = ({plan_id, amount}) => {
 		clientToken: null,
 		error: '',
 		instance: {},
-		message: `Your bill is ${amount}`
+		message: `Your bill is ${amount}`,
 	});
 
 	const [showPopup, setShowPopup] = useState(false);
 
-	
 	const getToken = () => {
 		axiosInstance
 			.get(`payment/gettoken/`)
@@ -44,10 +42,10 @@ const Payment = ({plan_id, amount}) => {
 		// setting token null to hide drop in
 		setInfo({
 			...info,
-			clientToken: null,
-			message: `Activating the subscription plan...`
-		})
-
+			// clientToken: null,
+			message: `Activating the subscription plan...`,
+		});
+		console.log(info);
 		let nonce;
 		let getNonce = info.instance.requestPaymentMethod().then((data) => {
 			console.log('MYDATA', data);
@@ -55,6 +53,7 @@ const Payment = ({plan_id, amount}) => {
 			const paymentData = {
 				paymentMethodNonce: nonce,
 			};
+
 			// Processing the payment
 			processPayment(paymentData)
 				.then((response) => {
@@ -70,7 +69,7 @@ const Payment = ({plan_id, amount}) => {
 						.then((res) => {
 							console.log('Subscribed', res);
 							setShowPopup(true);
-							setTimeout(() => history.push("/"), 2000)
+							setTimeout(() => history.push('/'), 2000);
 						})
 						.catch((error) =>
 							console.log('SUBSCRIPTION FAILED', error)
@@ -94,15 +93,15 @@ const Payment = ({plan_id, amount}) => {
 						<button
 							onClick={onPurchase}
 							className={formStyles.submitBtn}
-							style={{minWidth: '250px'}}
+							style={{ minWidth: '250px' }}
 						>
 							Buy Now
 						</button>
 					</div>
 				) : (
-					<div style={{width: '100vw', height: '20vh'}}>
-                		<Preloader />
-            		</div>
+					<div style={{ width: '100vw', height: '20vh' }}>
+						<Preloader />
+					</div>
 				)}
 			</div>
 		);
@@ -110,11 +109,15 @@ const Payment = ({plan_id, amount}) => {
 
 	return (
 		<>
-		<Popup show={showPopup} message="New subscription activated!" type="success"/>
-		<div>
-			<h4 style={{textAlign: 'center'}}>{info.message}</h4>
-			{showbtnDropIn()}
-		</div>
+			<Popup
+				show={showPopup}
+				message='New subscription activated!'
+				type='success'
+			/>
+			<div>
+				<h4 style={{ textAlign: 'center' }}>{info.message}</h4>
+				{showbtnDropIn()}
+			</div>
 		</>
 	);
 };
