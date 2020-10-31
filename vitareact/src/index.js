@@ -119,10 +119,13 @@ const routing = (
 				/>
 
 				{/* OPEN TO ALL ROUTES */}
-
+				<Route 
+					exact paht="/"
+					component={Home} 
+				>
+				</Route>
 				<Route
-					exact
-					path='/reset-password'
+					exact path='/reset-password'
 					component={ForgotPassword}
 				/>
 				<Route 

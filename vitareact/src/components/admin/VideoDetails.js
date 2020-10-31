@@ -10,6 +10,14 @@ import ReportList from './ReportListVidCom';
     // 1. Video player
     // 2. Video details [including comments] >> Reuse the GetVideo Components
 
+const detailBox = {
+    paddingBottom: '40px'
+}
+
+const heading = {
+    padding: '10px',
+    textAlign: 'center'
+}
 
 function VideoDetails() {
     // get id from pramas 
@@ -18,8 +26,9 @@ function VideoDetails() {
     return (
         <>
         <Header />
-        <div>
-            <h1><u>Video Details Page for Admin</u></h1>
+        <div style={detailBox}>
+            <h1 style={heading}>Video Details</h1>
+            <br />
             <EditVideo id={id} />
             <GetVideo />
             <ReportList type="video" id={id} />

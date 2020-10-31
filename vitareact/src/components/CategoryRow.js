@@ -3,6 +3,8 @@ import { Link, Redirect, useHistory } from 'react-router-dom';
 import { SERVER } from '../Backend';
 import style from '../components/css/row.module.css';
 import { getCategoryVideos } from '../request';
+
+
 function CategoryRow(props) {
 	const history = useHistory();
 	const { heading, id } = props;
@@ -24,7 +26,7 @@ function CategoryRow(props) {
 	}
 	return (
 		<div className={style.row}>
-			<h1>{heading}</h1>
+			<h2>{heading.charAt(0).toUpperCase() + heading.slice(1)}</h2>
 			<div className={style.row_posters}>
 				{videos.map((video) => {;
 					return (

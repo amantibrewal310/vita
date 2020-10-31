@@ -331,7 +331,7 @@ function EditVideo({id}) {
                         onClick={handleSubmit}
                         className={formStyles.videoSubmitBtn}
                     >
-                        Update Changes    
+                        Update   
                     </button> 
                 </div>
             </div>

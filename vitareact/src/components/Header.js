@@ -73,15 +73,6 @@ function Header() {
                             </span>
                         </div>
                     </Link>
-
-                    <Link to="/subscribe">
-                        <div className={style.navbarLink} onClick={handlePageChange}>
-                            <span className={style.navItem}>
-                                <i className={`fa fa-star-o ${style.icon}`}></i>
-                                Subscribe
-                            </span>
-                        </div>
-                    </Link>
                     
                     {
                         (checkLoggedIn())

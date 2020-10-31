@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import style from '../components/css/row.module.css';
+
+
 function VideoList(props) {
 	const history = useHistory();
 	// console.log(props);
@@ -16,7 +18,7 @@ function VideoList(props) {
 	// console.log(props.heading);
 	return (
 		<div className={style.row}>
-			<h1>{props.heading}</h1>
+			<h2>{props.heading}</h2>
 			<div className={style.row_posters}>
 				{videoList.map((video) => {
 					return (

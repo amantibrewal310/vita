@@ -13,7 +13,7 @@ function GetAllWatchList({userId}) {
             .then(res => {
                 setWatchlists(res.data)
             })
-    })  
+    }, [])  
 
     return (
         <div>
