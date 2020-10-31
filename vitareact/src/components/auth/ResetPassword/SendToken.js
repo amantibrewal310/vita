@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Link } from 'react-router-dom';
 import formStyles from '../../css/forms.module.css';
 import Popup from '../../utils/Popup';
+import logo from '../../../images/vita-log.png'
 
 
 function SendToken({setAppDataOnProcess}) {
@@ -79,6 +80,9 @@ function SendToken({setAppDataOnProcess}) {
     return (
         <div className={formStyles.formBG}>
             <Popup show={showPopup} message="Please Check you mail for instructions." type="success"/>
+            <div className={formStyles.logoBox}>
+                <img src={logo} alt="logo" />
+            </div>
             <div className={formStyles.smallFormContainer}>
                 <h2 className={formStyles.heading}>Account Recovery</h2>
                 {

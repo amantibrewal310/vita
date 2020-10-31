@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useHistory, Link} from 'react-router-dom';
 import Popup from '../utils/Popup';
 import formStyles from '../css/forms.module.css';
-
+import logo from '../../images/vita-log.png';
 
 function SignUp() {
     const history = useHistory();
@@ -106,6 +106,9 @@ function SignUp() {
     return (
         <div className={formStyles.formBG}>
             <Popup show={showPopup} message="Welcome to Vita!" type="success"/>
+            <div className={formStyles.logoBox}>
+                <img src={logo} alt="logo" />
+            </div>
             <div className={formStyles.formContainer}>
             <h2 className={formStyles.heading}>Sign Up</h2>
                 {

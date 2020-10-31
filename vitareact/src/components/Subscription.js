@@ -39,7 +39,7 @@ const Subscription = () => {
 	return (
 		<React.Fragment>
 			<section className={subStyles.plansContainer}>
-				<h1 className='text-center'>Pricing</h1>
+				<h1 className='text-center'>Subscription Plans</h1>
 				<div className={subStyles.allPlans}>
 					{flag ? (
 						memberships.map((type) => (

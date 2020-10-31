@@ -2,8 +2,11 @@
 import React, {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axiosInstance from '../../axios'
-// import '../css/gridResults.css'
 import Preloader from '../utils/Preloader'
+import rowStyle from '../css/row.module.css';
+
+// working beacuse of global import 
+// import '../css/gridResults.css'
 
 function GetWatchList({ id, name, videoIds }) {
 	const [loading, setLoading] = useState(true);
@@ -38,7 +41,7 @@ function GetWatchList({ id, name, videoIds }) {
             : (
                 <>
                 <h3>{name}</h3>
-                <div className="resultContainer">
+                <div className={rowStyle.row_posters}>
                 {   
                     videos.map(item => (
                         <Link key={item.id} to={`../../preplay/${item.id}`}>

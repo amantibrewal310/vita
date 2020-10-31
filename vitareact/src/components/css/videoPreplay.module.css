@@ -156,7 +156,7 @@
 
 .extrasItem {
     cursor: pointer;
-    margin-top: 20px;
+    margin: 20px 10px;
 }
 
 @media screen and (max-width: 1050px) {

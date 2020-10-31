@@ -11,12 +11,10 @@ function AddToWatchlist({setAddTo, setShowPopup, videoId}) {
 
     // get user's watchlists
     useEffect(() => {
-        console.log('use effect')
         getWatchlistOptions()
     }, [])  
 
     const getWatchlistOptions = () => {
-        console.log('getting wathlist options')
         axiosInstance
             .get(`video/get-watchlist/user/`)
             .then(res => {

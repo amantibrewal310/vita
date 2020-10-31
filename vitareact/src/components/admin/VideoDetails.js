@@ -1,6 +1,7 @@
 import React from 'react';
 import {useParams} from 'react-router-dom'
 import GetVideo from '../GetVideo';
+import Header from '../Header';
 import DeleteVidCom from './DeleteVidCom';
 import EditVideo from './EditVideo';
 import ReportList from './ReportListVidCom';
@@ -9,19 +10,31 @@ import ReportList from './ReportListVidCom';
     // 1. Video player
     // 2. Video details [including comments] >> Reuse the GetVideo Components
 
+const detailBox = {
+    paddingBottom: '40px'
+}
+
+const heading = {
+    padding: '10px',
+    textAlign: 'center'
+}
 
 function VideoDetails() {
     // get id from pramas 
     const {id} = useParams();
 
     return (
-        <div>
-            <h1><u>Video Details Page for Admin</u></h1>
+        <>
+        <Header />
+        <div style={detailBox}>
+            <h1 style={heading}>Video Details</h1>
+            <br />
             <EditVideo id={id} />
             <GetVideo />
             <ReportList type="video" id={id} />
             <DeleteVidCom type="Video" urlSuffix="video/video-list/" id={id} />
         </div>
+        </>
     )
 }
 

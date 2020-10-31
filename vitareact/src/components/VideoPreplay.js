@@ -6,6 +6,8 @@ import AddToWatchlist from './Watchlist/AddToWatchlist';
 import Popup from './utils/Popup';
 import Preloader from './utils/Preloader';
 import axiosInstance from '../axios';
+import Header from './Header';
+import rowStyles from './css/row.module.css';
 
 function VideoPreplay() {
     const {id} = useParams();
@@ -35,7 +37,7 @@ function VideoPreplay() {
         const q = title.replace(/[^a-zA-Z ]/g, "").split(' ').join('+');
         const baseurl = `https://www.googleapis.com/youtube/v3/search`;
         const key = `AIzaSyCZy2OBsSgT6FkZbyefZbZT_-Im11dzsbs`
-        const maxResults = 5
+        const maxResults = 10
         const url = `${baseurl}?part=snippet&key=${key}&type=video&q=${q},trailer&order=viewCount&maxResults=${maxResults}`;
 
         // axios.get(url)
@@ -81,6 +83,8 @@ function VideoPreplay() {
     }
 
     return (
+        <>
+        <Header />
         <div>
         <Popup show={showPopup} message="Added to Watchlist" type="success"/>
         {
@@ -192,7 +196,7 @@ function VideoPreplay() {
                 {/* make a horizontal scroll bar */}
                 <div className={style.detailBanner}>
                     <h3 style={{padding:'10px'}}> Trailers and Extras</h3>
-                    <div className={style.extras}>
+                    <div className={rowStyles.row_posters}>
                         {
                             (extrasLoading)
                             ? (
@@ -221,6 +225,7 @@ function VideoPreplay() {
         )
         }
         </div>
+        </>
     )
 }
 

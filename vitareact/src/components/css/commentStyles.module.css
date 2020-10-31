@@ -20,8 +20,9 @@
     border-radius: 20px;
     padding-top: 10px;
     font-size: 18px;
-    background-color: var(--vita-dark-blue);
-    color: white;
+    background-color: var(--vita-bright-blue);
+    color: var(--vita-dark-blue);
+    font-weight: bold;
     text-align: center;
 }
 

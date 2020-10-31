@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import formStyles from '../../css/forms.module.css';
 import Popup from '../../utils/Popup';
+import logo from '../../../images/vita-log.png'
 
 function VerifyToken({setAppDataOnProcess, setTokenAndUid}) {
 
@@ -78,6 +79,9 @@ function VerifyToken({setAppDataOnProcess, setTokenAndUid}) {
     return (
         <div className={formStyles.formBG}>
             <Popup show={showPopup} message="Verified, you can set new password!" type="success"/>
+            <div className={formStyles.logoBox}>
+                <img src={logo} alt="logo" />
+            </div>
             <div className={formStyles.smallFormContainer}> 
                 <h2 className={formStyles.heading}>Verify Token</h2>
                 {
