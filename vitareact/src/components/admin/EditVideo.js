@@ -33,6 +33,12 @@ function EditVideo({id}) {
         uploadProgress: 0,
         source:null
     }
+    const initSelectedMembership = {
+        free: false,
+        ent: false,
+        pro: false
+    }
+
 
     // states 
     // category options
@@ -47,6 +53,9 @@ function EditVideo({id}) {
     const [uploadState, setUploadState] = useState(initUploadState);
     // popup
     const [showPopup, setShowPopup] = useState(false);
+    // membership options 
+    const [selectedMembership, setSelectedMembership] = useState(initSelectedMembership)
+
 
     // fill the edit form with current values 
     useEffect(() => {
@@ -60,6 +69,13 @@ function EditVideo({id}) {
                     description: res.data.description,
                     playtime: res.data.playtime,
                     category: res.data.category
+                })
+                let memData = res.data.allowed_membership;
+
+                setSelectedMembership({
+                    free: memData.includes(1),
+                    ent: memData.includes(2),
+                    pro: memData.includes(3)
                 })
             })
             .catch(err => {
@@ -154,13 +170,7 @@ function EditVideo({id}) {
         axiosInstance
             .patch(`video/video-list/${id}/`, formData, config)
             .then(res => {
-                setShowPopup(true);
-                setTimeout(() => {
-                    history.push({
-                        pathname: `/admin/video-details/${res.data.id}`,
-                    });
-                    window.location.reload();
-                }, 1500);
+                saveMembership(res.data.id);
             })
             .catch(err => {
                 console.log(err);
@@ -201,6 +211,36 @@ function EditVideo({id}) {
             });
             return true;
         }
+    }
+
+    /*
+        patch request for saving membership of the video
+    */
+    const saveMembership = async (id) => {
+        let allowed_membership = []
+        if(selectedMembership.free) {
+            allowed_membership.push('1')
+        }
+        if(selectedMembership.ent) {
+            allowed_membership.push('2')
+        }
+        if(selectedMembership.pro) {
+            allowed_membership.push('3')
+        }
+    
+        const body = {
+            allowed_membership: allowed_membership
+        }
+        const res = await axiosInstance.patch(`video/video-list/${id}/`, body)
+        console.log(res);
+        
+        setShowPopup(true);
+        setTimeout(() => {
+            history.push({
+                pathname: `/admin/video-details/${id}`,
+            });
+            window.location.reload();
+        }, 1500);
     }
 
     return (
@@ -259,6 +299,63 @@ function EditVideo({id}) {
                                 className={formStyles.videoInput}
                                 style={{resize: 'none'}}
                             /> 
+                        </div>
+
+                        {/* mebership select */}
+                        <div className={formStyles.videoCheckboxContainer}>
+                            <p>Allowed Membership</p>
+                            <div className={formStyles.checkboxInputs}>
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='free'
+                                        type='checkbox'
+                                        checked={selectedMembership.free}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               free: !selectedMembership.free   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Free
+                                    </label>
+                                </div>
+
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='ent'
+                                        type='checkbox' 
+                                        checked={selectedMembership.ent}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               ent: !selectedMembership.ent   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Enterprise
+                                    </label>
+                                </div>
+
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='pro'
+                                        type='checkbox'
+                                        checked={selectedMembership.pro}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               pro: !selectedMembership.pro   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Pro
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
             
@@ -325,6 +422,7 @@ function EditVideo({id}) {
                                 }
                             </select>
                         </div>
+
                     </div>
                     <button 
                         type="submit"

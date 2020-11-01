@@ -91,261 +91,174 @@ function VideoPreplay() {
 		setAddTo(!addTo);
 	};
 
-	return (
-		<>
-			<Header />
-			<div style={{ height: '60px' }}></div>
 
-			<div>
-				<Popup
-					show={showPopup}
-					message='Added to Watchlist'
-					type='success'
-				/>
-				{videoLoading ? (
-					<div>videoLoading</div>
-				) : (
-					<>
-						<div className={style.detailBanner}>
-							<div className={style.detailInfoContainer}>
-								<div className={style.imageContainer}>
-									<div className={style.imageHolder}>
-										<img src={video.thumbnail} alt='img' />
-									</div>
-									<div className={style.imageGradient}></div>
-								</div>
-								<div className={style.detailContainer}>
-									<div className={style.titleAndDetail}>
-										<h1 className={style.videoTitle}>
-											<b>{video.title}</b>
-										</h1>
-										<p className={style.timeGenre}>
-											<b>
-												{calculatedData.playtime} .{' '}
-												{calculatedData.year} .{' '}
-												{calculatedData.category}
-											</b>
-										</p>
-										<p className={style.description}>
-											{video.description}
-										</p>
-									</div>
-									<div className={style.videoStats}>
-										<span>
-											<i
-												className='fa fa-eye'
-												aria-hidden='true'
-											></i>
-											{video.views}
-										</span>
-										<span>
-											<i
-												className='fa fa-thumbs-o-up'
-												aria-hidden='true'
-											></i>
-											{video.likes}
-										</span>
-										<span>
-											<i
-												className='fa fa-thumbs-o-down'
-												aria-hidden='true'
-											></i>
-											{video.dislikes}
-										</span>
-									</div>
-									<div className={style.watchOptions}>
-										<div className={style.watchOptionsDiv}>
-											<Link
-												key={video.id}
-												to={`../play/${video.id}`}
-											>
-												<i
-													style={{
-														cursor: 'pointer',
-														color: 'white',
-													}}
-													className={`fa fa-play ${style.fa}`}
-													aria-hidden='true'
-												></i>
-												<b
-													style={{
-														color: 'white',
-														cursor: 'pointer',
-													}}
-												>
-													Play Now
-												</b>
-											</Link>
-										</div>
-										<div
-											className={style.watchOptionsDiv}
-											onClick={handleAddToWatchlistClick}
-										>
-											{!addTo ? (
-												<i
-													style={{
-														cursor: 'pointer',
-													}}
-													className={`fa fa-plus ${style.fa}`}
-													aria-hidden='true'
-												></i>
-											) : (
-												<i
-													style={{
-														cursor: 'pointer',
-													}}
-													className={`fa fa-times ${style.fa}`}
-													aria-hidden='true'
-												></i>
-											)}
-											<b style={{ cursor: 'pointer' }}>
-												Watchlist
-											</b>
-										</div>
-									</div>
-									<div className={style.backupWatchOptions}>
-										<div
-											className={
-												style.backupWatchOptionsDiv
-											}
-										>
-											<Link
-												key={video.id}
-												to={`play/${video.id}`}
-											>
-												<i
-													style={{ color: 'white' }}
-													className={`fa fa-play ${style.fa}`}
-													aria-hidden='true'
-												></i>
-												<b style={{ color: 'white' }}>
-													Play Now
-												</b>
-											</Link>
-										</div>
-										<div
-											className={
-												style.backupWatchOptionsDiv
-											}
-											onClick={handleAddToWatchlistClick}
-										>
-											<i
-												className={`fa fa-plus ${style.fa}`}
-												aria-hidden='true'
-											></i>
-											<b>Watchlist</b>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className={style.bottomDetailContainer}>
-								<div className={style.bottomTitleAndDetail}>
-									<h1 className={style.bottomTitle}>
-										<b>{video.title}</b>
-									</h1>
-									<p className={style.timeGenre}>
-										<b>
-											{calculatedData.playtime} . 2019 .{' '}
-											{calculatedData.category}
-										</b>
-									</p>
-									<p className={style.description}>
-										{video.description}
-									</p>
-								</div>
-								<div className={style.bottomVideoStats}>
-									<span>
-										<i
-											className='fa fa-eye'
-											aria-hidden='true'
-										></i>
-										{video.views}
-									</span>
-									<span>
-										<i
-											className='fa fa-thumbs-o-up'
-											aria-hidden='true'
-										></i>
-										{video.likes}
-									</span>
-									<span>
-										<i
-											className='fa fa-thumbs-o-down'
-											aria-hidden='true'
-										></i>
-										{video.dislikes}
-									</span>
-								</div>
-							</div>
-						</div>
+    /* 
+        with links to admin, if admin logged in
+    */
 
-						{/* add to watchlist */}
-						{addTo ? (
-							<div
-								className={style.detailBanner}
-								style={{ paddingBottom: '20px' }}
-							>
-								<h3 style={{ padding: '10px' }}>
-									{' '}
-									Select Watchlist
-								</h3>
-								<AddToWatchlist
-									setAddTo={setAddTo}
-									setShowPopup={setShowPopup}
-									videoId={id}
-								/>
-							</div>
-						) : (
-							<></>
-						)}
+    return (
+        <>
+        <Header />
+        <div>
+        <Popup show={showPopup} message="Added to Watchlist" type="success"/>
+        {
+            (videoLoading) 
+        ? (<div>videoLoading</div>)
+        :(
+            <>
+                <div className={style.detailBanner}>
+                    <div className={style.detailInfoContainer}>
+                        <div className={style.imageContainer}>
+                            <div className={style.imageHolder}>
+                                <img src={video.thumbnail} alt="img" />
+                            </div>
+                            <div className={style.imageGradient}></div>
+                        </div>
+                        <div className={style.detailContainer}>
+                            <div className={style.titleAndDetail}>
+                                <h1 className={style.videoTitle}><b>{video.title}</b></h1>
+                                <p className={style.timeGenre}>
+                                    <b>{calculatedData.playtime} . {calculatedData.year} . {calculatedData.category}</b>
+                                </p>
+                                <p className={style.description}>
+                                    {video.description}
+                                </p>
+                                {
+                                    checkAdminLoggedIn() && (
+                                        <Link to={`../../admin/video-details/${video.id}`}>
+                                            <p className={style.description}>
+                                               <button>View in Admin </button>
+                                            </p>
+                                        </Link>
+                                    )
+                                }
+                            </div>
+                            <div className={style.videoStats}>
+                                <span>
+                                    <i className="fa fa-eye" aria-hidden="true"></i>
+                                    {video.views} 
+                                </span>
+                                <span>
+                                    <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                    {video.likes} 
+                                </span>
+                                <span>
+                                <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                    {video.dislikes} 
+                                </span>
+                            </div>
+                            <div className={style.watchOptions}>
+                                <div className={style.watchOptionsDiv}>
+                                    <Link key={video.id} to={`../play/${video.id}`} >
+                                        <i style={{cursor:'pointer', color:'white'}} className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
+                                        <b style={{color:'white', cursor:'pointer'}}>Play Now</b>
+                                    </Link>
+                                </div>
+                                <div className={style.watchOptionsDiv} onClick={handleAddToWatchlistClick}>
+                                    {
+                                        (!addTo)
+                                        ? (<i style={{cursor:'pointer'}} className={`fa fa-plus ${style.fa}`} aria-hidden="true"></i>)
+                                        : (<i style={{cursor:'pointer'}} className={`fa fa-times ${style.fa}`} aria-hidden="true"></i>)
+                                    }
+                                    <b style={{cursor:'pointer'}}>Watchlist</b>
+                                </div>
+                            </div>
+                            <div className={style.backupWatchOptions}>
+                                <div className={style.backupWatchOptionsDiv}>
+                                    <Link key={video.id} to={`play/${video.id}`} >
+                                        <i style={{color:'white'}} className={`fa fa-play ${style.fa}`} aria-hidden="true"></i>
+                                        <b style={{color:'white'}}>Play Now</b>
+                                    </Link>
+                                </div>
+                                <div className={style.backupWatchOptionsDiv} onClick={handleAddToWatchlistClick}>
+                                    <i className={`fa fa-plus ${style.fa}`} aria-hidden="true"></i>
+                                    <b>Watchlist</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={style.bottomDetailContainer}>
+                        <div className={style.bottomTitleAndDetail}>
+                            <h1 className={style.bottomTitle}><b>{video.title}</b></h1>
+                            <p className={style.timeGenre}>
+                                <b>{calculatedData.playtime} . 2019 . {calculatedData.category}</b>
+                            </p>
+                            <p className={style.description}>
+                                {video.description}
+                            </p>
+                        </div>
+                        <div className={style.bottomVideoStats}>
+                            <span>
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                                {video.views} 
+                            </span>
+                            <span>
+                                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                {video.likes} 
+                            </span>
+                            <span>
+                            <i className="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                {video.dislikes} 
+                            </span>
+                        </div>
+                        {
+                            checkAdminLoggedIn() && (
+                                <Link to={`../../admin/video-details/${video.id}`}>
+                                    <p className={style.description}>
+                                       <button>View in Admin </button>
+                                    </p>
+                                </Link>
+                            )
+                        }
+                    </div>
+                </div>
+                
+                {/* add to watchlist */}
+                {
+                    (addTo)
+                    ? ( <div className={style.detailBanner} style={{paddingBottom: '20px'}}>
+                            <h3 style={{padding:'10px'}}> Select Watchlist</h3>
+                            <AddToWatchlist setAddTo={setAddTo} setShowPopup={setShowPopup} videoId={id}/>
+                        </div>
+                    ): 
+                    (<></>)
+                }
 
-						{/* trailers/Extras from youtube */}
-						
-						<div className={style.detailBanner}>
-							<h3 style={{ padding: '10px' }}>
-								{' '}
-								Trailers and Extras
-							</h3>
-							<div className={rowStyles.row_posters}>
-								{extrasLoading ? (
-									<div
-										style={{
-											width: '100vw',
-											height: '25vh',
-										}}
-									>
-										<Preloader />
-									</div>
-								) : (
-									extras.map((item, index) => (
-										<div
-											key={index}
-											className={style.extrasItem}
-										>
-											<div className={style.iframe}>
-												<iframe
-													width='320px'
-													height='180px'
-													frameBorder='0'
-													style={{
-														borderRadius: '6px',
-													}}
-													src={`http://www.youtube.com/embed/${item.id.videoId}`}
-													title='Trailer'
-													allowFullScreen='allowfullscreen'
-												></iframe>
-												{/* <span className={style.extrasTitle}>{item.snippet.title}</span> */}
-											</div>
-										</div>
-									))
-								)}
-							</div>
-						</div>
-					</>
-				)}
-			</div>
-		</>
-	);
+                {/* trailers/Extras from youtube */}
+                {/* make a horizontal scroll bar */}
+                <div className={style.detailBanner}>
+                    <h3 style={{padding:'10px'}}> Trailers and Extras</h3>
+                    <div className={rowStyles.row_posters}>
+                        {
+                            (extrasLoading)
+                            ? (
+                                <div style={{width: '100vw', height: '25vh'}}>
+                                    <Preloader />
+                                </div>
+                            ) : (
+                                extras.map((item, index) => (
+                                    <div key={index} className={style.extrasItem}>
+                                        <div className={style.iframe}>
+                                            <iframe 
+                                                width='320px' height='180px' 
+                                                frameBorder='0'
+                                                style={{borderRadius: '6px'}}
+                                                src={`http://www.youtube.com/embed/${item.id.videoId}`} title="Trailer" allowFullScreen="allowfullscreen">
+                                            </iframe>
+                                            {/* <span className={style.extrasTitle}>{item.snippet.title}</span> */}
+                                        </div>
+                                    </div>
+                                ))
+                            )
+                        }
+                    </div>
+                </div>
+            </>
+        )
+        }
+        </div>
+        </>
+    );
 }
 
 export default VideoPreplay;

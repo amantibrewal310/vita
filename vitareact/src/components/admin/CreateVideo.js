@@ -19,7 +19,8 @@ function CreateVideo() {
         title: '',
         description: '',
         playtime: 0,
-        category: -1
+        category: -1,
+        status: 'published',
     });
     const initErrors = {
         emptyFormError: null,
@@ -28,6 +29,11 @@ function CreateVideo() {
     const initUploadState = {
         uploadProgress: 0,
         source:null
+    }
+    const initSelectedMembership = {
+        free: false,
+        ent: false,
+        pro: false
     }
 
     // states
@@ -43,6 +49,19 @@ function CreateVideo() {
     const [uploadState, setUploadState] = useState(initUploadState);
     // popup
     const [showPopup, setShowPopup] = useState(false); 
+    // membership options 
+    const [selectedMembership, setSelectedMembership] = useState(initSelectedMembership)
+    // status options 
+    const statusOptions = [
+        {
+            id: 1,
+            name: 'published'
+        },
+        {
+            id: 2,
+            name: 'draft'
+        }
+    ];
 
     useEffect(() => {
         // getting category options
@@ -93,6 +112,7 @@ function CreateVideo() {
         formData.append('playtime', textData.playtime);
         formData.append('thumbnail',thumbnail.thumbnail[0]);
         formData.append('videoFile', videoFile.videoFile[0]);
+        formData.append('status', textData.status);
 
         // upload progress
         const cancelToken = axios.CancelToken;
@@ -122,13 +142,7 @@ function CreateVideo() {
         axiosInstance
             .post(`video/video-list/`, formData, config)
             .then(res => {
-                setShowPopup(true);
-                setTimeout(() => {
-                    history.push({
-                        pathname: `/admin/video-details/${res.data.id}`,
-                    });
-                    window.location.reload();
-                }, 1500);
+                saveMembership(res.data.id);
             })
             .catch(err => {
                 console.log(err);
@@ -154,6 +168,7 @@ function CreateVideo() {
     const vaidateDetails = () => {
         if (textData.title === "" || textData.description === "" || 
             textData.category === -1 || textData.playtime <= 0 ||
+            textData.allowed_membership === -1 || 
             thumbnail === null || videoFile === null) {
             // update the errors in form
             setError({
@@ -169,6 +184,39 @@ function CreateVideo() {
             });
             return true;
         }
+    }
+
+    /*
+        patch request for saving membership of the video
+    */
+
+    const saveMembership = async (id) => {
+
+        let allowed_membership = []
+        
+        if(selectedMembership.free) {
+            allowed_membership.push('1')
+        }
+        if(selectedMembership.ent) {
+            allowed_membership.push('2')
+        }
+        if(selectedMembership.pro) {
+            allowed_membership.push('3')
+        }
+
+        const body = {
+            allowed_membership: allowed_membership
+        }
+
+        const res = await axiosInstance.patch(`video/video-list/${id}/`, body)
+        
+        setShowPopup(true);
+        setTimeout(() => {
+            history.push({
+                pathname: `/admin/video-details/${id}`,
+            });
+            window.location.reload();
+        }, 1500);
     }
 
     return (
@@ -231,6 +279,64 @@ function CreateVideo() {
                                 style={{resize: 'none'}}
                             /> 
                         </div>
+
+                        {/* mebership select */}
+                        <div className={formStyles.videoCheckboxContainer}>
+                            <p>Allowed Membership</p>
+                            <div className={formStyles.checkboxInputs}>
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='free'
+                                        type='checkbox'
+                                        checked={selectedMembership.free}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               free: !selectedMembership.free   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Free
+                                    </label>
+                                </div>
+
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='ent'
+                                        type='checkbox' 
+                                        checked={selectedMembership.ent}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               ent: !selectedMembership.ent   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Enterprise
+                                    </label>
+                                </div>
+
+                                <div className={formStyles.checkInput}>
+                                    <input 
+                                        name='pro'
+                                        type='checkbox'
+                                        checked={selectedMembership.pro}
+                                        onChange = {(e) => {
+                                            setSelectedMembership({
+                                               ...selectedMembership,
+                                               pro: !selectedMembership.pro   
+                                        })
+                                        }}
+                                    /> 
+                                    <label style={{color: 'white'}}> 
+                                       Pro
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div className={formStyles.videoFormCol}>
                         <div>
@@ -293,6 +399,30 @@ function CreateVideo() {
                                 }
                             </select>
                         </div>
+                        
+                        {/* video status drop down */}
+                        <div className={formStyles.videoSelectInputContainer}>
+                            <select 
+                                value={textData.status} 
+                                onChange={(e) => {
+                                    setTextData({
+                                        ...textData,
+                                        status: e.target.value
+                                    })
+                                }}>
+                                {
+                                    statusOptions.map(option => (
+                                        <option 
+                                            key={option.id} 
+                                            value={option.name}
+                                        > 
+                                            {option.name}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+
                     </div>
                     <button 
                         type="submit"

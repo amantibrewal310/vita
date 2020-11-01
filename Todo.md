@@ -41,6 +41,8 @@
     - put a preloader when video create in admin, edit video 
     - add a form field for video type (membership allow)
 
+    - navbar in mobile view beacame transparent - correct it
+
 # Admin Dashboard
     - Users
         - total active users 
@@ -50,7 +52,7 @@
 
     videos 
         - total
-        - total published, draft, reported
+        - total published, draft, reported  
         - change status, published, drafted, reported
         - uploaded month wise chart - api
         - most liked, disliked, reported 
@@ -95,3 +97,6 @@
 # IMPORTANT 
     - on video play page 
         - check if the video is available for the user (by his subscription type)
+    - make Demo presentation script 
+    - make demo video 
+    - make project highlights script
