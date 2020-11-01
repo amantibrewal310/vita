@@ -36,9 +36,7 @@
 	background: linear-gradient(
 		to bottom,
 		#061a3118,
-		#6a097d,
-		#c060a1,
-		#f1d4d4
+		#6a097d
 	);
 	position: absolute;
 	transition: all 0.3s ease;

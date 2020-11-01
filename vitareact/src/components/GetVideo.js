@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CommentList from './CommentList';
 import VideoPlayer from './VideoPlayer';
@@ -8,9 +8,21 @@ import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 import detailStyle from './css/videoDetails.module.css';
 import Preloader from './utils/Preloader';
 import Header from './Header';
+import axiosInstance from '../axios';
+import Popup from './utils/Popup';
 
 // Get video data for a particular video 
 // Get all comments on the video
+
+/* 
+    user none => no videos
+    user free => videos free,
+    user ent =>  videos free + ent, 
+    user pro =>  videos free + ent + pro 
+    admin => all
+
+    - set admin logic
+*/
 
 function GetVideo() {
     // video Id
@@ -24,34 +36,102 @@ function GetVideo() {
         loading: true,
         comments: null
     });
+    const [popUpState, setPopupState] = useState({
+        message: '',
+        show: false
+    })
 
+    const history = useHistory();
+
+    /*
+        check user membership and then decide to play
+    */
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/video/video-list/${id}/`)
-            .then(res => {
-                setVideoData({
-                    loading:false,
-                    video:res.data
-                });
-            })
-            .catch(err => {
-                console.log('error in video data: ' + err);
-            });
-
+        if(checkAdminLoggedIn()) {
+            // admin can play all videos 
+            getVideoPlayDetails()
+        } else {
+            // check for normal user
+            checkUserMembershipBeforePlay()
+        }
         
-    }, [])  ;
+    }, []);
 
-    useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/video/${id}/comments/`)
-            .then(res => {
-                setCommentsData({
-                    loading:false,
-                    comments:res.data
-                });
-            })
-            .catch(err => {
-                console.log('error in comment data: ' + err);
-            });
-    }, [])
+    
+    /* 
+        checks if user has valid membership to play video
+    */
+    const checkUserMembershipBeforePlay = async () => {
+        // user details
+        // get user data,request with token headers
+        let res = await axiosInstance.get(`membership/user/type/`)
+        let userMembershipType = res.data.membership_type;
+        
+        // user has no membership
+        if(userMembershipType  === "None") {
+            showPopUpAndRedirect('Please buy a membership plan to watch!')
+            return;
+        }
+        
+        // get video detail
+        res = await axios.get(`http://127.0.0.1:8000/api/video/video-list/${id}/`)
+        let allowed = res.data.allowed_membership
+
+        // no membership allowed 
+        if(allowed.length === 0) {
+            showPopUpAndRedirect('The video is not available')
+            return;
+        }
+
+        // video allows at least one membership 
+        // so pro can watch
+
+        if(userMembershipType === "Enterprise") {
+            // videos neither available for free nor enterprise 
+            if(!allowed.includes(1) && !allowed.includes(2)) {
+                showPopUpAndRedirect('Only for Professional,Please upgrage your membership')
+                return;
+            }
+        } else if(userMembershipType === "Free") {
+            if(!allowed.includes(1)) {
+                showPopUpAndRedirect('Free users cannot watch this video, Please Upgrade')
+                return;
+            }
+        }
+        // user can play video
+        getVideoPlayDetails();
+    }
+
+    /* 
+        get video data and comments for this video 
+    */
+    const getVideoPlayDetails = async () => {
+        let res = await axios.get(`http://127.0.0.1:8000/api/video/video-list/${id}/`)
+        // set video data 
+        setVideoData({
+            loading:false,
+            video:res.data
+        });
+
+        // set comments data
+        res = await axios.get(`http://127.0.0.1:8000/api/video/${id}/comments/`)
+        setCommentsData({
+            loading: false, 
+            comments: res.data
+        })
+    }
+
+
+    // redirect when user cannot play video
+    const showPopUpAndRedirect = (message) => {
+        setPopupState({
+            message: message,
+            show: true
+        })
+        setTimeout(() => {
+            history.goBack();
+        }, 2000)
+    }
 
 
     // method to add new comment to the comments array 
@@ -69,6 +149,7 @@ function GetVideo() {
     return (
         <>
         <Header />
+        <Popup show={popUpState.show} message={popUpState.message} type='fail' />
         <div>
             {/* Returns a component with video players and video details */}
             {
