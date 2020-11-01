@@ -10,6 +10,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Widget from '../Widget';
 import WidgetBar from '../WidgetBar';
 import WidgetPie from '../WidgetPie';
+import '../css/grid.css';
 
 // Admin Options Avalailable
 
@@ -103,42 +104,53 @@ function Admin() {
 			<Header />
 			<div style={{ height: '60px' }}></div>
 			<h1 className='text-center'>Admin Panel</h1>
-			<Container>
-				<Row>
-					<Col>
-						<Widget
-							title={'Upload Video'}
-							description={'Create a new video'}
-							buttonName={'Upload'}
-							buttonPath={'/'}
-						/>
-					</Col>
-					<Col>
-						<Widget
-							title={'Total Video'}
-							description={'videos are uploaded'}
-							value={'100'}
-						/>
-					</Col>
-					<Col>
-						<Widget
-							title={'Membership'}
-							description={'Types of Membership available'}
-							value={'3'}
-						/>
-					</Col>
-				</Row>
-			</Container>
-			<Container>
-				<Row>
+			<div className='grid-container'>
+				<div className='grid-item'>
+					<Widget
+						title={'Upload Video'}
+						description={'Create a new video'}
+						buttonName={'Upload'}
+						buttonPath={'/'}
+					/>
+				</div>
+				<div className='grid-item'>
+					<Widget
+						title={'Total Video'}
+						description={'videos are uploaded'}
+						value={'100'}
+					/>
+				</div>
+				<div className='grid-item'>
+					<Widget
+						title={'Membership'}
+						description={'Types of Membership available'}
+						value={'3'}
+					/>
+				</div>
+				<div className='grid-item'>
+					<Widget
+						title={'Videos Reported'}
+						description={'Total Videos Reported'}
+						value={'3'}
+					/>
+				</div>
+				<div className='grid-item'>
+					<Widget
+						title={'Comments Reported'}
+						description={'Total Comment Reported'}
+						value={'3'}
+					/>
+				</div>
+				<div
+					className='grid-item'
+					style={{ gridColumnStart: '1', gridColumnEnd: '3' }}
+				>
 					<WidgetBar data={chartData} title={'Subscription Graph'} />
-				</Row>
-			</Container>
-			<Container>
-				<Row>
+				</div>
+				<div className='grid-item'>
 					<WidgetPie data={chartData} title={'Revenue Model Graph'} />
-				</Row>
-			</Container>
+				</div>
+			</div>
 			<div>
 				{/* <Link to={`/admin/create`}>
 					<button id='create-new-btn'>Create New Video</button>

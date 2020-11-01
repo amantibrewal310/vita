@@ -10,7 +10,7 @@ function WidgetBar(props) {
 	// Create a JSON object to store the chart configurations
 	const chartConfigs = {
 		type: 'bar2d', // The chart type
-		width: '75%', // Width of the chart
+		width: '100%', // Width of the chart
 		height: '225', // Height of the chart
 		dataFormat: 'json', // Data type
 		dataSource: {
@@ -21,7 +21,7 @@ function WidgetBar(props) {
 				xAxisName: 'Country', //Set the x-axis name
 				yAxisName: 'Reserves (MMbbl)', //Set the y-axis name
 				numberSuffix: 'K',
-				bgColor: '#2a2a2a',
+				bgColor: 'transparent',
 				theme: 'fusion', //Set the theme for your chart
 			},
 			// Chart Data - from step 2
@@ -29,12 +29,13 @@ function WidgetBar(props) {
 		},
 	};
 	return (
-		<div className={style.widgetWrap}>
-			<div className={style.widgetTitle}>{props.title}</div>
-			<div className={style.widgetValue}>
-				<ReactFC {...chartConfigs} />
-			</div>
-		</div>
+		<ReactFC {...chartConfigs} />
+
+		// <div className={style.widgetWrap}>
+		// 	<div className={style.widgetTitle}>{props.title}</div>
+		// 	<div className={style.widgetValue}>
+		// 	</div>
+		// </div>
 	);
 }
 

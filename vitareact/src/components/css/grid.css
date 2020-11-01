@@ -1,0 +1,20 @@
+.grid-container {
+	display: grid;
+	width: 70vw;
+	margin: auto;
+	/* background-color: aliceblue; */
+	grid-gap: 10px;
+	grid-template-columns: 1fr 1fr 1fr;
+	/* grid-template-rows: 1fr 1fr; */
+}
+
+.grid-item {
+	max-width: 100%;
+}
+
+@media (max-width: 640px) {
+	.grid-container {
+		grid-template-columns: 250px;
+		margin: auto;
+	}
+}
