@@ -124,3 +124,8 @@
 		align-items: center;
 	}
 }
+@media (max-width: 900px) {
+	.navbar {
+		background-color: black;
+	}
+}

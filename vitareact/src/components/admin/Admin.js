@@ -11,6 +11,12 @@ import Widget from '../Widget';
 import WidgetBar from '../WidgetBar';
 import WidgetPie from '../WidgetPie';
 import '../css/grid.css';
+import {
+	getAllMembershipsType,
+	getAllReportedVideos,
+	getCategoriesList,
+	getVideosList,
+} from '../../request';
 
 // Admin Options Avalailable
 
@@ -44,9 +50,17 @@ function Admin() {
 	const [commentResults, setCommentResults] = useState([]);
 	const [videoResLoading, setVideoResLoadingLoading] = useState(false);
 	const [commentResLoading, setCommentResLoading] = useState(false);
+	const [totalVideos, setTotalVideos] = useState(0);
+	const [totalCategories, setTotalCategories] = useState(0);
+	const [totalMembershipType, setTotalMembershipType] = useState(0);
 
 	useEffect(() => {
 		// recent reported videos
+		getAllReportedVideos().then((res) => {
+			console.log(res);
+			setVideoResults(res);
+			setVideoResLoadingLoading(false);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -54,12 +68,24 @@ function Admin() {
 			.get(`video/reported-comment-list/`)
 			.then((res) => {
 				setCommentResults(res.data);
-				// console.log(res.data)
+				console.log(res.data);
 				setCommentResLoading(false);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+	}, []);
+
+	useEffect(() => {
+		getVideosList().then((res) => {
+			setTotalVideos(res.length);
+		});
+		getCategoriesList().then((res) => {
+			setTotalCategories(res.length);
+		});
+		getAllMembershipsType().then((res) =>
+			setTotalMembershipType(res.length)
+		);
 	}, []);
 
 	// search handlers
@@ -94,59 +120,71 @@ function Admin() {
 			<Header />
 			<div style={{ height: '60px' }}></div>
 			<h1 className='text-center'>Admin Panel</h1>
-			<div className='grid-container'>
-				<div className='grid-item'>
-					<Widget
-						title={'Upload Video'}
-						description={'Create a new video'}
-						buttonName={'Upload'}
-						buttonPath={'/admin/create'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Total Video'}
-						description={'videos are uploaded'}
-						value={'100'}
-						buttonName={'Show Videos'}
-						buttonPath={'/admin/videos/list'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Membership'}
-						description={'Types of Membership available'}
-						value={'3'}
-						buttonName={'Show'}
-						buttonPath={'/admin/membership'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Videos Reported'}
-						description={'Total Videos Reported'}
-						value={'3'}
-						buttonName={'Show'}
-						buttonPath={'/admin/membership'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Comments Reported'}
-						description={'Total Comment Reported'}
-						value={'3'}
-						buttonName={'Show'}
-						buttonPath={'/admin/membership'}
-					/>
-				</div>
-				<div
-					className='grid-item'
-					style={{ gridColumnStart: '1', gridColumnEnd: '3' }}
-				>
-					<WidgetBar data={chartData} title={'Subscription Graph'} />
-				</div>
-				<div className='grid-item'>
-					<WidgetPie data={chartData} title={'Revenue Model Graph'} />
+			<div className='container'>
+				<div className='grid-container'>
+					<div className='grid-item'>
+						<Widget
+							title={'Upload Video'}
+							description={'Create a new video'}
+							buttonName={'Upload'}
+							buttonPath={'/admin/create'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Total Video'}
+							description={'videos are uploaded'}
+							value={totalVideos}
+							buttonName={'Show Videos'}
+							buttonPath={'/admin/videos/list'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Membership'}
+							description={'Types of Membership available'}
+							value={totalMembershipType}
+							buttonName={'Show'}
+							buttonPath={'/admin/membership'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Categories'}
+							description={'Total Categories'}
+							value={totalCategories}
+							buttonName={'Show'}
+							buttonPath={'/admin/membership'}
+						/>
+					</div>
+					<div className='grid-item widget-bar'>
+						<WidgetBar
+							data={chartData}
+							title={'Subscription Graph'}
+						/>
+					</div>
+					<div
+						className='grid-item widget-pie'
+						// style={{ gridColumnStart: '3', gridColumnEnd: '5' }}
+					>
+						<WidgetPie
+							data={chartData}
+							title={'Revenue Model Graph'}
+						/>
+					</div>
+
+					<div className='grid-item VideoReports'>
+						<VideoResultsLoading
+							isLoading={videoResLoading}
+							allVideos={videoResults}
+						/>
+					</div>
+					<div className='grid-item CommentReports'>
+						<CommentResultsLoading
+							isLoading={commentResLoading}
+							allComments={commentResults}
+						/>
+					</div>
 				</div>
 			</div>
 			<div>
@@ -183,19 +221,13 @@ function Admin() {
 				{/* heading changes based on serach/filter applied */}
 				{/* <h2>{boxHeading.videoHeading}</h2> */}
 				{/* video results */}
-				{/* <VideoResultsLoading
-							isLoading={videoResLoading}
-							allVideos={videoResults}
-						/> */}
+
 				{/* </div> */}
 				{/* <div className='col'> */}
 				{/* heading changes based on serach/filter applied */}
 				{/* <h2>{boxHeading.commentHeading}</h2> */}
 				{/* comments results */}
-				{/* <CommentResultsLoading
-							isLoading={commentResLoading}
-							allComments={commentResults}
-						/> */}
+
 				{/* </div> */}
 				{/* </div> */}
 			</div>

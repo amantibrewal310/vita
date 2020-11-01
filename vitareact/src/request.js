@@ -61,8 +61,9 @@ export const getAllReportedVideos = () => {
 	return axiosInstance
 		.get(`video/reported-video-list/`)
 		.then((res) => {
+			console.log(res);
 			return res.data;
-			// console.log(res.data)
+			console.log(res.data);
 			// setVideoResLoadingLoading(false);
 		})
 		.catch((err) => {
