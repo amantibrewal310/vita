@@ -35,6 +35,7 @@ function DeleteVidCom({type, id, urlSuffix}) {
         <button 
             onClick={handleDelete}
             className={formStyles.dangerBtn}
+            style={{display: 'block', marginTop: '20px'}}
         >
             Delete {type}
         </button>

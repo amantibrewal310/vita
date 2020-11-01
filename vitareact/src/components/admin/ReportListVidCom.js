@@ -39,7 +39,7 @@ function ReportListVidCom({type, id}) {
             {
                 (reportList.list.length == 0) 
                 ? (
-                    <p>No Reports found.</p>
+                    <p style={{textAlign: 'center'}}>No Reports found.</p>
                 )
                 : (
                     <>

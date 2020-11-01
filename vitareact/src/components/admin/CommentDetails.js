@@ -23,6 +23,7 @@ function CommentDetail() {
     return (
         <>
         <Header />
+        <div style={{height: '60px'}}></div>
         <div style={container}>
             <h1 style={heading}>Comment Details</h1>
             
@@ -36,6 +37,7 @@ function CommentDetail() {
             <Link to={`../comment-report-action/${id}`}>
                 <button 
                     className={formStyles.smallSubmitBtn}
+                    style={{display: 'block'}}
                 >
                     View Reports 
                 </button>

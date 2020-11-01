@@ -4,6 +4,7 @@ import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import formStyles from '../css/forms.module.css';
 import Popup from '../utils/Popup';
+import Preloader from '../utils/Preloader';
 
 // Returns the edit video form
 
@@ -261,15 +262,8 @@ function EditVideo({id}) {
                 {
                     (uploadState.uploadProgress > 0) 
                     ? (
-                        <div className={formStyles.uploadProgress}>
-                            <div  className={formStyles.error}>Upload: {uploadState.uploadProgress}%</div>
-                            <button 
-                                className={formStyles.videoSubmitBtn}
-                                type="submit"
-                                onClick={handleCancelUpload}
-                            >
-                                Cancel
-                            </button>
+                        <div style={{width: '100%', height: '10vh'}}>
+                            <Preloader />
                         </div>
                     ) : (
                         <></>

@@ -213,12 +213,14 @@ function Admin() {
 					</div>
 
 					<div className='grid-item VideoReports'>
+						<h2 style={{textAlign:'center', paddingBottom: '10px'}}>Recent Video Reports</h2>
 						<VideoResultsLoading
 							isLoading={videoResLoading}
 							allVideos={videoResults}
 						/>
 					</div>
 					<div className='grid-item CommentReports'>
+						<h2 style={{textAlign:'center', paddingBottom: '10px'}}>Recent Comment Reports</h2>
 						<CommentResultsLoading
 							isLoading={commentResLoading}
 							allComments={commentResults}
