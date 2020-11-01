@@ -2,8 +2,10 @@
 @import url('//fonts.googleapis.com/css?family=Cookie');
 
 :root {
-	--vita-pink: #eb2b9b;
-	--vita-light-pink: #eb4ca8;
+	--bg-color: #000000;
+	--color-3: #f1d4d4;
+	--color-1: #6a097d;
+	--color-2: #c060a1;
 	--vita-orange: #fa761d;
 	--vita-light-orange: #ee833b;
 	--vita-light-green: #13e069;
@@ -23,7 +25,7 @@
 }
 
 body {
-	background: var(--vita-light-blue);
+	background: var(--bg-color);
 	/* margin: 0;
 	padding: 0; */
 	-webkit-font-smoothing: antialiased;
@@ -42,23 +44,26 @@ a:active {
 }
 
 .page-not-found {
-    width: 100vw;
-    height: 90vh;
-    background: linear-gradient(to right, var(--vita-dark-blue),var(--vita-pink));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+	width: 100vw;
+	height: 90vh;
+	background: linear-gradient(
+		to right,
+		var(--vita-dark-blue),
+		var(--vita-pink)
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .page-not-found div {
-    padding: 20vh 0;
+	padding: 20vh 0;
 }
 
 .page-not-found p {
-    font-size: 7vw;
-    width: 60%;
-    text-align: center;
-    margin: auto;
-    color: white;
-    font-weight: bold;
-}   
-
+	font-size: 7vw;
+	width: 60%;
+	text-align: center;
+	margin: auto;
+	color: white;
+	font-weight: bold;
+}

@@ -1,297 +1,300 @@
-
 .formBG {
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink));
+	/* padding: 0;
+	margin: 0;
+	width: 100vw;
+	height: 100vh; */
+	/* background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink)); */
 }
 
 .logoBox {
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    padding-top: 60px;
+	width: 100px;
+	height: 100px;
+	margin: auto;
+	padding-top: 60px;
 }
 
 .logoBox > img {
-    width: 100px;
-    
+	width: 100px;
 }
 
-.formContainer, 
-.smallFormContainer, 
+.formContainer,
+.smallFormContainer,
 .mediumFormContainer {
-    background: rgba(3, 3, 55, 0.144);
-    width: 600px;
-    height: 580px;
-    margin: 200px auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 6px;
+	background: rgba(3, 3, 55, 0.144);
+	width: 600px;
+	height: 580px;
+	margin: 200px auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 6px;
+	border: 1px solid;
+	border-color: var(--color-1);
 }
 
 .mediumFormContainer {
-    height: 460px;
+	height: 460px;
 }
 
 .smallFormContainer {
-    height: 380px;
+	height: 380px;
 }
 
-.form  {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-content: center;
-    margin: 70px auto 0;
+.form {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-content: center;
+	margin: 70px auto 0;
 }
 
 .heading {
-    text-align: center;
-    vertical-align: middle;
-    line-height: 3rem;
-    height: 3rem;
-    background: var(--vita-dark-blue);
-    font-size: 1.4rem;
-    color: #d3d3d3;
-    border-radius: 6px 6px 0 0;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 3rem;
+	height: 3rem;
+	background: #6a097d;
+	font-size: 1.4rem;
+	color: white;
+	border-radius: 6px 6px 0 0;
+	text-transform: uppercase;
 }
 
-.input, 
-.error, 
+.input,
+.error,
 .videoInput {
-    background: transparent;
-    border: 0;
-    border: 1px solid ;
-    border-left: 5px solid;
-    border-color: var(--vita-dark-blue);
-    background-color: #d3d3d318;
-    padding: 10px;
-    color: white;
-    display: block;
-    width: 70%;
-    margin: 15px auto;
-    outline: none;
-    border-radius: 4px;
+	background: transparent;
+	border: 1px solid;
+	border-left: 5px solid;
+	border-color: var(--color-1);
+	background-color: #d3d3d318;
+	padding: 10px;
+	color: white;
+	display: block;
+	width: 70%;
+	margin: 15px auto;
+	outline: none;
+	border-radius: 4px;
 }
 
 .error {
-    background-color: var(--orange);
-    border-color: var(--vita-orange);
-    background: transparent;
-    color: var(--vita-orange);  
+	/* background-color: var(--color-1); */
+	border-color: var(--color-2);
+	background: linear-gradient(to right, var(--color-1), white);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .input:focus {
-    outline: 0;
-    background: transparent;
+	outline: 0;
+	background: transparent;
 }
 
 ::placeholder {
-    color: #d3d3d3;
+	color: #d3d3d3;
 }
 
 .input option {
-    color: #d3d3d3;
-    background-color: var(--vita-dark-blue);
+	color: #d3d3d3;
+	background-color: var(--vita-dark-blue);
 }
 
-.submitBtn, 
-.videoSubmitBtn, 
-.dangerBtn, 
-.smallSubmitBtn, 
+.submitBtn,
+.videoSubmitBtn,
+.dangerBtn,
+.smallSubmitBtn,
 .smallDangerBtn {
-    background: var(--vita-light-pink);
-    border: 0;
-    display: block;
-    width: 70%;
-    margin: 15px auto 0;
-    color: white;
-    padding: 0.7rem;
-    cursor: pointer;
-    outline: none;
-    border-radius: 4px;
-    transition: all 0.1s ease-out;
+	background: transparent;
+	border: 1px solid;
+	/* display: block; */
+	width: 70%;
+	margin: 15px auto 0;
+	color: white;
+	padding: 0.7rem;
+	cursor: pointer;
+	outline: none;
+	border-radius: 4px;
+	transition: all 0.1s ease-out;
+	border-color: var(--color-1);
 }
 
 .dangerBtn {
-    width: 300px;
-    height: 50px;
-    background-color: var(--vita-light-orange);
+	width: 300px;
+	height: 50px;
+	background-color: var(--vita-light-orange);
 }
-.smallSubmitBtn, 
+.smallSubmitBtn,
 .smallDangerBtn {
-    width: 120px;
-    height: 40px;
-    padding: 0;
+	width: 120px;
+	height: 40px;
+	padding: 0;
 }
 .smallDangerBtn {
-    background-color: var(--vita-light-orange);
+	background-color: var(--vita-light-orange);
 }
 
-.submitBtn:focus, 
-.videoSubmitBtn:focus, 
-.dangerBtn:focus, 
-.smallSubmitBtn:focus, 
-.smallDangerBtn:focus{
-    outline: none;
+.submitBtn:focus,
+.videoSubmitBtn:focus,
+.dangerBtn:focus,
+.smallSubmitBtn:focus,
+.smallDangerBtn:focus {
+	outline: none;
 }
 
-.submitBtn:hover, 
-.videoSubmitBtn:hover, 
+.submitBtn:hover,
+.videoSubmitBtn:hover,
 .smallSubmitBtn:hover {
-    background: var(--vita-pink);
+	background: var(--vita-pink);
 }
-.dangerBtn:hover, 
+.dangerBtn:hover,
 .smallDangerBtn:hover {
-    background-color: var(--vita-orange);
+	background-color: var(--vita-orange);
 }
 
-.submitBtn:active, 
-.videoSubmitBtn:active, 
-.dangerBtn:active, 
-.smallSubmitBtn:active, 
-    .smallDangerBtn:active {  
-    transform: scale(0.98);
+.submitBtn:active,
+.videoSubmitBtn:active,
+.dangerBtn:active,
+.smallSubmitBtn:active,
+.smallDangerBtn:active {
+	transform: scale(0.98);
 }
 
 .fblogin {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .redirectLink {
-    font-size: 16px;
-    color: white;
-    margin: 20px auto;
-    width: 70%;
-    text-align: center;
+	font-size: 16px;
+	color: white;
+	margin: 20px auto;
+	width: 70%;
+	text-align: center;
 }
 
 .redirectBtn {
-    cursor: pointer;
-    color: white;
+	cursor: pointer;
+	color: white;
 }
 
 @media (max-width: 900px) {
-    .formContainer, .smallFormContainer, .mediumFormContainer {
-        width: 80%;
-        margin: 120px auto;
-    }
-    .logoBox {
-        padding-top: 10px;
-    }
-    
+	.formContainer,
+	.smallFormContainer,
+	.mediumFormContainer {
+		width: 80%;
+		margin: 120px auto;
+	}
+	.logoBox {
+		padding-top: 10px;
+	}
 }
 
 /* forms for create and edit videos */
 .videoFormContainer {
-    background: rgba(3, 3, 55, 0.144);
-    width: 80%;
-    height: 730px;
-    margin: 120px auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 6px;
+	background: rgba(3, 3, 55, 0.144);
+	width: 80%;
+	height: 730px;
+	margin: 120px auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 6px;
 }
 
 .videoFormRow {
-    margin-top: 40px;
-    height: 570px;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    flex-direction: row;
+	margin-top: 40px;
+	height: 570px;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	flex-direction: row;
 }
 
 .videoFormCol {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-content: flex-start;
-    height: 460px;
-    width: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-content: flex-start;
+	height: 460px;
+	width: 50%;
 }
 
 .videoSubmitBtn {
-    width: 300px;
-    height: 50px;
+	width: 300px;
+	height: 50px;
 }
 
 .buttonBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .videoInput {
-    width: 85%;
+	width: 85%;
 }
 
 .videoSelectInputContainer {
-    width: 100%;
+	width: 100%;
 }
 
 .videoSelectInputContainer select {
-    display: flex;
-    margin: auto;
-    border: 0;
-    border: 1px solid;
-    width: 85%;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid ;
-    border-left: 5px solid;
-    color: var(--vita-dark-blue);
-    background-color: #d3d3d318;
+	display: flex;
+	margin: auto;
+	border: 0;
+	border: 1px solid;
+	width: 85%;
+	padding: 10px;
+	background: transparent;
+	border: 1px solid;
+	border-left: 5px solid;
+	color: var(--vita-dark-blue);
+	background-color: #d3d3d318;
 }
 
 .videoSelectInputContainer option {
-    color: #d3d3d3;
-    background-color: var(--vita-dark-blue);
+	color: #d3d3d3;
+	background-color: var(--vita-dark-blue);
 }
 
 .videoSelectInputContainer select:focus {
-    outline: 0;
-    color: var(--vita-dark-blue);
-    color: white;
+	outline: 0;
+	color: var(--vita-dark-blue);
+	color: white;
 }
 
-.uploadProgress  {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0;
+.uploadProgress {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 0;
 }
 
 .uploadProgress div {
-    width: 20%;
+	width: 20%;
 }
 
-
 @media (max-width: 900px) {
-    .formBG {
-        height: 180vh;
-    }
-    .videoFormContainer {
-        height: 160vh;
-    }
-    .videoFormCol {
-        width: 100%;
-    }
-    .videoSubmitBtn {
-        width: 80%;
-    }
-    .videoSubmitBtn, .dangerBtn {
-        width: 40%;
-    }
+	.formBG {
+		height: 180vh;
+	}
+	.videoFormContainer {
+		height: 160vh;
+	}
+	.videoFormCol {
+		width: 100%;
+	}
+	.videoSubmitBtn {
+		width: 80%;
+	}
+	.videoSubmitBtn,
+	.dangerBtn {
+		width: 40%;
+	}
 }

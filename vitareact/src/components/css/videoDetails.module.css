@@ -1,14 +1,14 @@
-
 .videoDetailContainer {
-    width: 97vw;
-    margin: 0 1vw;  
-    background-color: var(--vita-light-blue);
-    color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
+	width: 96vw;
+	margin: 0 1vw;
+	background-color: transparent;
+	color: white;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 6px;
 }
 
 .videoTitle {
-    font-weight: bold;
+	font-weight: bold;
+	color: var(--color-3);
 }
