@@ -28,6 +28,7 @@ import Home from './Home';
 import AuthenticatedRoute from './Routes/AuthenticatedRoute';
 import MembershipList from './components/admin/MembershipList';
 import categoryList from './components/admin/categories/CategoryList';
+import ReportReasonList from './components/admin/reportReasons/ReportReasonList';
 
 const routing = (
 	<Router>
@@ -111,6 +112,12 @@ const routing = (
 					exact
 					path='/create-category'
 					component = {categoryList}
+				/>
+
+				<Route 
+					exact
+					path='/report-reason'
+					component = {ReportReasonList}
 				/>
 
 				{/* 404 */}
