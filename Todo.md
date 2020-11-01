@@ -59,12 +59,8 @@
     - reports 
         - list
         - detail 
-        - respond 
+        - respond
 
-
-    charts 
-        - category wise movies 
-    
 
 # Features
     - reply feature in comments
