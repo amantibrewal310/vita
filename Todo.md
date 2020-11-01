@@ -33,15 +33,9 @@
 
     - single model that can handle, video watch count and store the previous palytime of the user 
 
-# React
-    - set a link/button for admin for video detail page / comment detail page
+# React=
     - increase video views on play
-    - correct routes 
-    - add a lot of description so search works well
-    - put a preloader when video create in admin, edit video 
-    - add a form field for video type (membership allow)
-
-    - navbar in mobile view beacame transparent - correct it
+    - put a preloader when video create in admin, edit video
 
 # Admin Dashboard
     - Users
@@ -69,34 +63,22 @@
     
 
 # Features
-
-    - success pop up boxes after form fill
     - reply feature in comments
     - pin feature in comments
-    - watch list for user
 
 # Ideas
-    - use google charts 
     - captions
     - realtime notif 
     - register user activate
 
 
 # Today
-    - apex graphs 
-    - add to watchlist
-        - convert into popup 
-
-    - admin - features and calls 
-
-    - video form add functionality 
-        - allowed_membership
-        - status 
 
 
 # IMPORTANT 
-    - on video play page 
-        - check if the video is available for the user (by his subscription type)
     - make Demo presentation script 
     - make demo video 
     - make project highlights script
+
+
+- user video lastplaytime
