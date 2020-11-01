@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 // import '../css/adminHome.css';
 import axiosInstance from '../../axios';
 import VideoResults from './VideoResults';
@@ -11,6 +11,15 @@ import Widget from '../Widget';
 import WidgetBar from '../WidgetBar';
 import WidgetPie from '../WidgetPie';
 import '../css/grid.css';
+import formStyle from '../css/forms.module.css';
+import {
+	getAllMembershipsType,
+	getAllReportedVideos,
+	getAllUserMembership,
+	getCategoriesList,
+	getReportReason,
+	getVideosList,
+} from '../../request';
 
 // Admin Options Avalailable
 
@@ -31,6 +40,7 @@ import '../css/grid.css';
 // 2. Link to detail page
 
 function Admin() {
+	const history = useHistory();
 	const VideoResultsLoading = ContentLoading(VideoResults);
 	const CommentResultsLoading = ContentLoading(CommentResults);
 
@@ -44,19 +54,20 @@ function Admin() {
 	const [commentResults, setCommentResults] = useState([]);
 	const [videoResLoading, setVideoResLoadingLoading] = useState(false);
 	const [commentResLoading, setCommentResLoading] = useState(false);
+	const [totalVideos, setTotalVideos] = useState(0);
+	const [totalCategories, setTotalCategories] = useState(0);
+	const [totalMembershipType, setTotalMembershipType] = useState(0);
+	const [membershipChartData, setMembershipChartData] = useState([]);
+	const [revenueModelData, setRevenueModelData] = useState([]);
+	const [totalReportReason, setTotalRepotReason] = useState(0);
 
 	useEffect(() => {
 		// recent reported videos
-		axiosInstance
-			.get(`video/reported-video-list/`)
-			.then((res) => {
-				setVideoResults(res.data);
-				// console.log(res.data)
-				setVideoResLoadingLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		getAllReportedVideos().then((res) => {
+			console.log(res);
+			setVideoResults(res);
+			setVideoResLoadingLoading(false);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -64,7 +75,7 @@ function Admin() {
 			.get(`video/reported-comment-list/`)
 			.then((res) => {
 				setCommentResults(res.data);
-				// console.log(res.data)
+				console.log(res.data);
 				setCommentResLoading(false);
 			})
 			.catch((err) => {
@@ -72,85 +83,147 @@ function Admin() {
 			});
 	}, []);
 
+	useEffect(() => {
+		getVideosList().then((res) => {
+			setTotalVideos(res.length);
+		});
+		getCategoriesList().then((res) => {
+			setTotalCategories(res.length);
+		});
+		getAllMembershipsType().then((res) =>
+			setTotalMembershipType(res.length)
+		);
+		getReportReason().then((res) => {
+			setTotalRepotReason(res.length);
+		});
+		getAllUserMembership().then((res) => {
+			console.log('Mmm', res);
+			let cnt1 = 0;
+			let cnt2 = 0;
+			let cnt3 = 0;
+			res.map((member) => {
+				if (member?.membership == 1) {
+					cnt1++;
+				} else if (member?.membership == 2) {
+					cnt2++;
+				} else if (member?.membership == 3) {
+					cnt3++;
+				}
+			});
+			let arr = [];
+			arr.push({ label: 'Free', value: cnt1 });
+			arr.push({ label: 'Enterprise', value: cnt2 });
+			arr.push({ label: 'Pro', value: cnt3 });
+			console.log(arr);
+			setMembershipChartData(arr);
+			arr = [];
+			arr.push({ label: 'Free', value: cnt1 * 0 });
+			arr.push({ label: 'Enterprise', value: cnt2 * 10 });
+			arr.push({ label: 'Pro', value: cnt3 * 15 });
+			setRevenueModelData(arr);
+		});
+	}, []);
+
 	// search handlers
 	const handleSearchChange = () => {};
 	// search submit handler
 	const handleSearchSubmit = () => {};
-	const chartData = [
-		{
-			label: 'Venezuela',
-			value: '290',
-		},
-		{
-			label: 'Saudi',
-			value: '260',
-		},
-		{
-			label: 'Canada',
-			value: '180',
-		},
-		{
-			label: 'Iran',
-			value: '140',
-		},
-		{
-			label: 'Russia',
-			value: '115',
-		},
-	];
+	// console.log(membershipChartData);
 
 	return (
 		<>
 			<Header />
 			<div style={{ height: '60px' }}></div>
 			<h1 className='text-center'>Admin Panel</h1>
-			<div className='grid-container'>
-				<div className='grid-item'>
-					<Widget
-						title={'Upload Video'}
-						description={'Create a new video'}
-						buttonName={'Upload'}
-						buttonPath={'/admin/create'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Total Video'}
-						description={'videos are uploaded'}
-						value={'100'}
-						buttonName={'Show Videos'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Membership'}
-						description={'Types of Membership available'}
-						value={'3'}
-						buttonName={'Show Membership'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Videos Reported'}
-						description={'Total Videos Reported'}
-						value={'3'}
-					/>
-				</div>
-				<div className='grid-item'>
-					<Widget
-						title={'Comments Reported'}
-						description={'Total Comment Reported'}
-						value={'3'}
-					/>
-				</div>
+			<div className='container'>
 				<div
-					className='grid-item'
-					style={{ gridColumnStart: '1', gridColumnEnd: '3' }}
+					className='row'
+					style={{
+						display: 'flex',
+						justifyContent: 'space-evenly',
+						padding: '20px',
+					}}
 				>
-					<WidgetBar data={chartData} title={'Subscription Graph'} />
+					<button
+						className={formStyle.btn}
+						onClick={() => {
+							history.push('/admin/create');
+						}}
+					>
+						Upload New Video
+					</button>
+					<button className={formStyle.btn}>Most Like Video</button>
+					<button className={formStyle.btn}>
+						Most Reported VIdeo
+					</button>
 				</div>
-				<div className='grid-item'>
-					<WidgetPie data={chartData} title={'Revenue Model Graph'} />
+				<div className='grid-container'>
+					<div className='grid-item'>
+						<Widget
+							title={'Total Video'}
+							description={'videos are uploaded'}
+							value={totalVideos}
+							buttonName={'Show Videos'}
+							buttonPath={'/admin/videos/list'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Membership'}
+							description={'Types of Membership available'}
+							value={totalMembershipType}
+							buttonName={'Show'}
+							buttonPath={'/admin/membership'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Categories'}
+							description={'Total Categories'}
+							value={totalCategories}
+							buttonName={'Show'}
+							buttonPath={'/admin/category/list'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Report Reason'}
+							value={totalReportReason}
+							description={'Total Reasons'}
+							buttonName={'Show'}
+							buttonPath={'/admin/report-reason'}
+						/>
+					</div>
+					<div className='grid-item widget-bar'>
+						<WidgetBar
+							data={membershipChartData}
+							title={'Subscription Graph'}
+							yAxisName={'Number of Users'}
+							xAxisName={'Membership Type'}
+						/>
+					</div>
+					<div
+						className='grid-item widget-pie'
+						// style={{ gridColumnStart: '3', gridColumnEnd: '5' }}
+					>
+						<WidgetPie
+							data={revenueModelData}
+							title={'Revenue Model Graph'}
+						/>
+					</div>
+
+					<div className='grid-item VideoReports'>
+						<VideoResultsLoading
+							isLoading={videoResLoading}
+							allVideos={videoResults}
+						/>
+					</div>
+					<div className='grid-item CommentReports'>
+						<CommentResultsLoading
+							isLoading={commentResLoading}
+							allComments={commentResults}
+						/>
+					</div>
 				</div>
 			</div>
 			<div>
@@ -187,19 +260,13 @@ function Admin() {
 				{/* heading changes based on serach/filter applied */}
 				{/* <h2>{boxHeading.videoHeading}</h2> */}
 				{/* video results */}
-				{/* <VideoResultsLoading
-							isLoading={videoResLoading}
-							allVideos={videoResults}
-						/> */}
+
 				{/* </div> */}
 				{/* <div className='col'> */}
 				{/* heading changes based on serach/filter applied */}
 				{/* <h2>{boxHeading.commentHeading}</h2> */}
 				{/* comments results */}
-				{/* <CommentResultsLoading
-							isLoading={commentResLoading}
-							allComments={commentResults}
-						/> */}
+
 				{/* </div> */}
 				{/* </div> */}
 			</div>

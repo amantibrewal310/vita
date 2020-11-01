@@ -1,106 +1,114 @@
-
 .reportBox {
-    width: 90%;
-    margin: auto;
-    padding: 20px 10px;
+	width: 90%;
+	margin: auto;
+	padding: 20px 10px;
 }
 
 .reportListBox > h2 {
-    text-align: center;
-    margin: 10px 0 40px 0;
+	text-align: center;
+	margin: 10px 0 40px 0;
 }
 
-.reportItem, .reportHeading {
-    width: 500px;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.reportItem,
+.reportHeading {
+	width: 500px;
+	margin: auto;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .reportListBox {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid var(--vita-bright-blue);
-    width: 520px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid var(--vita-bright-blue);
+	width: 520px;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
-.reportItem > div, .reportHeading > div {
-    margin: 0;
-    margin: 1px 0;
-    font-size: 20px;
-    width: 200px;
-    text-align: center;
-}  
+.reportItem > div,
+.reportHeading > div {
+	margin: 0;
+	margin: 1px 0;
+	font-size: 20px;
+	width: 200px;
+	text-align: center;
+}
 
 .reportHeading {
-    font-size: 22px;
-    text-transform: uppercase;
-    padding-bottom: 10px;
+	font-size: 22px;
+	text-transform: uppercase;
+	padding-bottom: 10px;
 }
 
-.userInfo  {
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.userInfo {
+	width: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .userInfo > p {
-    margin: 0;
-    margin-left: 10px;
+	margin: 0;
+	margin-left: 10px;
 }
 
 .buttonBox {
-    display: flex;
-    width: 500px;
-    margin: 30px auto 10px auto;
-    justify-content: center;
+	display: flex;
+	width: 500px;
+	margin: 30px auto 10px auto;
+	justify-content: center;
 }
 
 .recentReportBox {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--vita-bright-blue);
-    border-radius: 6px;
-    padding: 6px;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--vita-bright-blue);
+	border-radius: 6px;
+	padding: 6px;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.recentReportBox::-webkit-scrollbar {
+	display: none;
 }
 
-.recentReportVideo  {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 8px;
-    transition: all 0.3s ease;
+.recentReportVideo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 8px;
+	transition: all 0.3s ease;
 }
 .recentReportVideo:hover {
-    transform: translateX(3px);
+	transform: translateX(3px);
 }
 .recentReportVideo > img {
-    border-radius: 2px;
+	border-radius: 2px;
 }
 .details h6 {
-    padding-left: 20px;
-    margin: 0;
-    font-size: 18px;
+	padding-left: 20px;
+	margin: 0;
+	font-size: 18px;
 }
 
 .commentText {
-    width: 500px;
+	width: 500px;
 }
 
 .commentText > h6 {
-    margin: 0;
-    font-size: 18px;
+	margin: 0;
+	font-size: 18px;
 }
 .stats span i {
-    color: #d4d4d4;
+	color: #d4d4d4;
 }
 .stats span i:hover {
-    color: #e6e6e6;
+	color: #e6e6e6;
 }

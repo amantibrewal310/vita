@@ -1,0 +1,7 @@
+table,
+th,
+td {
+	border: 2px solid var(--color-3);
+	border-collapse: collapse;
+	text-align: center;
+}

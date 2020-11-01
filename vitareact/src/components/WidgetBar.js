@@ -7,6 +7,7 @@ import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 function WidgetBar(props) {
+	console.log('Widget Bar', props);
 	// Create a JSON object to store the chart configurations
 	const chartConfigs = {
 		type: 'bar2d', // The chart type
@@ -16,11 +17,9 @@ function WidgetBar(props) {
 		dataSource: {
 			// Chart Configuration
 			chart: {
-				caption: 'Countries With Most Oil Reserves [2017-18]', //Set the chart caption
-				subCaption: 'In MMbbl = One Million barrels', //Set the chart subcaption
-				xAxisName: 'Country', //Set the x-axis name
-				yAxisName: 'Reserves (MMbbl)', //Set the y-axis name
-				numberSuffix: 'K',
+				caption: props.title, //Set the chart caption
+				xAxisName: props.xAxisName, //Set the x-axis name
+				yAxisName: props.yAxisName, //Set the y-axis name
 				bgColor: 'transparent',
 				theme: 'fusion', //Set the theme for your chart
 			},

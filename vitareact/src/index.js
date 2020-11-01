@@ -27,6 +27,7 @@ import VideoSearch from './components/VideoSearch';
 import Home from './Home';
 import AuthenticatedRoute from './Routes/AuthenticatedRoute';
 import MembershipList from './components/admin/MembershipList';
+import VideosList from './components/admin/VideosList';
 import categoryList from './components/admin/categories/CategoryList';
 import ReportReasonList from './components/admin/reportReasons/ReportReasonList';
 import CategoryBarGraph from './components/forGraphs/CategoryBarGraph';
@@ -94,6 +95,11 @@ const routing = (
 					path='/admin/comment-report-action/:id'
 					component={CommentReportAction}
 				/>
+				<AdminRoute
+					exact
+					path='/admin/videos/list'
+					component={VideosList}
+				/>
 
 				{/* OPEN TO ALL ROUTES */}
 				<Route exact path='/' component={Home}></Route>
@@ -108,17 +114,17 @@ const routing = (
 					path='/admin/membership'
 					component={MembershipList}
 				/>
-				
-				<Route 
+
+				<AdminRoute
 					exact
-					path='/create-category'
-					component = {categoryList}
+					path='/admin/category/list'
+					component={categoryList}
 				/>
 
-				<Route 
+				<AdminRoute
 					exact
-					path='/report-reason'
-					component = {ReportReasonList}
+					path='/admin/report-reason'
+					component={ReportReasonList}
 				/>
 
 				<Route 
