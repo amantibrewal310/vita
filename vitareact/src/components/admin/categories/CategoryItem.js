@@ -37,7 +37,6 @@ function CategoryItem({ item, refreshCategories }) {
 
 	return (
 		<div className='categoryWrapper'>
-			<br></br>
 			<div className='category-container'>
 				<img src={item.image} width='100px' alt='cat-image' />
 				<h2>{item.category}</h2>
@@ -50,37 +49,39 @@ function CategoryItem({ item, refreshCategories }) {
 			</div>
 
 			{showEditform ? (
-				<div className='category-edit-form'>
-					<div className='container'>
-						<input
-							className={formStyles.input}
-							type='text'
-							name='category'
-							placeholder='updated name'
-							value={newCatName}
-							onChange={(e) => setNewCatName(e.target.value)}
-						/>
-					</div>
-					<div className='container'>
-						<input
-							type='file'
-							accept='image/*'
-							id='image'
-							name='image'
-							onChange={(e) =>
-								setImage({
-									image: e.target.files,
-								})
-							}
-						/>
+				<div className='container'>
+					<div className='category-edit-form'>
+						<div className='container'>
+							<input
+								className={formStyles.input}
+								type='text'
+								name='category'
+								placeholder='updated name'
+								value={newCatName}
+								onChange={(e) => setNewCatName(e.target.value)}
+							/>
+						</div>
+						<div className='container'>
+							<input
+								type='file'
+								accept='image/*'
+								id='image'
+								name='image'
+								onChange={(e) =>
+									setImage({
+										image: e.target.files,
+									})
+								}
+							/>
 
-						<button
-							className='btn btn-danger'
-							type='submit'
-							onClick={handleSubmit}
-						>
-							Save changes
-						</button>
+							<button
+								className='btn btn-danger'
+								type='submit'
+								onClick={handleSubmit}
+							>
+								Save changes
+							</button>
+						</div>
 					</div>
 				</div>
 			) : (

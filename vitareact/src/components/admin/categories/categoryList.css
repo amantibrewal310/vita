@@ -22,3 +22,18 @@
 	align-items: center;
 	margin-top: 10px;
 }
+
+@media only screen and (max-width: 550px) {
+	.category-container,
+	.category-create-form,
+	.category-edit-form {
+		flex-direction: column;
+		align-items: center;
+	}
+	.category-create-form {
+		display: block;
+	}
+
+	.categoryWrapper {
+	}
+}
