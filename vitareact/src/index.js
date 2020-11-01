@@ -5,7 +5,6 @@ import PrivateRoute from './Routes/PrivateRoute';
 import AdminRoute from './Routes/AdminRoute';
 import './components/css/main.css';
 import App from './App';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './components/auth/Login/Login';
 import Logout from './components/auth/Logout';
@@ -24,7 +23,6 @@ import CategoryResults from './components/CategoryResults';
 import VideoPreplay from './components/VideoPreplay';
 import ForgotPassword from './components/auth/ResetPassword/ForgotPassword';
 import Subscription from './components/Subscription';
-import Payment from './components/Payment';
 import VideoSearch from './components/VideoSearch';
 import Home from './Home'
 import AuthenticatedRoute from './Routes/AuthenticatedRoute'
@@ -120,7 +118,7 @@ const routing = (
 
 				{/* OPEN TO ALL ROUTES */}
 				<Route 
-					exact paht="/"
+					exact path="/"
 					component={Home} 
 				>
 				</Route>

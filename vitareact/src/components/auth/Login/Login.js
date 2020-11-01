@@ -111,6 +111,33 @@ function Login() {
 		}
 	};
 
+    const redirectBySubscription = () => {
+        axiosInstance
+            .get(`http://127.0.0.1:8000/api/membership/user/type/`)
+            .then(res => {
+                if(res.data.membership_type === "None") {
+                    setShowPopup(true);
+                    setTimeout(() => {
+                        history.push("/subscribe");
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        history.push("/home");
+                    }, 1500);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                // setError({
+                //     ...error,
+                //     credentialsError: 'could not login, please retry'
+                // })
+                setShowPopup(true);
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1500)    
+            })
+    }
 	const setAdminStatus = async () => {
 		const res = await axios.get(
 			`http://127.0.0.1:8000/api/user/byemail/${formData.email}/`
@@ -119,32 +146,6 @@ function Login() {
 		localStorage.setItem('admin', admin);
 	};
 
-	const redirectBySubscription = () => {
-		axiosInstance
-			.get(`http://127.0.0.1:8000/api/membership/user/type/`)
-			.then((res) => {
-				if (res.data.membership_type === 'None') {
-					setShowPopup(true);
-					setTimeout(() => {
-						history.push('/subscribe');
-					}, 1500);
-				} else {
-					setTimeout(() => {
-						history.push('/home');
-					}, 1500);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				setError({
-					...error,
-					credentialsError: 'could not login, please retry',
-				});
-				setTimeout(() => {
-					window.location.reload();
-				}, 1000);
-			});
-	};
 
 	return (
 		<div className={formStyles.formBG}>

@@ -55,13 +55,13 @@
 }
 
 .titleAndDetail {
-	width: 50%;
-	position: absolute;
-	/* background-color: aqua; */
-	right: 0;
-	top: 10%;
-	text-align: right;
-	padding-right: 30px;
+    width: 50%;
+    position: absolute;
+    /* background-color: aqua; */
+    right: 0;
+    top: 6%;
+    text-align: right;
+    padding-right: 30px;
 }
 
 .videoTitle {
@@ -81,6 +81,20 @@
 	font-weight: 600;
 }
 
+.description > button {
+    padding: 5px 15px;
+    margin-top: 8px;
+    border-radius: 4px;
+    outline: none;
+    background: var(--vita-light-pink);
+    border: none;
+}
+.description > button:hover {
+    background: var(--vita-pink);
+}
+.description > button:focus, .description > button:active {
+    outline: none;
+}
 .fa {
 	padding: 0 5px;
 }

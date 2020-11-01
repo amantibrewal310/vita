@@ -3,78 +3,29 @@ import { Link } from 'react-router-dom';
 // import '../css/adminHome.css';
 import axiosInstance from '../../axios';
 import VideoResults from './VideoResults';
-import ContentLoading from '../ContentLoading';
 import CommentResults from './CommentResults';
 import Header from '../Header';
+import formStyles from '../css/forms.module.css'
+import Preloader from '../utils/Preloader';
 import { Col, Container, Row } from 'react-bootstrap';
 import Widget from '../Widget';
 import WidgetBar from '../WidgetBar';
 import WidgetPie from '../WidgetPie';
 
-// Admin Options Avalailable
-
-// Video options
-// components
-// 1. video result box [for search/filter results] / by default shows recently reported videos
-// Features
-// 1. Upload new  video
-// 2. Search for videos
-// 3. Filter, Sort for videos [by most reported, date/time ... etc]
-// 4. Link to detail page
-
-// Comment options
-// components
-// 1. comment result box [for filter results] / by default shows recently reported comments
-// Featurs
-// 1. Filter, Sort for videos [by most reported, date/time... etc]
-// 2. Link to detail page
 
 function Admin() {
-	const VideoResultsLoading = ContentLoading(VideoResults);
-	const CommentResultsLoading = ContentLoading(CommentResults);
 
-	const initHeading = {
-		videoHeading: 'Recent Video Reports',
-		commentHeading: 'Recent Comment Reports',
-	};
+    const initHeading = {
+        videoHeading: 'Recent Video Reports',
+        commentHeading: 'Recent Comment Reports'
+    }
 
-	const [boxHeading, setBoxHeading] = useState(initHeading);
-	const [videoResults, setVideoResults] = useState([]);
-	const [commentResults, setCommentResults] = useState([]);
-	const [videoResLoading, setVideoResLoadingLoading] = useState(false);
-	const [commentResLoading, setCommentResLoading] = useState(false);
-
-	useEffect(() => {
-		// recent reported videos
-		axiosInstance
-			.get(`video/reported-video-list/`)
-			.then((res) => {
-				setVideoResults(res.data);
-				// console.log(res.data)
-				setVideoResLoadingLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
-
-	useEffect(() => {
-		axiosInstance
-			.get(`video/reported-comment-list/`)
-			.then((res) => {
-				setCommentResults(res.data);
-				// console.log(res.data)
-				setCommentResLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
-
-	// search handlers
-	const handleSearchChange = () => {};
-	// search submit handler
-	const handleSearchSubmit = () => {};
+    const [boxHeading, setBoxHeading] = useState(initHeading);
+    const [videoResults, setVideoResults] = useState([]);
+    const [commentResults, setCommentResults] = useState([]);
+    const [videoResLoading, setVideoResLoadingLoading] = useState(true);
+	const [commentResLoading, setCommentResLoading] = useState(true);
+	
 	const chartData = [
 		{
 			label: 'Venezuela',
@@ -97,6 +48,33 @@ function Admin() {
 			value: '115',
 		},
 	];
+
+    useEffect(() => {
+        // recent reported videos 
+        axiosInstance
+            .get(`video/reported-video-list/`)
+            .then(res => {
+                setVideoResults(res.data);
+                setVideoResLoadingLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
+
+    useEffect(() => {
+        // recent reported comments 
+        axiosInstance
+            .get(`video/reported-comment-list/`)
+            .then(res => {
+                setCommentResults(res.data);
+                setCommentResLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
+
 
 	return (
 		<>
@@ -139,58 +117,68 @@ function Admin() {
 					<WidgetPie data={chartData} title={'Revenue Model Graph'} />
 				</Row>
 			</Container>
-			<div>
-				{/* <Link to={`/admin/create`}>
-					<button id='create-new-btn'>Create New Video</button>
-				</Link> */}
-
-				{/* <div id='search-container'>
-					<input
-						id='admin-search-box'
-						type='text'
-						name='searchbox'
-						onChange={handleSearchChange}
-						placeholder='Search Videos'
-					/>
-					<button
-						id='admin-search-btn'
-						type='submit'
-						onClick={handleSearchSubmit}
-					>
-						Search
-					</button>
-				</div> */}
-
-				{/* <div>
-					<h3>Options</h3>
-					<button>Most views</button>
-					<button>Most Likes</button>
-					<button>Most Reported</button>
-				</div> */}
-
-				{/* <div className='row'> */}
-				{/* <div className='col'> */}
-				{/* heading changes based on serach/filter applied */}
-				{/* <h2>{boxHeading.videoHeading}</h2> */}
-				{/* video results */}
-				{/* <VideoResultsLoading
-							isLoading={videoResLoading}
-							allVideos={videoResults}
-						/> */}
-				{/* </div> */}
-				{/* <div className='col'> */}
-				{/* heading changes based on serach/filter applied */}
-				{/* <h2>{boxHeading.commentHeading}</h2> */}
-				{/* comments results */}
-				{/* <CommentResultsLoading
-							isLoading={commentResLoading}
-							allComments={commentResults}
-						/> */}
-				{/* </div> */}
-				{/* </div> */}
-			</div>
 		</>
-	);
+	)
+
+	
+	/*
+		// Admin Changes by @harshjoeyit
+		// include video, comment report list 
+
+    return (
+        <>
+        <Header />
+        <div>
+            <h1 style={{textAlign:'center'}}>Admin Home</h1>
+            
+            <Link 
+                to={`/admin/create`}>
+                <button 
+                    className={formStyles.submitBtn}>
+                    Create New Video
+                </button>
+            </Link>
+
+            <div style={{display: 'flex', justifyContent: 'center'}}>  
+                <button className={formStyles.smallSubmitBtn}>Most views</button>
+                <button className={formStyles.smallSubmitBtn}>Most Likes</button>
+                <button className={formStyles.smallSubmitBtn}>Most Reported</button>
+            </div>
+
+            <div className="row">
+                <div className="col">
+                    <h2>{boxHeading.videoHeading}</h2>
+                    {
+                        (videoResLoading)
+                        ? (
+                            <div style={{width: '200px', height: '200px'}}>
+                                <Preloader />
+                            </div>
+                        ) : (
+                            <VideoResults allVideos={videoResults}/>
+                        )
+                    }
+                </div>
+                <div className="col">
+                <h2>{boxHeading.commentHeading}</h2>
+                    {
+                        (commentResLoading)
+                        ? (
+                            <div style={{width: '200px', height: '200px'}}>
+                                <Preloader />
+                            </div>
+                        ) : (
+                            <CommentResults allComments={commentResults}/>
+                        )
+                    }
+                </div>
+				
+            </div>
+        </div>
+        </>
+	)
+	
+	*/
 }
 
 export default Admin;
