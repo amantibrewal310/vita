@@ -79,3 +79,12 @@ export const getAllUserMembership = () => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const getReportReason = () => {
+	return axios
+		.get(`http://127.0.0.1:8000/api/video/report-reason/`)
+		.then((res) => {
+			return res.data;
+		})
+		.catch((error) => console.log(error));
+};

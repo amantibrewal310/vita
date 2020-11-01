@@ -61,7 +61,7 @@ function CategoryList() {
 					))}
 
 					<button
-						className='btn btn-info'
+						className={formStyles.btn}
 						onClick={() => setShowCreateForm(!showCreateForm)}
 						style={{ float: 'right', marginTop: '10px' }}
 					>

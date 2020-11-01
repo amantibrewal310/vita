@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import formStyles from '../css/forms.module.css';
 import Popup from '../utils/Popup';
+import Header from '../Header';
 
 function CreateVideo() {
 	// TODO:
@@ -230,213 +231,230 @@ function CreateVideo() {
 	};
 
 	return (
-		<div className={formStyles.formBG}>
-			<Popup
-				show={showPopup}
-				message='Video Uploaded Successfully'
-				type='success'
-			/>
-			<div className={formStyles.videoFormContainer}>
-				<h2 className={formStyles.heading}>Create new video</h2>
-				{/* TODO:
+		<>
+			<Header />
+			<div style={{ height: '60px' }}></div>
+			<div className={formStyles.formBG}>
+				<Popup
+					show={showPopup}
+					message='Video Uploaded Successfully'
+					type='success'
+				/>
+				<div className={formStyles.videoFormContainer}>
+					<h2 className={formStyles.heading}>Create new video</h2>
+					{/* TODO:
                     create seperate error component, 
                     to be used it in all forms
                 */}
-				{error.authError ? (
-					<div className={formStyles.error}> {error.authError} </div>
-				) : (
-					<></>
-				)}
-				{error.emptyFormError ? (
-					<div className={formStyles.error}>
-						{' '}
-						{error.emptyFormError}{' '}
-					</div>
-				) : (
-					<></>
-				)}
-				{uploadState.uploadProgress > 0 ? (
-					<div className={formStyles.uploadProgress}>
+					{error.authError ? (
 						<div className={formStyles.error}>
-							Upload: {uploadState.uploadProgress}%
+							{' '}
+							{error.authError}{' '}
 						</div>
-						<button
-							className={formStyles.videoSubmitBtn}
-							type='submit'
-							onClick={handleCancelUpload}
-						>
-							Cancel
-						</button>
-					</div>
-				) : (
-					<></>
-				)}
-
-				<div className={formStyles.videoFormRow}>
-					<div className={formStyles.videoFormCol}>
-						<div>
-							<input
-								type='text'
-								name='title'
-								required
-								placeholder='Video title'
-								onChange={handleChange}
-								className={formStyles.videoInput}
-							/>
+					) : (
+						<></>
+					)}
+					{error.emptyFormError ? (
+						<div className={formStyles.error}>
+							{' '}
+							{error.emptyFormError}{' '}
 						</div>
-						<div>
-							<textarea
-								rows='10'
-								name='description'
-								required
-								placeholder='Storyline'
-								onChange={handleChange}
-								className={formStyles.videoInput}
-								style={{ resize: 'none' }}
-							/>
+					) : (
+						<></>
+					)}
+					{uploadState.uploadProgress > 0 ? (
+						<div className={formStyles.uploadProgress}>
+							<div className={formStyles.error}>
+								Upload: {uploadState.uploadProgress}%
+							</div>
+							<button
+								className={formStyles.videoSubmitBtn}
+								type='submit'
+								onClick={handleCancelUpload}
+							>
+								Cancel
+							</button>
 						</div>
+					) : (
+						<></>
+					)}
 
-						{/* mebership select */}
-						<div className={formStyles.videoCheckboxContainer}>
-							<p>Allowed Membership</p>
-							<div className={formStyles.checkboxInputs}>
-								<div className={formStyles.checkInput}>
-									<input
-										name='free'
-										type='checkbox'
-										checked={selectedMembership.free}
-										onChange={(e) => {
-											setSelectedMembership({
-												...selectedMembership,
-												free: !selectedMembership.free,
-											});
-										}}
-									/>
-									<label style={{ color: 'white' }}>
-										Free
-									</label>
-								</div>
+					<div className={formStyles.videoFormRow}>
+						<div className={formStyles.videoFormCol}>
+							<div>
+								<input
+									type='text'
+									name='title'
+									required
+									placeholder='Video title'
+									onChange={handleChange}
+									className={formStyles.videoInput}
+								/>
+							</div>
+							<div>
+								<textarea
+									rows='10'
+									name='description'
+									required
+									placeholder='Storyline'
+									onChange={handleChange}
+									className={formStyles.videoInput}
+									style={{ resize: 'none' }}
+								/>
+							</div>
 
-								<div className={formStyles.checkInput}>
-									<input
-										name='ent'
-										type='checkbox'
-										checked={selectedMembership.ent}
-										onChange={(e) => {
-											setSelectedMembership({
-												...selectedMembership,
-												ent: !selectedMembership.ent,
-											});
-										}}
-									/>
-									<label style={{ color: 'white' }}>
-										Enterprise
-									</label>
-								</div>
+							{/* mebership select */}
+							<div className={formStyles.videoCheckboxContainer}>
+								<p>Allowed Membership</p>
+								<div className={formStyles.checkboxInputs}>
+									<div className={formStyles.checkInput}>
+										<input
+											name='free'
+											type='checkbox'
+											checked={selectedMembership.free}
+											onChange={(e) => {
+												setSelectedMembership({
+													...selectedMembership,
+													free: !selectedMembership.free,
+												});
+											}}
+										/>
+										<label style={{ color: 'white' }}>
+											Free
+										</label>
+									</div>
 
-								<div className={formStyles.checkInput}>
-									<input
-										name='pro'
-										type='checkbox'
-										checked={selectedMembership.pro}
-										onChange={(e) => {
-											setSelectedMembership({
-												...selectedMembership,
-												pro: !selectedMembership.pro,
-											});
-										}}
-									/>
-									<label style={{ color: 'white' }}>
-										Pro
-									</label>
+									<div className={formStyles.checkInput}>
+										<input
+											name='ent'
+											type='checkbox'
+											checked={selectedMembership.ent}
+											onChange={(e) => {
+												setSelectedMembership({
+													...selectedMembership,
+													ent: !selectedMembership.ent,
+												});
+											}}
+										/>
+										<label style={{ color: 'white' }}>
+											Enterprise
+										</label>
+									</div>
+
+									<div className={formStyles.checkInput}>
+										<input
+											name='pro'
+											type='checkbox'
+											checked={selectedMembership.pro}
+											onChange={(e) => {
+												setSelectedMembership({
+													...selectedMembership,
+													pro: !selectedMembership.pro,
+												});
+											}}
+										/>
+										<label style={{ color: 'white' }}>
+											Pro
+										</label>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className={formStyles.videoFormCol}>
-						<div>
-							<input
-								className={formStyles.videoInput}
-								type='file'
-								accept='image/*'
-								id='thumbnail'
-								name='thumbnail'
-								onChange={handleChange}
-								required
-							/>
-						</div>
-						<div>
-							<input
-								className={formStyles.videoInput}
-								type='file'
-								accept='video/*'
-								id='videoFile'
-								name='videoFile'
-								onChange={handleChange}
-								required
-							/>
-						</div>
-						<div>
-							<input
-								className={formStyles.videoInput}
-								type='number'
-								name='playtime'
-								required
-								placeholder='Play time (minutes)'
-								onChange={handleChange}
-								min='0'
-							/>
-						</div>
-						<div className={formStyles.videoSelectInputContainer}>
-							<select
-								value={textData.category}
-								onChange={(e) => {
-									setTextData({
-										...textData,
-										category: e.target.value,
-									});
-								}}
+						<div className={formStyles.videoFormCol}>
+							<div>
+								<input
+									className={formStyles.videoInput}
+									type='file'
+									accept='image/*'
+									id='thumbnail'
+									name='thumbnail'
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div>
+								<input
+									className={formStyles.videoInput}
+									type='file'
+									accept='video/*'
+									id='videoFile'
+									name='videoFile'
+									onChange={handleChange}
+									required
+								/>
+							</div>
+							<div>
+								<input
+									className={formStyles.videoInput}
+									type='number'
+									name='playtime'
+									required
+									placeholder='Play time (minutes)'
+									onChange={handleChange}
+									min='0'
+								/>
+							</div>
+							<div
+								className={formStyles.videoSelectInputContainer}
 							>
-								<option key='0' value='-1'>
-									Select
-								</option>
-								{categoryOptions.map((option) => (
-									<option key={option.id} value={option.id}>
-										{option.category}
+								<select
+									value={textData.category}
+									onChange={(e) => {
+										setTextData({
+											...textData,
+											category: e.target.value,
+										});
+									}}
+								>
+									<option key='0' value='-1'>
+										Select
 									</option>
-								))}
-							</select>
-						</div>
+									{categoryOptions.map((option) => (
+										<option
+											key={option.id}
+											value={option.id}
+										>
+											{option.category}
+										</option>
+									))}
+								</select>
+							</div>
 
-						{/* video status drop down */}
-						<div className={formStyles.videoSelectInputContainer}>
-							<select
-								value={textData.status}
-								onChange={(e) => {
-									setTextData({
-										...textData,
-										status: e.target.value,
-									});
-								}}
+							{/* video status drop down */}
+							<div
+								className={formStyles.videoSelectInputContainer}
 							>
-								{statusOptions.map((option) => (
-									<option key={option.id} value={option.name}>
-										{option.name}
-									</option>
-								))}
-							</select>
+								<select
+									value={textData.status}
+									onChange={(e) => {
+										setTextData({
+											...textData,
+											status: e.target.value,
+										});
+									}}
+								>
+									{statusOptions.map((option) => (
+										<option
+											key={option.id}
+											value={option.name}
+										>
+											{option.name}
+										</option>
+									))}
+								</select>
+							</div>
 						</div>
+						<button
+							type='submit'
+							onClick={handleSubmit}
+							className={formStyles.videoSubmitBtn}
+						>
+							Create
+						</button>
 					</div>
-					<button
-						type='submit'
-						onClick={handleSubmit}
-						className={formStyles.videoSubmitBtn}
-					>
-						Create
-					</button>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

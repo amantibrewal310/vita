@@ -120,10 +120,10 @@ const routing = (
 					component={categoryList}
 				/>
 
-				<Route 
+				<AdminRoute
 					exact
-					path='/report-reason'
-					component = {ReportReasonList}
+					path='/admin/report-reason'
+					component={ReportReasonList}
 				/>
 
 				{/* 404 */}

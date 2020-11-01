@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 // import '../css/adminHome.css';
 import axiosInstance from '../../axios';
 import VideoResults from './VideoResults';
@@ -11,11 +11,13 @@ import Widget from '../Widget';
 import WidgetBar from '../WidgetBar';
 import WidgetPie from '../WidgetPie';
 import '../css/grid.css';
+import formStyle from '../css/forms.module.css';
 import {
 	getAllMembershipsType,
 	getAllReportedVideos,
 	getAllUserMembership,
 	getCategoriesList,
+	getReportReason,
 	getVideosList,
 } from '../../request';
 
@@ -38,6 +40,7 @@ import {
 // 2. Link to detail page
 
 function Admin() {
+	const history = useHistory();
 	const VideoResultsLoading = ContentLoading(VideoResults);
 	const CommentResultsLoading = ContentLoading(CommentResults);
 
@@ -56,6 +59,7 @@ function Admin() {
 	const [totalMembershipType, setTotalMembershipType] = useState(0);
 	const [membershipChartData, setMembershipChartData] = useState([]);
 	const [revenueModelData, setRevenueModelData] = useState([]);
+	const [totalReportReason, setTotalRepotReason] = useState(0);
 
 	useEffect(() => {
 		// recent reported videos
@@ -89,6 +93,9 @@ function Admin() {
 		getAllMembershipsType().then((res) =>
 			setTotalMembershipType(res.length)
 		);
+		getReportReason().then((res) => {
+			setTotalRepotReason(res.length);
+		});
 		getAllUserMembership().then((res) => {
 			console.log('Mmm', res);
 			let cnt1 = 0;
@@ -121,29 +128,7 @@ function Admin() {
 	const handleSearchChange = () => {};
 	// search submit handler
 	const handleSearchSubmit = () => {};
-	const chartData = [
-		{
-			label: 'Venezuela',
-			value: '290',
-		},
-		{
-			label: 'Saudi',
-			value: '260',
-		},
-		{
-			label: 'Canada',
-			value: '180',
-		},
-		{
-			label: 'Iran',
-			value: '140',
-		},
-		{
-			label: 'Russia',
-			value: '115',
-		},
-	];
-	console.log(membershipChartData);
+	// console.log(membershipChartData);
 
 	return (
 		<>
@@ -151,15 +136,28 @@ function Admin() {
 			<div style={{ height: '60px' }}></div>
 			<h1 className='text-center'>Admin Panel</h1>
 			<div className='container'>
+				<div
+					className='row'
+					style={{
+						display: 'flex',
+						justifyContent: 'space-evenly',
+						padding: '20px',
+					}}
+				>
+					<button
+						className={formStyle.btn}
+						onClick={() => {
+							history.push('/admin/create');
+						}}
+					>
+						Upload New Video
+					</button>
+					<button className={formStyle.btn}>Most Like Video</button>
+					<button className={formStyle.btn}>
+						Most Reported VIdeo
+					</button>
+				</div>
 				<div className='grid-container'>
-					<div className='grid-item'>
-						<Widget
-							title={'Upload Video'}
-							description={'Create a new video'}
-							buttonName={'Upload'}
-							buttonPath={'/admin/create'}
-						/>
-					</div>
 					<div className='grid-item'>
 						<Widget
 							title={'Total Video'}
@@ -185,6 +183,15 @@ function Admin() {
 							value={totalCategories}
 							buttonName={'Show'}
 							buttonPath={'/admin/category/list'}
+						/>
+					</div>
+					<div className='grid-item'>
+						<Widget
+							title={'Report Reason'}
+							value={totalReportReason}
+							description={'Total Reasons'}
+							buttonName={'Show'}
+							buttonPath={'/admin/report-reason'}
 						/>
 					</div>
 					<div className='grid-item widget-bar'>

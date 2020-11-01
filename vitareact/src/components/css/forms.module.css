@@ -17,6 +17,31 @@
 .logoBox > img {
 	width: 100px;
 }
+.btn {
+	border: 1px solid var(--color-1);
+	color: white;
+	padding: 10px 15px;
+	background-color: black;
+	margin-top: 10px;
+	border-radius: 4px;
+}
+
+.btn_blue {
+	border: 1px solid var(--vita-bright-blue);
+	color: white;
+	padding: 10px 15px;
+	background-color: black;
+	margin-top: 10px;
+	border-radius: 4px;
+}
+.btn_red {
+	border: 1px solid red;
+	color: white;
+	padding: 10px 15px;
+	background-color: black;
+	margin-top: 10px;
+	border-radius: 4px;
+}
 
 .formContainer,
 .smallFormContainer,
@@ -305,7 +330,7 @@
 	align-items: center;
 }
 
-.checkInput > label { 
+.checkInput > label {
 	margin: 0;
 	padding: 0;
 	margin-top: 2px;
