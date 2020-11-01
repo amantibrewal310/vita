@@ -19,7 +19,11 @@ import {
 	getCategoriesList,
 	getReportReason,
 	getVideosList,
+	getCategoryVideos,
 } from '../../request';
+
+import CategoryWiseVideoGraph from '../forGraphs/CategoryBarGraph';
+import WidgetColumn3D from '../WidgetColumn3D';
 
 // Admin Options Avalailable
 
@@ -60,6 +64,7 @@ function Admin() {
 	const [membershipChartData, setMembershipChartData] = useState([]);
 	const [revenueModelData, setRevenueModelData] = useState([]);
 	const [totalReportReason, setTotalRepotReason] = useState(0);
+	const [categoryWiseVideos, setCategoryWiseVideos] = useState([]);
 
 	useEffect(() => {
 		// recent reported videos
@@ -122,6 +127,29 @@ function Admin() {
 			arr.push({ label: 'Pro', value: cnt3 * 15 });
 			setRevenueModelData(arr);
 		});
+		const getCategoryWiseData = async () => {
+			let categories = await getCategoriesList();
+
+			const categoryNames = categories.map((item) => item.category);
+
+			const promises = categories.map(async (category) => {
+				let videos = await getCategoryVideos(category.id);
+				return videos.length;
+			});
+
+			let numberOfMovies = await Promise.all(promises);
+
+			let arr = [];
+
+			for (let i = 0; i < categoryNames.length; i++) {
+				arr.push({
+					label: categoryNames[i],
+					value: numberOfMovies[i],
+				});
+			}
+			setCategoryWiseVideos(arr);
+		};
+		getCategoryWiseData();
 	}, []);
 
 	// search handlers
@@ -222,6 +250,14 @@ function Admin() {
 						<CommentResultsLoading
 							isLoading={commentResLoading}
 							allComments={commentResults}
+						/>
+					</div>
+					<div className='grid-item category_vs_videos_graph'>
+						<WidgetColumn3D
+							data={categoryWiseVideos}
+							title={'Category-wise Videos'}
+							yAxisName={'Videos'}
+							xAxisName={'Category'}
 						/>
 					</div>
 				</div>

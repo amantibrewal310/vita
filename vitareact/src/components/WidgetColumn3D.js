@@ -7,12 +7,12 @@ import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 function WidgetBar(props) {
-	// console.log('Widget Bar', props);
+	console.log('Widget Bar', props);
 	// Create a JSON object to store the chart configurations
 	const chartConfigs = {
-		type: 'bar2d', // The chart type
+		type: 'column3d', // The chart type
 		width: '100%', // Width of the chart
-		height: '225', // Height of the chart
+		height: '300', // Height of the chart
 		dataFormat: 'json', // Data type
 		dataSource: {
 			// Chart Configuration
