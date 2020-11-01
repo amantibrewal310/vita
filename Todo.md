@@ -60,6 +60,10 @@
         - list
         - detail 
         - respond 
+
+
+    charts 
+        - category wise movies 
     
 
 # Features
@@ -82,3 +86,12 @@
 
 
 - user video lastplaytime
+
+
+
+
+- SCRIPT 
+    - subscription
+    - live search 
+    - categories 
+    - admin option on each video and comment when logged in 
