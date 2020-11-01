@@ -100,7 +100,7 @@ function CategoryList() {
 							</div>
 							<div className='container'>
 								<button
-									className='btn btn-danger'
+									className={formStyles.btn_red}
 									type='submit'
 									onClick={handleSubmit}
 								>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import style from './css/widget.module.css';
+import formStyles from './css/forms.module.css';
 function Widget(props) {
 	const history = useHistory();
 	return (
@@ -11,7 +12,7 @@ function Widget(props) {
 				<div className={style.description}>{props.description}</div>
 				{props.buttonName && (
 					<button
-						className='btn btn-info'
+						className={formStyles.btn}
 						onClick={() => {
 							history.push(props.buttonPath);
 						}}

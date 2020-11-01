@@ -41,7 +41,7 @@ function CategoryItem({ item, refreshCategories }) {
 				<img src={item.image} width='100px' alt='cat-image' />
 				<h2>{item.category}</h2>
 				<button
-					className='btn btn-info'
+					className={formStyles.btn_blue}
 					onClick={() => setShowEditForm(!showEditform)}
 				>
 					Edit
@@ -75,7 +75,7 @@ function CategoryItem({ item, refreshCategories }) {
 							/>
 
 							<button
-								className='btn btn-danger'
+								className={formStyles.btn_red}
 								type='submit'
 								onClick={handleSubmit}
 							>
