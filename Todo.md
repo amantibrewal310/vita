@@ -59,8 +59,8 @@
     - reports 
         - list
         - detail 
-        - respond 
-    
+        - respond
+
 
 # Features
     - reply feature in comments
@@ -82,3 +82,12 @@
 
 
 - user video lastplaytime
+
+
+
+
+- SCRIPT 
+    - subscription
+    - live search 
+    - categories 
+    - admin option on each video and comment when logged in 

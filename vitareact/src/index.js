@@ -30,6 +30,7 @@ import MembershipList from './components/admin/MembershipList';
 import VideosList from './components/admin/VideosList';
 import categoryList from './components/admin/categories/CategoryList';
 import ReportReasonList from './components/admin/reportReasons/ReportReasonList';
+import CategoryBarGraph from './components/forGraphs/CategoryBarGraph';
 
 const routing = (
 	<Router>
@@ -124,6 +125,12 @@ const routing = (
 					exact
 					path='/admin/report-reason'
 					component={ReportReasonList}
+				/>
+
+				<Route 
+					exact
+					path='/category-graph'
+					component = {CategoryBarGraph}
 				/>
 
 				{/* 404 */}
