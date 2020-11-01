@@ -137,13 +137,14 @@ function Login() {
             })
             .catch(err => {
                 console.log(err);
-                setError({
-                    ...error,
-                    credentialsError: 'could not login, please retry'
-                })
+                // setError({
+                //     ...error,
+                //     credentialsError: 'could not login, please retry'
+                // })
+                setShowPopup(true);
                 setTimeout(() => {
                     window.location.reload()
-                }, 1000)    
+                }, 1500)    
             })
     }
 
