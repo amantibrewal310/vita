@@ -184,7 +184,7 @@ function Admin() {
 							description={'Total Categories'}
 							value={totalCategories}
 							buttonName={'Show'}
-							buttonPath={'/admin/membership'}
+							buttonPath={'/admin/category/list'}
 						/>
 					</div>
 					<div className='grid-item widget-bar'>

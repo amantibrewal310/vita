@@ -113,7 +113,11 @@ const routing = (
 					component={MembershipList}
 				/>
 
-				<Route exact path='/create-category' component={categoryList} />
+				<AdminRoute
+					exact
+					path='/admin/category/list'
+					component={categoryList}
+				/>
 
 				{/* 404 */}
 				<Route path='*' component={NotFound} />
