@@ -14,6 +14,7 @@ import '../css/grid.css';
 import {
 	getAllMembershipsType,
 	getAllReportedVideos,
+	getAllUserMembership,
 	getCategoriesList,
 	getVideosList,
 } from '../../request';
@@ -53,6 +54,8 @@ function Admin() {
 	const [totalVideos, setTotalVideos] = useState(0);
 	const [totalCategories, setTotalCategories] = useState(0);
 	const [totalMembershipType, setTotalMembershipType] = useState(0);
+	const [membershipChartData, setMembershipChartData] = useState([]);
+	const [revenueModelData, setRevenueModelData] = useState([]);
 
 	useEffect(() => {
 		// recent reported videos
@@ -86,6 +89,32 @@ function Admin() {
 		getAllMembershipsType().then((res) =>
 			setTotalMembershipType(res.length)
 		);
+		getAllUserMembership().then((res) => {
+			console.log('Mmm', res);
+			let cnt1 = 0;
+			let cnt2 = 0;
+			let cnt3 = 0;
+			res.map((member) => {
+				if (member?.membership == 1) {
+					cnt1++;
+				} else if (member?.membership == 2) {
+					cnt2++;
+				} else if (member?.membership == 3) {
+					cnt3++;
+				}
+			});
+			let arr = [];
+			arr.push({ label: 'Free', value: cnt1 });
+			arr.push({ label: 'Enterprise', value: cnt2 });
+			arr.push({ label: 'Pro', value: cnt3 });
+			console.log(arr);
+			setMembershipChartData(arr);
+			arr = [];
+			arr.push({ label: 'Free', value: cnt1 * 0 });
+			arr.push({ label: 'Enterprise', value: cnt2 * 10 });
+			arr.push({ label: 'Pro', value: cnt3 * 15 });
+			setRevenueModelData(arr);
+		});
 	}, []);
 
 	// search handlers
@@ -114,6 +143,7 @@ function Admin() {
 			value: '115',
 		},
 	];
+	console.log(membershipChartData);
 
 	return (
 		<>
@@ -159,8 +189,10 @@ function Admin() {
 					</div>
 					<div className='grid-item widget-bar'>
 						<WidgetBar
-							data={chartData}
+							data={membershipChartData}
 							title={'Subscription Graph'}
+							yAxisName={'Number of Users'}
+							xAxisName={'Membership Type'}
 						/>
 					</div>
 					<div
@@ -168,7 +200,7 @@ function Admin() {
 						// style={{ gridColumnStart: '3', gridColumnEnd: '5' }}
 					>
 						<WidgetPie
-							data={chartData}
+							data={revenueModelData}
 							title={'Revenue Model Graph'}
 						/>
 					</div>

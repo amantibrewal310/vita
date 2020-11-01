@@ -70,3 +70,12 @@ export const getAllReportedVideos = () => {
 			console.log(err);
 		});
 };
+
+export const getAllUserMembership = () => {
+	return axiosInstance
+		.get('membership/user-membership/')
+		.then((res) => {
+			return res.data;
+		})
+		.catch((err) => console.log(err));
+};
