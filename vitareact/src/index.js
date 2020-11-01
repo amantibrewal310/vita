@@ -27,6 +27,7 @@ import VideoSearch from './components/VideoSearch';
 import Home from './Home';
 import AuthenticatedRoute from './Routes/AuthenticatedRoute';
 import MembershipList from './components/admin/MembershipList';
+import VideosList from './components/admin/VideosList';
 
 const routing = (
 	<Router>
@@ -90,6 +91,11 @@ const routing = (
 					exact
 					path='/admin/comment-report-action/:id'
 					component={CommentReportAction}
+				/>
+				<AdminRoute
+					exact
+					path='/admin/videos/list'
+					component={VideosList}
 				/>
 
 				{/* OPEN TO ALL ROUTES */}

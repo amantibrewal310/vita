@@ -47,16 +47,6 @@ function Admin() {
 
 	useEffect(() => {
 		// recent reported videos
-		axiosInstance
-			.get(`video/reported-video-list/`)
-			.then((res) => {
-				setVideoResults(res.data);
-				// console.log(res.data)
-				setVideoResLoadingLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
 	}, []);
 
 	useEffect(() => {
@@ -119,6 +109,7 @@ function Admin() {
 						description={'videos are uploaded'}
 						value={'100'}
 						buttonName={'Show Videos'}
+						buttonPath={'/admin/videos/list'}
 					/>
 				</div>
 				<div className='grid-item'>
@@ -126,7 +117,8 @@ function Admin() {
 						title={'Membership'}
 						description={'Types of Membership available'}
 						value={'3'}
-						buttonName={'Show Membership'}
+						buttonName={'Show'}
+						buttonPath={'/admin/membership'}
 					/>
 				</div>
 				<div className='grid-item'>
@@ -134,6 +126,8 @@ function Admin() {
 						title={'Videos Reported'}
 						description={'Total Videos Reported'}
 						value={'3'}
+						buttonName={'Show'}
+						buttonPath={'/admin/membership'}
 					/>
 				</div>
 				<div className='grid-item'>
@@ -141,6 +135,8 @@ function Admin() {
 						title={'Comments Reported'}
 						description={'Total Comment Reported'}
 						value={'3'}
+						buttonName={'Show'}
+						buttonPath={'/admin/membership'}
 					/>
 				</div>
 				<div
