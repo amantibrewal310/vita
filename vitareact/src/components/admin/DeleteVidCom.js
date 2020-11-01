@@ -32,14 +32,12 @@ function DeleteVidCom({type, id, urlSuffix}) {
     }
 
     return (
-        <div>
-            <button 
-                onClick={handleDelete}
-                className={formStyles.dangerBtn}
-            >
-                Delete {type}
-            </button>
-        </div>
+        <button 
+            onClick={handleDelete}
+            className={formStyles.dangerBtn}
+        >
+            Delete {type}
+        </button>
     )
 }
 

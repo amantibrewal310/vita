@@ -5,7 +5,6 @@ import PrivateRoute from './Routes/PrivateRoute';
 import AdminRoute from './Routes/AdminRoute';
 import './components/css/main.css';
 import App from './App';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import Login from './components/auth/Login/Login';
 import Logout from './components/auth/Logout';
@@ -24,72 +23,47 @@ import CategoryResults from './components/CategoryResults';
 import VideoPreplay from './components/VideoPreplay';
 import ForgotPassword from './components/auth/ResetPassword/ForgotPassword';
 import Subscription from './components/Subscription';
-import Payment from './components/Payment';
 import VideoSearch from './components/VideoSearch';
-import Home from './Home'
-import AuthenticatedRoute from './Routes/AuthenticatedRoute'
+import Home from './Home';
+import AuthenticatedRoute from './Routes/AuthenticatedRoute';
+import MembershipList from './components/admin/MembershipList';
 
 const routing = (
 	<Router>
 		<React.StrictMode>
-
 			<Switch>
-
 				{/* AUTHENTICATED ROUTES */}
 
-				<AuthenticatedRoute 
-					exact path='/login' 
-					component={Login}
+				<AuthenticatedRoute exact path='/login' component={Login} />
+				<AuthenticatedRoute
+					exact
+					path='/register'
+					component={Register}
 				/>
-				<AuthenticatedRoute 
-					exact path='/register' 
-					component={Register} 
-				/>
-				
+
 				{/* PRIVATE ROUTES */}
 
 				{/* TODO: only subscribed user can go to /home */}
-				<PrivateRoute 
-					exact path='/home' 
-					component={App} 
-				/>
-				<PrivateRoute 
-					exact path='/profile' 
-					component={UserProfile} 	
-				/>
+				<PrivateRoute exact path='/home' component={App} />
+				<PrivateRoute exact path='/profile' component={UserProfile} />
 				<PrivateRoute
 					exact
 					path='/preplay/:id'
 					component={VideoPreplay}
 				/>
-				<PrivateRoute 
-					exact path='/play/:id' 
-					component={GetVideo} 
-				/>
-				<PrivateRoute 
-					exact path='/logout' 
-					component={Logout} 
-				/>
-				<PrivateRoute 
-					exact path='/search' 
-					component={VideoSearch} 
-				/>
-				<PrivateRoute 
-					exact path='/categories' 
-					component={Category} 
-				/>
+				<PrivateRoute exact path='/play/:id' component={GetVideo} />
+				<PrivateRoute exact path='/logout' component={Logout} />
+				<PrivateRoute exact path='/search' component={VideoSearch} />
+				<PrivateRoute exact path='/categories' component={Category} />
 				<PrivateRoute
 					exact
 					path='/category/results/:id'
 					component={CategoryResults}
 				/>
-				
+
 				{/* ADMIN ROUTES */}
 
-				<AdminRoute 
-					exact path='/admin' 
-					component={Admin}
-				/>
+				<AdminRoute exact path='/admin' component={Admin} />
 				<AdminRoute
 					exact
 					path='/admin/create'
@@ -119,26 +93,21 @@ const routing = (
 				/>
 
 				{/* OPEN TO ALL ROUTES */}
-				<Route 
-					exact paht="/"
-					component={Home} 
-				>
-				</Route>
+				<Route exact path='/' component={Home}></Route>
 				<Route
-					exact path='/reset-password'
+					exact
+					path='/reset-password'
 					component={ForgotPassword}
 				/>
-				<Route 
-					exact path='/subscribe' 
-					component={Subscription}
+				<Route exact path='/subscribe' component={Subscription} />
+				<Route
+					exact
+					path='/admin/membership'
+					component={MembershipList}
 				/>
 
 				{/* 404 */}
-				<Route 
-					path='*' 
-					component={NotFound} 
-				/>
-
+				<Route path='*' component={NotFound} />
 			</Switch>
 
 			<Footer />

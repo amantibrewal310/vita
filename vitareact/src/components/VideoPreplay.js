@@ -8,6 +8,7 @@ import Preloader from './utils/Preloader';
 import axiosInstance from '../axios';
 import Header from './Header';
 import rowStyles from './css/row.module.css';
+import checkAdminLoggedIn from './auth/checkAdminLoggedIn';
 
 function VideoPreplay() {
 	const { id } = useParams();
@@ -299,7 +300,7 @@ function VideoPreplay() {
 						)}
 
 						{/* trailers/Extras from youtube */}
-						{/* make a horizontal scroll bar */}
+						
 						<div className={style.detailBanner}>
 							<h3 style={{ padding: '10px' }}>
 								{' '}

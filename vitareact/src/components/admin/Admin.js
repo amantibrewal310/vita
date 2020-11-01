@@ -110,7 +110,7 @@ function Admin() {
 						title={'Upload Video'}
 						description={'Create a new video'}
 						buttonName={'Upload'}
-						buttonPath={'/'}
+						buttonPath={'/admin/create'}
 					/>
 				</div>
 				<div className='grid-item'>
@@ -118,6 +118,7 @@ function Admin() {
 						title={'Total Video'}
 						description={'videos are uploaded'}
 						value={'100'}
+						buttonName={'Show Videos'}
 					/>
 				</div>
 				<div className='grid-item'>
@@ -125,6 +126,7 @@ function Admin() {
 						title={'Membership'}
 						description={'Types of Membership available'}
 						value={'3'}
+						buttonName={'Show Membership'}
 					/>
 				</div>
 				<div className='grid-item'>

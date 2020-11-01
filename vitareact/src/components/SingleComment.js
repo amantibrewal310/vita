@@ -4,6 +4,8 @@ import ReportComment from './ReportVidCom';
 import commentStyles from './css/commentStyles.module.css'
 import preplayStyles from './css/videoPreplay.module.css'
 import UserAvatar from './UserAvatar';
+import { Link } from 'react-router-dom';
+import CheckAdminLoggedIn from './auth/checkAdminLoggedIn';
 
 // Returns a single comment
 // props -> single comment object
@@ -133,7 +135,18 @@ function SingleComment({comment}) {
             
             <div className={commentStyles.restDetailsBox}>
                 
-                <p><b>{commentUser}</b></p>
+                <p
+                    className={commentStyles.userBox}
+                >   
+                    <b>{commentUser}</b>
+                    {
+                        CheckAdminLoggedIn() && (
+                            <Link to={`../admin/comment-details/${comment.id}`}>
+                                <button>View in Admin</button>
+                            </Link>
+                        )
+                    }
+                </p>
                 <p>{comment.text}</p>
                 
                 <div className={preplayStyles.bottomVideoStats} style={{marginTop:'5px'}}>
