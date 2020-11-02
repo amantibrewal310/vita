@@ -42,7 +42,7 @@ function VideoDetails() {
 				<ReportList type='video' id={id} />
 
 				<Link to={`../video-report-action/${id}`}>
-					<button className={formStyles.smallSubmitBtn}>
+					<button className={formStyles.smallSubmitBtn} style={{display:'block'}}>
 						View Reports
 					</button>
 				</Link>

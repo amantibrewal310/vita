@@ -65,7 +65,7 @@ function AddComment({ videoId, addCommentToList }) {
 				placeholder='Add a public comment'
 				className={formStyle.input}
 				style={{
-					borderColor: 'white',
+					borderColor: 'var(--color-3)',
 					width: '100%',
 					backgroundColor: 'black',
 				}}

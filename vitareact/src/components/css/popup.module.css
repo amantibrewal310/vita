@@ -15,7 +15,7 @@
     top: 8%;
     width: 400px;
     height: 100px;
-    background: linear-gradient(to bottom right, var(--vita-dark-blue), var(--vita-pink));
+    background: linear-gradient(to right, var(--color-1), var(--color-2));
     color: white;
     display: flex;
     justify-content:center;
@@ -24,7 +24,7 @@
     font-size: 18px;
     flex-direction: row;
     margin-bottom: 0;
-    box-shadow: 0 8px 6px -6px black
+    box-shadow: 0 8px 6px -6px var(--bg-color)
 }
 
 .modalText {

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import axiosInstance from '../../axios'
 import Preloader from '../utils/Preloader'
 import rowStyle from '../css/row.module.css';
+import profileStyle from '../css/profile.module.css'
 
 // working beacuse of global import 
 // import '../css/gridResults.css'
@@ -40,7 +41,7 @@ function GetWatchList({ id, name, videoIds }) {
             )
             : (
                 <>
-                <h3>{name}</h3>
+                <h3 className={profileStyle.watchlistName}>{name}</h3>
                 <div className={rowStyle.row_posters}>
                 {   
                     videos.map(item => (

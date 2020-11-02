@@ -15,7 +15,7 @@ function MembershipList() {
 		<>
 			<Header />
 			<div style={{ height: '60px' }}></div>
-			<h1 className='text-center'>Membership List</h1>
+			<h1 className='text-center' style={{margin: '50px'}}>Memberships Available</h1>
 			<div className='container'>
 				<table className='container'>
 					<thead>

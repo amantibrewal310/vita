@@ -32,7 +32,7 @@ function ReportReasonList({ item, refreshReasons }) {
 	return (
 		<div className='categoryWrapper'>
 			<div className='category-container'>
-				<h3>{item.reason}</h3>
+				<h6>{item.reason}</h6>
 
 				<button
 					className={formStyles.btn_blue}

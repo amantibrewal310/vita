@@ -10,6 +10,7 @@
 	border-left: 8px solid var(--color-1);
 	border-top-left-radius: 8px;
 	border-bottom-left-radius: 8px;
+	padding: 5px 0;
 }
 
 .avatarBox {
@@ -48,17 +49,15 @@
     align-items: center;
 }
 .userBox button {
+	margin-top: 5px;
     padding: 3px 8px;
     border-radius: 4px;
-    background-color: var(--vita-light-pink);
-    border: none;
+    background: transparent;
+    border: 1px solid white;
     outline: none;
     transition: all 0.3s ease;
 }
 
-.userBox button:hover {
-    background-color: var(--vita-pink);
-}
 .userBox button:focus, .userBox button:active {
     outline: none;
 }
