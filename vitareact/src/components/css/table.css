@@ -1,7 +1,18 @@
 table,
 th,
 td {
-	border: 2px solid var(--color-3);
+	border: 2px solid var(--color-2);
 	border-collapse: collapse;
 	text-align: center;
+}
+
+table {
+	margin-top: 20px;
+}
+
+th {
+	padding: 12px;
+}
+td {
+	padding: 8px;
 }

@@ -21,7 +21,7 @@
 .reportListBox {
 	padding: 10px;
 	border-radius: 6px;
-	border: 1px solid var(--vita-bright-blue);
+	border: 1px solid var(--color-2);
 	width: 520px;
 	margin: auto;
 	display: flex;
@@ -67,7 +67,7 @@
 .recentReportBox {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid var(--vita-bright-blue);
+	border: 1px solid var(--color-2);
 	border-radius: 6px;
 	padding: 6px;
 	width: 100%;

@@ -18,7 +18,9 @@ function GetAllWatchList({userId}) {
     return (
         <div>
         {   
-            watchlists.map(item => <GetWatchList key={item.id} id={item.id} name={item.name} videoIds={item.videos}/>)
+            watchlists.length == 0
+            ? <div style={{textAlign:'center'}}>No watchlist available</div>
+            : watchlists.map(item => <GetWatchList key={item.id} id={item.id} name={item.name} videoIds={item.videos}/>)
         }
         </div>
     )

@@ -2,18 +2,19 @@
 @import url('//fonts.googleapis.com/css?family=Cookie');
 
 :root {
-	--bg-color: #000000;
-	--color-3: #f1d4d4;
-	--color-1: #6a097d;
-	--color-2: #c060a1;
+	--bg-color: #0c0c0c;
+	--color-3: #cdedff;
+	--color-1: #0899ba;
+	--color-2: #63bdf1;
 	--vita-orange: #fa761d;
 	--vita-light-orange: #ee833b;
-	--vita-light-green: #13e069;
+	--vita-light-green: #5ae795;
 	--vita-bright-blue: #63bdf1;
 	--vita-dark-grey: #b191c08c;
 	--vita-light-blue: #0f2947;
 	--vita-dark-blue: #061a31;
 	--vita-light-grey: #a2aebb;
+	--input-bg: #dad8d809;
 	--easing: 0.25s;
 }
 * {

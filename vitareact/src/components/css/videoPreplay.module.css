@@ -86,8 +86,10 @@
     margin-top: 8px;
     border-radius: 4px;
     outline: none;
-    background: var(--vita-light-pink);
-    border: none;
+	background: transparent;
+	border: 1px solid white;
+	font-weight: bold;
+	color: white;
 }
 .description > button:hover {
     background: var(--vita-pink);

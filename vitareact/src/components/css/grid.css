@@ -28,6 +28,7 @@
 .category_vs_videos_graph {
 	grid-column-start: 1;
 	grid-column-end: 5;
+	margin: 100px 0;
 }
 
 @media only screen and (max-width: 550px) {

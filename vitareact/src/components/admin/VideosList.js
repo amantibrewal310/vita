@@ -3,6 +3,7 @@ import Header from '../Header';
 import '../css/table.css';
 import { getVideosList } from '../../request';
 import { useHistory } from 'react-router-dom';
+import formStyles from '../css/forms.module.css'
 
 function VideosList() {
 	const history = useHistory();
@@ -24,6 +25,7 @@ function VideosList() {
 					<thead>
 						<tr>
 							<th>Sr No.</th>
+							<th>Thumbnail</th>
 							<th>Title</th>
 							<th>Operations</th>
 						</tr>
@@ -32,32 +34,35 @@ function VideosList() {
 						<tbody key={video.id}>
 							<tr>
 								<td>{index + 1}</td>
+								<td>
+									<img src={video.thumbnail} width="60px" alt="img"/>
+								</td>
 								<td>{video.title}</td>
 								<td>
 									<button
-										className='btn btn-info'
+										className={formStyles.smallSubmitBtn}
 										onClick={() => {
 											history.push(
 												`/preplay/${video.id}`
 											);
 										}}
-										// style={{ float: 'right' }}
+										style={{margin: '5px'}}
 									>
 										View
 									</button>
 									<button
-										className='btn btn-info'
-										// style={{ float: 'right' }}
+										className={formStyles.smallSubmitBtn}
 										onClick={() => {
 											history.push(
 												`/admin/video-details/${video.id}`
 											);
 										}}
+										style={{margin: '5px'}}
 									>
 										Edit
 									</button>
 									<button
-										className='btn btn-danger'
+										className={formStyles.smallDangerBtn}
 										// style={{ float: 'right' }}
 									>
 										Delete

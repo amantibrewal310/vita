@@ -39,7 +39,7 @@ function CategoryItem({ item, refreshCategories }) {
 		<div className='categoryWrapper'>
 			<div className='category-container'>
 				<img src={item.image} width='100px' alt='cat-image' />
-				<h2>{item.category.charAt(0).toUpperCase() + item.category.slice(1)}</h2>
+				<h6 style={{margin: '0'}}>{item.category.charAt(0).toUpperCase() + item.category.slice(1)}</h6>
 				<button
 					className={formStyles.btn_blue}
 					onClick={() => setShowEditForm(!showEditform)}
