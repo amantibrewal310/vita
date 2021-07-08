@@ -1,23 +1,5 @@
-# Created by https://www.gitignore.io/api/django
-# Edit at https://www.gitignore.io/?templates=django
-
-### Django ###
-*.log
-*.pot
-*.pyc
-_pycache_/
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-/media              
-/static
-
-# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
-# in your Git repository. Update and uncomment the following line accordingly.
-# <django-project-name>/staticfiles/
-
-### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
+__pycache__/
 *.py[cod]
 *$py.class
 
@@ -26,6 +8,7 @@ db.sqlite3-journal
 
 # Distribution / packaging
 .Python
+env/
 build/
 develop-eggs/
 dist/
@@ -38,12 +21,9 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -58,7 +38,6 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
-.nox/
 .coverage
 .coverage.*
 .cache
@@ -66,10 +45,18 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
-.pytest_cache/
 
 # Translations
 *.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
 
 # Scrapy stuff:
 .scrapy
@@ -80,15 +67,11 @@ docs/_build/
 # PyBuilder
 target/
 
+# Jupyter Notebook
+.ipynb_checkpoints
+
 # pyenv
 .python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
 
 # celery beat schedule file
 celerybeat-schedule
@@ -96,6 +79,14 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+.vscode
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -103,20 +94,22 @@ celerybeat-schedule
 # Rope project settings
 .ropeproject
 
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
 # mkdocs documentation
 /site
 
 # mypy
 .mypy_cache/
-.dmypy.json
-dmypy.json
 
-# Pyre type checker
-.pyre/
+.DS_Store
+*.sqlite3
+media/
+*.pyc
+*.db
+*.pid
 
-# End of https://www.gitignore.io/api/django
+# Ignore Django Migrations in Development if you are working on team
+
+# Only for Development only
+# **/migrations/**
+# !**/migrations
+# !**/migrations/__init__.py
