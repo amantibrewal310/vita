@@ -1,5 +1,7 @@
 # Vita
 A on demand Video Streaming platform.
+Live: https://vita-stream.herokuapp.com/
+
 ## How to run?
 * Clone the Repository.
 * Make a virtual environment.
